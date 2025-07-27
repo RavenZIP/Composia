@@ -37,7 +37,7 @@ fun HorizontalPagerIndicator(
     padding: PaddingValues = PaddingValues(bottom = 20.dp),
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(padding),
+        modifier = Modifier.wrapContentHeight().fillMaxWidth().padding(padding),
         horizontalArrangement = Arrangement.Center,
     ) {
         PagerIndicator(pagerState, selectedIndicatorConfig, unselectedIndicatorConfig)
@@ -47,12 +47,12 @@ fun HorizontalPagerIndicator(
 @Composable
 fun VerticalPagerIndicator(
     pagerState: PagerState,
-    selectedIndicatorConfig: PagerIndicatorConfig,
-    unselectedIndicatorConfig: PagerIndicatorConfig,
+    selectedIndicatorConfig: PagerIndicatorConfig = PagerIndicatorConfig.SelectedRectangle,
+    unselectedIndicatorConfig: PagerIndicatorConfig = PagerIndicatorConfig.UnselectedRectangle,
     padding: PaddingValues = PaddingValues(start = 20.dp),
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth().padding(padding),
+        modifier = Modifier.wrapContentWidth().fillMaxWidth().padding(padding),
         verticalArrangement = Arrangement.Center,
     ) {
         PagerIndicator(pagerState, selectedIndicatorConfig, unselectedIndicatorConfig)
