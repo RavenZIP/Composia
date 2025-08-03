@@ -32,6 +32,8 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.androidx.navigation.compose)
+            implementation(project(":composia"))
         }
 
         commonTest.dependencies { implementation(libs.kotlin.test) }
@@ -41,11 +43,11 @@ kotlin {
 }
 
 android {
-    namespace = "io.ravenzip.composiaDemo"
+    namespace = "io.ravenzip.composia"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "io.ravenzip.composiaDemo"
+        applicationId = "io.ravenzip.composia"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -61,14 +63,12 @@ android {
 
 compose.desktop {
     application {
-        mainClass = "io.ravenzip.composiaDemo.MainKt"
+        mainClass = "io.ravenzip.composia.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "io.ravenzip.composiaDemo"
+            packageName = "io.ravenzip.composia"
             packageVersion = "1.0.0"
         }
     }
 }
-
-dependencies { implementation(project(":composia")) }
