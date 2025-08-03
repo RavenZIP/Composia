@@ -10,6 +10,8 @@ group = "io.ravenzip.composia"
 version = "0.0.1"
 
 kotlin {
+    jvm()
+
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
