@@ -10,8 +10,6 @@ group = "io.ravenzip.composia"
 version = "0.0.1"
 
 kotlin {
-    jvm()
-
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -21,8 +19,6 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
         }
 
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
+        commonTest.dependencies { implementation(libs.kotlin.test) }
     }
 }
