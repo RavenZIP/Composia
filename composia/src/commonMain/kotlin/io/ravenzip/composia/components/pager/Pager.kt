@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
@@ -14,11 +16,11 @@ fun VerticalHPagerWithIndicator(
     pageContent: @Composable (PagerScope.(Int) -> Unit),
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { content ->
+        VerticalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { content ->
             pageContent(content)
         }
 
-        Box(modifier = Modifier.fillMaxSize()) { VerticalPagerIndicator(pagerState) }
+        Box(modifier = Modifier.align(Alignment.CenterEnd)) { VerticalPagerIndicator(pagerState) }
     }
 }
 
@@ -32,6 +34,8 @@ fun HorizontalPagerWithIndicator(
             pageContent(content)
         }
 
-        Box(modifier = Modifier.fillMaxSize()) { HorizontalPagerIndicator(pagerState) }
+        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
+            HorizontalPagerIndicator(pagerState)
+        }
     }
 }

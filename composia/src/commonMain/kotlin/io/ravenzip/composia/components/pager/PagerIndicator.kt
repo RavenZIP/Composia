@@ -24,7 +24,7 @@ private fun PagerIndicator(
                 Modifier.padding(2.dp)
                     .clip(config.shape)
                     .background(config.color)
-                    .size(height = config.width.dp, width = config.height.dp)
+                    .size(height = config.height.dp, width = config.width.dp)
         )
     }
 }
@@ -32,12 +32,14 @@ private fun PagerIndicator(
 @Composable
 fun HorizontalPagerIndicator(
     pagerState: PagerState,
-    selectedIndicatorConfig: PagerIndicatorConfig = PagerIndicatorConfig.SelectedRectangle,
-    unselectedIndicatorConfig: PagerIndicatorConfig = PagerIndicatorConfig.UnselectedRectangle,
-    padding: PaddingValues = PaddingValues(bottom = 20.dp),
+    selectedIndicatorConfig: PagerIndicatorConfig =
+        PagerIndicatorConfig.SelectedHorizontalRectangle,
+    unselectedIndicatorConfig: PagerIndicatorConfig =
+        PagerIndicatorConfig.UnselectedHorizontalRectangle,
+    padding: PaddingValues = PaddingValues(bottom = 10.dp),
 ) {
     Row(
-        modifier = Modifier.wrapContentHeight().fillMaxWidth().padding(padding),
+        modifier = Modifier.fillMaxWidth().padding(padding),
         horizontalArrangement = Arrangement.Center,
     ) {
         PagerIndicator(pagerState, selectedIndicatorConfig, unselectedIndicatorConfig)
@@ -47,12 +49,13 @@ fun HorizontalPagerIndicator(
 @Composable
 fun VerticalPagerIndicator(
     pagerState: PagerState,
-    selectedIndicatorConfig: PagerIndicatorConfig = PagerIndicatorConfig.SelectedRectangle,
-    unselectedIndicatorConfig: PagerIndicatorConfig = PagerIndicatorConfig.UnselectedRectangle,
-    padding: PaddingValues = PaddingValues(start = 20.dp),
+    selectedIndicatorConfig: PagerIndicatorConfig = PagerIndicatorConfig.SelectedVerticalRectangle,
+    unselectedIndicatorConfig: PagerIndicatorConfig =
+        PagerIndicatorConfig.UnselectedVerticalRectangle,
+    padding: PaddingValues = PaddingValues(end = 10.dp),
 ) {
     Column(
-        modifier = Modifier.wrapContentWidth().fillMaxWidth().padding(padding),
+        modifier = Modifier.fillMaxHeight().padding(padding),
         verticalArrangement = Arrangement.Center,
     ) {
         PagerIndicator(pagerState, selectedIndicatorConfig, unselectedIndicatorConfig)

@@ -38,7 +38,7 @@ data class PagerIndicatorConfig(
         @Stable val SelectedSquare = UnselectedSquare.copy(color = Color.DarkGray)
 
         @Stable
-        val UnselectedRectangle =
+        val UnselectedHorizontalRectangle =
             PagerIndicatorConfig(
                 height = 10,
                 width = 20,
@@ -46,6 +46,19 @@ data class PagerIndicatorConfig(
                 shape = CircleShape,
             )
 
-        @Stable val SelectedRectangle = UnselectedRectangle.copy(color = Color.DarkGray)
+        @Stable
+        val SelectedHorizontalRectangle = UnselectedHorizontalRectangle.copy(color = Color.DarkGray)
+
+        @Stable
+        val UnselectedVerticalRectangle =
+            PagerIndicatorConfig(
+                height = 20,
+                width = 10,
+                color = Color.LightGray,
+                shape = CircleShape,
+            )
+
+        @Stable
+        val SelectedVerticalRectangle = UnselectedVerticalRectangle.copy(color = Color.DarkGray)
     }
 }
