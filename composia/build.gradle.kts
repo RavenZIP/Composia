@@ -1,3 +1,7 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
@@ -11,6 +15,11 @@ version = "0.0.1"
 
 kotlin {
     jvm()
+
+    wasmJs {
+        outputModuleName.set("composia")
+        browser { commonWebpackConfig { outputFileName = "composia.js" } }
+    }
 
     sourceSets {
         commonMain.dependencies {
