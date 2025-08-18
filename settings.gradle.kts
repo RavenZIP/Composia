@@ -15,6 +15,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Composia"
 
-include("composia")
+include("composia-ui")
 
-include("demo")
+include("composia-core")
+
+include("composia-demo")

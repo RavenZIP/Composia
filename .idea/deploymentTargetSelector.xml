@@ -2,9 +2,9 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-      <SelectionState runConfigName="ComposeApp">
+      <SelectionState runConfigName="composia-android">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-08-03T07:08:51.736895700Z">
+        <DropdownSelection timestamp="2025-08-16T16:43:10.397640400Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Alexander\.android\avd\Pixel_9.avd" />
