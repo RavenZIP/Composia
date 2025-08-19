@@ -12,10 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.ravenzip.composia.components.button.SimpleButton
-import io.github.ravenzip.composia.control.BaseControl
+import io.github.ravenzip.composia.control.StatusControl
 
 class ButtonScreenViewModel : ViewModel() {
-    val simpleButtonControl = BaseControl(coroutineScope = viewModelScope)
+    val simpleButtonControl = StatusControl(coroutineScope = viewModelScope)
 }
 
 @Composable

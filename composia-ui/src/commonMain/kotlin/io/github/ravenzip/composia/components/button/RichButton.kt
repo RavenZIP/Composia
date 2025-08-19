@@ -12,11 +12,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.config.IconConfig
 import io.github.ravenzip.composia.config.TextConfig
-import io.github.ravenzip.composia.control.BaseControl
+import io.github.ravenzip.composia.control.StatusControl
 
 @Composable
 fun RichButton(
-    control: BaseControl,
+    control: StatusControl,
     modifier: Modifier = Modifier,
     label: String,
     labelConfig: TextConfig = TextConfig.S18Medium,
@@ -76,7 +76,7 @@ fun RichButton(
 
 @Composable
 fun RichButton(
-    control: BaseControl,
+    control: StatusControl,
     modifier: Modifier = Modifier,
     label: @Composable () -> Unit,
     description: @Composable () -> Unit,

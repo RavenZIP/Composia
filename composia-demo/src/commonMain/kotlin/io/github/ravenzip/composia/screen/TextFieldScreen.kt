@@ -10,30 +10,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.ravenzip.composia.Validator
 import io.github.ravenzip.composia.components.button.SimpleButton
-import io.github.ravenzip.composia.components.textField.OutlinedSinglenessTextField
-import io.github.ravenzip.composia.components.textField.SimpleTextField
-import io.github.ravenzip.composia.components.textField.SinglenessTextField
-import io.github.ravenzip.composia.control.BaseControl
-import io.github.ravenzip.composia.control.Control
+import io.github.ravenzip.composia.components.textField.OutlinedSingleLineTextFieldWithControl
+import io.github.ravenzip.composia.components.textField.SimpleTextFieldWithControl
+import io.github.ravenzip.composia.components.textField.SingleLineTextFieldWithControl
+import io.github.ravenzip.composia.control.FormControl
+import io.github.ravenzip.composia.control.StatusControl
 
 class TextFieldScreenViewModel : ViewModel() {
-    val simpleTextFieldControl = Control("", coroutineScope = viewModelScope)
+    val simpleTextFieldFormControl = FormControl("", coroutineScope = viewModelScope)
 
-    val singlenessTextFieldControl =
-        Control(
+    val singlenessTextFieldFormControl =
+        FormControl(
             initialValue = "",
             validators = listOf { x -> Validator.required(x) },
             coroutineScope = viewModelScope,
         )
 
-    val outlinedSinglenessTextFieldControl =
-        Control(
+    val outlinedSinglenessTextFieldFormControl =
+        FormControl(
             initialValue = "",
             validators = listOf { x -> Validator.required(x) },
             coroutineScope = viewModelScope,
         )
 
-    val simpleButtonControl = BaseControl(coroutineScope = viewModelScope)
+    val simpleButtonControl = StatusControl(coroutineScope = viewModelScope)
 }
 
 @Composable
@@ -47,16 +47,16 @@ fun TextFieldScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            SimpleTextField(control = viewModel.simpleTextFieldControl)
+            SimpleTextFieldWithControl(formControl = viewModel.simpleTextFieldFormControl)
 
-            SinglenessTextField(
-                control = viewModel.singlenessTextFieldControl,
+            SingleLineTextFieldWithControl(
+                formControl = viewModel.singlenessTextFieldFormControl,
                 maxLength = 25,
                 showTextLengthCounter = true,
             )
 
-            OutlinedSinglenessTextField(
-                control = viewModel.outlinedSinglenessTextFieldControl,
+            OutlinedSingleLineTextFieldWithControl(
+                formControl = viewModel.outlinedSinglenessTextFieldFormControl,
                 maxLength = 25,
                 showTextLengthCounter = true,
                 label = { Text("OutlinedSinglenessTextField") },

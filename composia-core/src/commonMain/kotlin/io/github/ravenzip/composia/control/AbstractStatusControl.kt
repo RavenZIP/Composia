@@ -4,7 +4,7 @@ import io.github.ravenzip.composia.ControlStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
-abstract class AbstractControl(
+abstract class AbstractStatusControl(
     private val disabled: Boolean = false,
     coroutineScope: CoroutineScope,
 ) {

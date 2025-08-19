@@ -6,12 +6,12 @@ import io.github.ravenzip.composia.ValueWithTypeChanges
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
-class Control<T>(
+class FormControl<T>(
     private val initialValue: T,
     private val validators: List<(T) -> String?> = emptyList(),
     disabled: Boolean = false,
     coroutineScope: CoroutineScope,
-) : AbstractControl(disabled, coroutineScope) {
+) : AbstractStatusControl(disabled, coroutineScope) {
     private val _value = MutableStateFlow(ValueWithTypeChanges.createInitializeChange(initialValue))
 
     private val _errorMessage =

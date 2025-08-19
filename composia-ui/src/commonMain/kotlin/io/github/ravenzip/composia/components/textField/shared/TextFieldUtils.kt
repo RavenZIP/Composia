@@ -3,33 +3,29 @@ package io.github.ravenzip.composia.components.textField.shared
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import io.github.ravenzip.composia.ControlStatus
 import io.github.ravenzip.composia.ValueChangeType
-import io.github.ravenzip.composia.control.Control
+import io.github.ravenzip.composia.components.text.CounterLabel
+import io.github.ravenzip.composia.components.text.HintText
+import io.github.ravenzip.composia.control.FormControl
 import io.github.ravenzip.composia.state.TextFieldState
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 
 /** Обертка над текстовыми полями */
 @Composable
 internal fun <T> TextFieldWrapper(
-    control: Control<T>,
+    formControl: FormControl<T>,
     state: TextFieldState,
     content: @Composable () -> Unit,
 ) {
-    LaunchedEffect(control, state) {
-        control.valueWithTypeChanges
+    LaunchedEffect(formControl, state) {
+        formControl.valueWithTypeChanges
             .filter { x -> x.typeChange is ValueChangeType.Reset }
             .collect { state.setReadonly(state.readonly) }
     }
@@ -40,68 +36,48 @@ internal fun <T> TextFieldWrapper(
 /** Сообщение с описанием ошибки + счетчик введенных символов */
 @Composable
 internal fun ErrorMessageWithSymbolsCounter(
-    controlStatusFlow: StateFlow<ControlStatus>,
-    isFocusedFlow: StateFlow<Boolean>,
+    errorMessage: String,
+    isFocused: Boolean,
     showTextLengthCounter: Boolean,
     maxLength: Int,
     currentLength: Int,
     colors: TextFieldColors,
 ) {
-    Row(horizontalArrangement = Arrangement.SpaceBetween) {
-        val controlStatus = controlStatusFlow.collectAsState().value
-        val isInvalid = controlStatus is ControlStatus.Invalid
+    val isInvalid = errorMessage.isNotBlank()
 
-        if (isInvalid) {
-            // TODO переименовать, содержимое функции никак не ограничивает нас использовать ее
-            // TODO только для вывода ошибки, здесь может быть любой текст
+    if (isInvalid || showTextLengthCounter) {
+        Row(horizontalArrangement = Arrangement.SpaceBetween) {
             ErrorMessage(
-                modifier = Modifier.weight(1f),
-                errorMessage = controlStatus.message,
+                modifier = Modifier.weight(1f).padding(start = 10.dp),
+                isInvalid = isInvalid,
+                errorMessage = errorMessage,
                 color = colors.errorLabelColor,
             )
-        }
 
-        if (showTextLengthCounter) {
-            val isFocused = isFocusedFlow.collectAsState().value
-            val color =
-                remember(isInvalid, isFocused) { colors.calculateLabelColor(isInvalid, isFocused) }
-
-            SymbolsCounter(
-                modifier = Modifier.weight(1f),
-                maxLength = maxLength,
-                currentLength = currentLength,
-                color = color,
-            )
+            if (showTextLengthCounter) {
+                CounterLabel(
+                    modifier = Modifier.weight(1f).padding(end = 10.dp),
+                    current = currentLength,
+                    max = maxLength,
+                    textAlign = TextAlign.End,
+                    color = colors.calculateLabelColor(isInvalid, isFocused),
+                )
+            }
         }
     }
 }
 
 /** Сообщение с описанием ошибки */
 @Composable
-internal fun ErrorMessage(modifier: Modifier = Modifier, errorMessage: String, color: Color) {
-    Text(
-        text = errorMessage,
-        modifier = modifier.padding(start = 10.dp),
-        color = color,
-        fontSize = 12.sp,
-    )
-}
-
-/** Счетчик введенных символов */
-@Composable
-internal fun SymbolsCounter(
+internal fun ErrorMessage(
     modifier: Modifier = Modifier,
-    maxLength: Int,
-    currentLength: Int,
+    isInvalid: Boolean,
+    errorMessage: String,
     color: Color,
 ) {
-    Text(
-        text = if (maxLength > 0) "$currentLength / $maxLength" else "$currentLength",
-        modifier = modifier.padding(end = 10.dp),
-        color = color,
-        fontSize = 12.sp,
-        textAlign = TextAlign.End,
-    )
+    if (isInvalid) {
+        HintText(text = errorMessage, modifier = modifier, color = color)
+    }
 }
 
 internal fun TextFieldColors.calculateLabelColor(isError: Boolean, isFocused: Boolean): Color =

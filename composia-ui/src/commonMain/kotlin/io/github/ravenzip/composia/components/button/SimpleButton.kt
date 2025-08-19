@@ -12,11 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.config.TextConfig
-import io.github.ravenzip.composia.control.BaseControl
+import io.github.ravenzip.composia.control.StatusControl
 
 @Composable
 fun SimpleButton(
-    control: BaseControl,
+    control: StatusControl,
     text: String,
     modifier: Modifier = Modifier,
     textConfig: TextConfig = TextConfig.S16Medium,
