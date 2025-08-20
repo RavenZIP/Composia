@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.components.textField
+package io.github.ravenzip.composia.components.textField.simple
 
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
