@@ -17,7 +17,7 @@ import io.github.ravenzip.composia.control.formControl.FormControl
 import io.github.ravenzip.composia.state.TextFieldState
 
 @Composable
-fun OutlinedMultilineTextField(
+fun OutlinedMultiLineTextField(
     value: String,
     onValueChange: (String) -> Unit,
     isEnabled: Boolean = true,
@@ -60,7 +60,7 @@ fun OutlinedMultilineTextField(
 }
 
 @Composable
-fun OutlinedMultilineTextField(
+fun OutlinedMultiLineTextField(
     control: FormControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
@@ -81,7 +81,7 @@ fun OutlinedMultilineTextField(
         val isReadonly = initializedState.isReadonly.collectAsState().value
         val isFocused = initializedState.isFocused.collectAsState().value
 
-        OutlinedMultilineTextField(
+        OutlinedMultiLineTextField(
             value = controlSnapshot.value,
             onValueChange = { x -> control.setValue(x) },
             modifier = modifier,
