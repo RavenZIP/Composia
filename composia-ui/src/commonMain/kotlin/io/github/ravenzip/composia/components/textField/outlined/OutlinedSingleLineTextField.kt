@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.components.textField
+package io.github.ravenzip.composia.components.textField.outlined
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,7 +17,7 @@ import io.github.ravenzip.composia.control.formControl.FormControl
 import io.github.ravenzip.composia.state.TextFieldState
 
 @Composable
-fun OutlinedMultilineTextField(
+fun OutlinedSingleLineTextField(
     value: String,
     onValueChange: (String) -> Unit,
     isEnabled: Boolean = true,
@@ -28,10 +28,11 @@ fun OutlinedMultilineTextField(
     onFocusChange: (FocusState) -> Unit = {},
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     maxLength: Int? = null,
-    maxLines: Int = Int.MAX_VALUE,
-    minLines: Int = 1,
     label: (@Composable () -> Unit)? = null,
     placeholder: (@Composable () -> Unit)? = null,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    trailingIcon: (@Composable () -> Unit)? = null,
+    isHiddenText: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     shape: Shape = RoundedCornerShape(10.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
@@ -43,33 +44,36 @@ fun OutlinedMultilineTextField(
         modifier = modifier,
         isEnabled = isEnabled,
         isReadonly = isReadonly,
+        errorMessage = errorMessage,
         isFocused = isFocused,
         onFocusChange = onFocusChange,
-        errorMessage = errorMessage,
         maxLength = maxLength,
-        maxLines = maxLines,
-        minLines = minLines,
         label = label,
         placeholder = placeholder,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
         isInvalid = isInvalid,
-        showTextLengthCounter = showTextLengthCounter,
+        isHiddenText = isHiddenText,
         keyboardOptions = keyboardOptions,
+        singleLine = true,
+        showTextLengthCounter = showTextLengthCounter,
         shape = shape,
         colors = colors,
     )
 }
 
 @Composable
-fun OutlinedMultilineTextField(
+fun OutlinedSingleLineTextField(
     control: FormControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     maxLength: Int? = null,
     label: (@Composable () -> Unit)? = null,
     placeholder: (@Composable () -> Unit)? = null,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    trailingIcon: (@Composable () -> Unit)? = null,
+    isHiddenText: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    maxLines: Int = Int.MAX_VALUE,
-    minLines: Int = 1,
     shape: Shape = RoundedCornerShape(10.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     showTextLengthCounter: Boolean = false,
@@ -81,23 +85,24 @@ fun OutlinedMultilineTextField(
         val isReadonly = initializedState.isReadonly.collectAsState().value
         val isFocused = initializedState.isFocused.collectAsState().value
 
-        OutlinedMultilineTextField(
+        OutlinedSingleLineTextField(
             value = controlSnapshot.value,
             onValueChange = { x -> control.setValue(x) },
-            modifier = modifier,
             isEnabled = controlSnapshot.isEnabled,
             isReadonly = isReadonly,
-            isFocused = isFocused,
-            onFocusChange = { x -> initializedState.setFocus(x.isFocused) },
+            isInvalid = controlSnapshot.isInvalid,
             errorMessage = controlSnapshot.errorMessage,
+            isFocused = isFocused,
+            onFocusChange = { focusState -> initializedState.setFocus(focusState.isFocused) },
+            modifier = modifier,
             maxLength = maxLength,
-            maxLines = maxLines,
-            minLines = minLines,
             label = label,
             placeholder = placeholder,
-            isInvalid = controlSnapshot.isInvalid,
-            showTextLengthCounter = showTextLengthCounter,
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon,
+            isHiddenText = isHiddenText,
             keyboardOptions = keyboardOptions,
+            showTextLengthCounter = showTextLengthCounter,
             shape = shape,
             colors = colors,
         )

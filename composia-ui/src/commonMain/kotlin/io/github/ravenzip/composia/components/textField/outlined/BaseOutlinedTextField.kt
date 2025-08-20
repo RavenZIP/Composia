@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.components.textField
+package io.github.ravenzip.composia.components.textField.outlined
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
