@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.ravenzip.composia.components.button.SimpleButton
-import io.github.ravenzip.composia.control.StatusControl
+import io.github.ravenzip.composia.control.statusControl.StatusControl
 
 class ButtonScreenViewModel : ViewModel() {
     val simpleButtonControl = StatusControl(coroutineScope = viewModelScope)
@@ -29,7 +29,7 @@ fun ButtonScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            val t = viewModel.simpleButtonControl.isEnabled.collectAsState().value
+            val t = viewModel.simpleButtonControl.isEnabledFlow.collectAsState().value
             val c = remember { mutableStateOf(0) }
 
             SimpleButton(

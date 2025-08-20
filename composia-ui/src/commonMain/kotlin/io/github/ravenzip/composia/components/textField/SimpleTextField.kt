@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.ravenzip.composia.components.textField.shared.TextFieldWrapper
-import io.github.ravenzip.composia.control.FormControl
+import io.github.ravenzip.composia.control.valueControl.ValueControl
 import io.github.ravenzip.composia.state.TextFieldState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,7 +28,6 @@ fun SimpleTextField(
     onValueChange: (String) -> Unit,
     isEnabled: Boolean = true,
     isReadonly: Boolean = false,
-    isInvalid: Boolean = false,
     modifier: Modifier = Modifier,
     placeholder: @Composable (() -> Unit)? = null,
     interactionSource: InteractionSource = MutableInteractionSource(),
@@ -49,7 +48,6 @@ fun SimpleTextField(
             innerTextField = it,
             enabled = isEnabled,
             singleLine = true,
-            isError = isInvalid,
             visualTransformation = VisualTransformation.None,
             interactionSource = interactionSource,
             placeholder = placeholder,
@@ -59,7 +57,6 @@ fun SimpleTextField(
                 if (showLine) {
                     Line(
                         isEnabled = isEnabled,
-                        isError = isInvalid,
                         interactionSource = interactionSource,
                         colors = colors,
                     )
@@ -71,7 +68,7 @@ fun SimpleTextField(
 
 @Composable
 fun SimpleTextFieldWithControl(
-    formControl: FormControl<String>,
+    control: ValueControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier,
     placeholder: @Composable (() -> Unit)? = null,
@@ -82,19 +79,16 @@ fun SimpleTextFieldWithControl(
 ) {
     val initializedState = state ?: remember { TextFieldState() }
 
-    TextFieldWrapper(formControl, initializedState) {
-        val value = formControl.value.collectAsState().value
+    TextFieldWrapper(control, initializedState) {
+        val controlSnapshot = control.snapshotFlow.collectAsState().value
         val isReadonly = initializedState.isReadonly.collectAsState().value
-        val isEnabled = formControl.isEnabled.collectAsState().value
-        val isInvalid = formControl.isInvalid.collectAsState().value
 
         SimpleTextField(
-            value = value,
-            onValueChange = { value -> formControl.setValue(value) },
+            value = controlSnapshot.value,
+            onValueChange = { value -> control.setValue(value) },
             modifier = modifier,
-            isEnabled = isEnabled,
+            isEnabled = controlSnapshot.isEnabled,
             isReadonly = isReadonly,
-            isInvalid = isInvalid,
             placeholder = placeholder,
             interactionSource = interactionSource,
             colors = colors,
@@ -108,14 +102,13 @@ fun SimpleTextFieldWithControl(
 @Composable
 private fun Line(
     isEnabled: Boolean,
-    isError: Boolean,
     interactionSource: InteractionSource,
     colors: TextFieldColors,
 ) {
     Box(
         Modifier.indicatorLine(
             enabled = isEnabled,
-            isError = isError,
+            isError = false,
             interactionSource = interactionSource,
             colors = colors,
         )

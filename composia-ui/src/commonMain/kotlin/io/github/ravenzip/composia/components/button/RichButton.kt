@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.config.IconConfig
 import io.github.ravenzip.composia.config.TextConfig
-import io.github.ravenzip.composia.control.StatusControl
+import io.github.ravenzip.composia.control.statusControl.StatusControl
 
 @Composable
 fun RichButton(
@@ -29,7 +29,7 @@ fun RichButton(
     contentPadding: PaddingValues = PaddingValues(18.dp),
     onClick: () -> Unit = {},
 ) {
-    val isEnabled = control.isEnabled.collectAsState().value
+    val isEnabled = control.isEnabledFlow.collectAsState().value
 
     Button(
         onClick = { onClick() },
@@ -86,7 +86,7 @@ fun RichButton(
     contentPadding: PaddingValues = PaddingValues(18.dp),
     onClick: () -> Unit = {},
 ) {
-    val isEnabled = control.isEnabled.collectAsState().value
+    val isEnabled = control.isEnabledFlow.collectAsState().value
 
     Button(
         onClick = { onClick() },

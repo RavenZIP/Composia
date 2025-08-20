@@ -20,9 +20,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.textField.shared.ErrorMessageWithSymbolsCounter
 import io.github.ravenzip.composia.components.textField.shared.TextFieldWrapper
-import io.github.ravenzip.composia.control.FormControl
+import io.github.ravenzip.composia.components.textField.shared.acceptInput
+import io.github.ravenzip.composia.control.formControl.FormControl
 import io.github.ravenzip.composia.state.TextFieldState
-import io.github.ravenzip.composia.utils.numberInRange
 
 @Composable
 fun OutlinedSingleLineTextField(
@@ -35,7 +35,7 @@ fun OutlinedSingleLineTextField(
     isFocused: Boolean = false,
     onFocusChange: (FocusState) -> Unit = {},
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
-    maxLength: Int = 0,
+    maxLength: Int? = null,
     label: (@Composable () -> Unit)? = null,
     placeholder: (@Composable () -> Unit)? = null,
     leadingIcon: (@Composable () -> Unit)? = null,
@@ -84,10 +84,10 @@ fun OutlinedSingleLineTextField(
 
 @Composable
 fun OutlinedSingleLineTextFieldWithControl(
-    formControl: FormControl<String>,
+    control: FormControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
-    maxLength: Int = 0,
+    maxLength: Int? = null,
     label: (@Composable () -> Unit)? = null,
     placeholder: (@Composable () -> Unit)? = null,
     leadingIcon: (@Composable () -> Unit)? = null,
@@ -105,25 +105,22 @@ fun OutlinedSingleLineTextFieldWithControl(
 ) {
     val initializedState = state ?: remember { TextFieldState() }
 
-    TextFieldWrapper(formControl, initializedState) {
-        val value = formControl.value.collectAsState().value
+    TextFieldWrapper(control, initializedState) {
+        val controlSnapshot = control.snapshotFlow.collectAsState().value
         val isReadonly = initializedState.isReadonly.collectAsState().value
-        val isEnabled = formControl.isEnabled.collectAsState().value
-        val errorMessage = formControl.errorMessage.collectAsState().value
-        val isInvalid = errorMessage.isNotBlank()
         val isFocused = initializedState.isFocused.collectAsState().value
 
         OutlinedSingleLineTextField(
-            value = value,
+            value = controlSnapshot.value,
             onValueChange = { newValue ->
-                if (maxLength == 0 || numberInRange(value = newValue.length, max = maxLength)) {
-                    formControl.setValue(newValue)
+                if (acceptInput(currentLength = newValue.length, maxLength = maxLength)) {
+                    control.setValue(newValue)
                 }
             },
-            isEnabled = isEnabled,
+            isEnabled = controlSnapshot.isEnabled,
             isReadonly = isReadonly,
-            isInvalid = isInvalid,
-            errorMessage = errorMessage,
+            isInvalid = controlSnapshot.isInvalid,
+            errorMessage = controlSnapshot.errorMessage,
             isFocused = isFocused,
             onFocusChange = { focusState -> initializedState.setFocus(focusState.isFocused) },
             modifier = modifier,

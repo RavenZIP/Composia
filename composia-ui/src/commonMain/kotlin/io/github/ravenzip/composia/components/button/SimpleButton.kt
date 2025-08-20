@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.config.TextConfig
-import io.github.ravenzip.composia.control.StatusControl
+import io.github.ravenzip.composia.control.statusControl.StatusControl
 
 @Composable
 fun SimpleButton(
@@ -25,7 +25,7 @@ fun SimpleButton(
     contentPadding: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
     onClick: () -> Unit = {},
 ) {
-    val isEnabled = control.isEnabled.collectAsState().value
+    val isEnabled = control.isEnabledFlow.collectAsState().value
 
     Button(
         onClick = { onClick() },
