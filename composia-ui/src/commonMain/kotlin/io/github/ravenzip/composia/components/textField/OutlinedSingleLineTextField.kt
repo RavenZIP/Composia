@@ -13,7 +13,6 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.textField.shared.TextFieldWrapper
-import io.github.ravenzip.composia.components.textField.shared.acceptInput
 import io.github.ravenzip.composia.control.formControl.FormControl
 import io.github.ravenzip.composia.state.TextFieldState
 
@@ -88,11 +87,7 @@ fun OutlinedSingleLineTextFieldWithControl(
 
         OutlinedSingleLineTextField(
             value = controlSnapshot.value,
-            onValueChange = { newValue ->
-                if (acceptInput(currentLength = newValue.length, maxLength = maxLength)) {
-                    control.setValue(newValue)
-                }
-            },
+            onValueChange = { x -> control.setValue(x) },
             isEnabled = controlSnapshot.isEnabled,
             isReadonly = isReadonly,
             isInvalid = controlSnapshot.isInvalid,

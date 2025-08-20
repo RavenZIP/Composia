@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.textField.shared.ErrorMessageWithSymbolsCounter
+import io.github.ravenzip.composia.components.textField.shared.acceptInput
 
 @Composable
 internal fun BasicOutlinedTextField(
@@ -45,7 +46,11 @@ internal fun BasicOutlinedTextField(
     Column(modifier = modifier) {
         OutlinedTextField(
             value = value,
-            onValueChange = onValueChange,
+            onValueChange = { x ->
+                if (acceptInput(currentLength = x.length, maxLength = maxLength)) {
+                    onValueChange(x)
+                }
+            },
             modifier = Modifier.fillMaxWidth().onFocusChanged(onFocusChange),
             enabled = isEnabled,
             readOnly = isReadonly,
