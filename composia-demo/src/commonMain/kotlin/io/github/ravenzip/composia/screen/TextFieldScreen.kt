@@ -13,9 +13,8 @@ import androidx.lifecycle.viewModelScope
 import io.github.ravenzip.composia.Validator
 import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.components.textField.OutlinedSingleLineTextField
-import io.github.ravenzip.composia.components.textField.OutlinedSingleLineTextFieldWithControl
-import io.github.ravenzip.composia.components.textField.SimpleTextFieldWithControl
-import io.github.ravenzip.composia.components.textField.SingleLineTextFieldWithControl
+import io.github.ravenzip.composia.components.textField.SimpleTextField
+import io.github.ravenzip.composia.components.textField.SingleLineTextField
 import io.github.ravenzip.composia.control.formControl.FormControl
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.control.valueControl.ValueControl
@@ -74,15 +73,15 @@ fun TextFieldScreen(
             val isFocused = viewModel.textFieldState.isFocused.collectAsState().value
             val isReadonly = viewModel.textFieldState.isReadonly.collectAsState().value
 
-            SimpleTextFieldWithControl(control = viewModel.simpleTextFieldControl)
+            SimpleTextField(control = viewModel.simpleTextFieldControl)
 
-            SingleLineTextFieldWithControl(
+            SingleLineTextField(
                 control = viewModel.singlenessTextFieldControl,
                 maxLength = 25,
                 showTextLengthCounter = true,
             )
 
-            OutlinedSingleLineTextFieldWithControl(
+            OutlinedSingleLineTextField(
                 control = viewModel.outlinedSinglenessTextFieldControl,
                 maxLength = 25,
                 showTextLengthCounter = true,

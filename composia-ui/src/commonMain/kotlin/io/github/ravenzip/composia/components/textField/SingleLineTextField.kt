@@ -83,7 +83,7 @@ fun SingleLineTextField(
 }
 
 @Composable
-fun SingleLineTextFieldWithControl(
+fun SingleLineTextField(
     control: FormControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),

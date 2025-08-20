@@ -63,7 +63,7 @@ fun OutlinedSingleLineTextField(
 }
 
 @Composable
-fun OutlinedSingleLineTextFieldWithControl(
+fun OutlinedSingleLineTextField(
     control: FormControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),

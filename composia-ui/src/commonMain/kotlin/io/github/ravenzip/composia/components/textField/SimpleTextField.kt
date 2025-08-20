@@ -67,7 +67,7 @@ fun SimpleTextField(
 }
 
 @Composable
-fun SimpleTextFieldWithControl(
+fun SimpleTextField(
     control: ValueControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier,
