@@ -25,6 +25,9 @@ abstract class AbstractValueControl<T>(
     val valueWithTypeChangesFlow = _valueFlow.asStateFlow()
 
     val value
+        get() = _valueFlow.value.value
+
+    val valueWithTypeChanges
         get() = _valueFlow.value
 
     fun setValue(value: T) {
