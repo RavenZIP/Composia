@@ -18,14 +18,14 @@ import io.github.ravenzip.composia.control.valueControl.ValueControl
 import io.github.ravenzip.composia.state.TextFieldState
 import kotlinx.coroutines.flow.filter
 
-/** Обертка над текстовыми полями */
+/** Обертка над текстовыми полями, которые используют контролы напрямую */
 @Composable
 internal fun <T> TextFieldWrapper(
     control: FormControl<T>,
     state: TextFieldState,
     content: @Composable () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
+    LaunchedEffect(control, state) {
         control.valueWithTypeChangesFlow
             .filter { x -> x.typeChange is ValueChangeType.Reset }
             .collect { state.setReadonly(state.readonly) }
