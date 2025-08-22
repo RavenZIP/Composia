@@ -7,6 +7,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+// S14
+@Stable
+val TextStyle.Companion.S14: TextStyle
+    @Composable get() = LocalTextStyle.current.merge(fontSize = 14.sp)
+
+fun TextStyle.s14(): TextStyle = this.merge(fontSize = 14.sp)
+
 // S16Medium
 @Stable
 val TextStyle.Companion.S16Medium: TextStyle
