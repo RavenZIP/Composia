@@ -10,16 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.config.TextConfig
 import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.extension.S16Medium
 
 @Composable
 fun SimpleButton(
     control: StatusControl,
-    text: String,
     modifier: Modifier = Modifier,
-    textConfig: TextConfig = TextConfig.S16Medium,
+    text: String,
+    textStyle: TextStyle = TextStyle.S16Medium,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     shape: Shape = RoundedCornerShape(14.dp),
     contentPadding: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
@@ -35,14 +36,8 @@ fun SimpleButton(
         shape = shape,
         contentPadding = contentPadding,
     ) {
-        // Игнорируем textConfig.color, потому что цветом будет управлять сама кнопка при помощи
+        // Игнорируем textStyle.color, потому что цветом будет управлять сама кнопка при помощи
         // contentColor
-        Text(
-            text = text,
-            fontSize = textConfig.size,
-            fontWeight = textConfig.weight,
-            textAlign = textConfig.align,
-            letterSpacing = textConfig.letterSpacing,
-        )
+        Text(text = text, style = textStyle.merge(color = colors.contentColor))
     }
 }

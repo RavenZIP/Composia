@@ -8,20 +8,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import io.github.ravenzip.composia.extension.S16Medium
+import io.github.ravenzip.composia.extension.withoutLetterSpacing
 
 @Composable
 fun Spinner(
-    text: String,
-    textWeight: FontWeight = FontWeight.Medium,
-    textSize: TextUnit = 16.sp,
-    textLetterSpacing: TextUnit = 0.sp,
-    textStyle: TextStyle = LocalTextStyle.current,
+    text: String? = null,
+    textStyle: TextStyle = TextStyle.S16Medium.withoutLetterSpacing(),
     indicatorSize: Dp = 50.dp,
     containerColors: CardColors = CardDefaults.cardColors(),
     shape: Shape = RoundedCornerShape(14.dp),
@@ -35,17 +31,9 @@ fun Spinner(
             ) {
                 CircularProgressIndicator(modifier = Modifier.size(indicatorSize))
 
-                if (text.isNotEmpty()) {
+                if (text != null) {
                     Spacer(modifier = Modifier.padding(top = 10.dp))
-                    Text(
-                        text = text,
-                        style =
-                            textStyle.merge(
-                                fontSize = textSize,
-                                fontWeight = textWeight,
-                                letterSpacing = textLetterSpacing,
-                            ),
-                    )
+                    Text(text = text, style = textStyle)
                 }
             }
         }

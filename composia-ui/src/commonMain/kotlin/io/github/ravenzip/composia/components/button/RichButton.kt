@@ -7,21 +7,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.config.IconConfig
-import io.github.ravenzip.composia.config.TextConfig
 import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.extension.S18Medium
+import io.github.ravenzip.composia.extension.S20
 
 @Composable
 fun RichButton(
     control: StatusControl,
     modifier: Modifier = Modifier,
     label: String,
-    labelConfig: TextConfig = TextConfig.S18Medium,
+    labelStyle: TextStyle = TextStyle.S18Medium,
     description: String,
-    descriptionConfig: TextConfig = TextConfig.S20,
+    descriptionStyle: TextStyle = TextStyle.S20,
     icon: Painter,
     iconConfig: IconConfig = IconConfig.Default,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
@@ -30,6 +33,15 @@ fun RichButton(
     onClick: () -> Unit = {},
 ) {
     val isEnabled = control.isEnabledFlow.collectAsState().value
+
+    val labelColor =
+        if (labelStyle.color != Color.Unspecified) labelStyle.color else colors.contentColor
+    val descriptionColor =
+        if (descriptionStyle.color != Color.Unspecified) descriptionStyle.color
+        else colors.contentColor
+
+    val mergedLabelStyle = labelStyle.merge(color = labelColor)
+    val mergedDescriptionStyle = descriptionStyle.merge(color = descriptionColor)
 
     Button(
         onClick = { onClick() },
@@ -54,21 +66,8 @@ fun RichButton(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(5.dp),
             ) {
-                Text(
-                    text = label,
-                    color = labelConfig.color ?: colors.contentColor,
-                    fontSize = labelConfig.size,
-                    fontWeight = labelConfig.weight,
-                    letterSpacing = labelConfig.letterSpacing,
-                )
-
-                Text(
-                    text = description,
-                    color = descriptionConfig.color ?: colors.contentColor,
-                    fontSize = descriptionConfig.size,
-                    fontWeight = descriptionConfig.weight,
-                    letterSpacing = descriptionConfig.letterSpacing,
-                )
+                Text(text = label, style = mergedLabelStyle)
+                Text(text = description, style = mergedDescriptionStyle)
             }
         }
     }
