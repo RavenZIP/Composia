@@ -22,6 +22,13 @@ val TextStyle.Companion.S16Medium: TextStyle
 
 fun TextStyle.s16Medium(): TextStyle = this.merge(fontSize = 16.sp, fontWeight = FontWeight.Medium)
 
+// S18
+@Stable
+val TextStyle.Companion.S18: TextStyle
+    @Composable get() = LocalTextStyle.current.merge(fontSize = 18.sp)
+
+fun TextStyle.s18(): TextStyle = this.merge(fontSize = 18.sp)
+
 // S18Medium
 @Stable
 val TextStyle.Companion.S18Medium: TextStyle
