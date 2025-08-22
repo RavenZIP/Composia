@@ -19,15 +19,14 @@ import io.github.ravenzip.composia.extension.S16Medium
 fun Switch(
     isSelected: Boolean,
     isEnabled: Boolean = true,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     text: String,
     textStyle: TextStyle = LocalTextStyle.current,
     colors: SwitchColors = SwitchDefaults.colors(),
-    onCheckedChange: () -> Unit,
 ) {
     Row(
-        modifier =
-            modifier.clip(RoundedCornerShape(10.dp)).clickable { onCheckedChange() }.padding(15.dp),
+        modifier = modifier.clip(RoundedCornerShape(10.dp)).clickable { onClick() }.padding(15.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(text = text, style = textStyle)
@@ -36,7 +35,7 @@ fun Switch(
 
         Switch(
             checked = isSelected,
-            onCheckedChange = { onCheckedChange() },
+            onCheckedChange = { onClick() },
             enabled = isEnabled,
             colors = colors,
         )
@@ -51,42 +50,34 @@ fun Switch(
     textStyle: TextStyle = LocalTextStyle.current,
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
-    Row(
-        modifier =
-            modifier
-                .clip(RoundedCornerShape(10.dp))
-                .clickable { control.setValue(!control.value) }
-                .padding(15.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(text = text, style = textStyle)
+    val isSelected = control.valueFlow.collectAsState().value
+    val isEnabled = control.isEnabledFlow.collectAsState().value
 
-        Spacer(modifier = Modifier.weight(1f))
-
-        Switch(
-            checked = control.valueFlow.collectAsState().value,
-            onCheckedChange = { control.setValue(!control.value) },
-            enabled = control.isEnabledFlow.collectAsState().value,
-            colors = colors,
-        )
-    }
+    Switch(
+        isSelected = isSelected,
+        isEnabled = isEnabled,
+        onClick = { control.setValue(!control.value) },
+        modifier = modifier,
+        text = text,
+        textStyle = textStyle,
+        colors = colors,
+    )
 }
 
 @Composable
 fun Switch(
     isSelected: Boolean,
     isEnabled: Boolean = true,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     label: String,
     labelStyle: TextStyle = TextStyle.S16Medium,
     description: String,
     descriptionStyle: TextStyle = TextStyle.S14,
     colors: SwitchColors = SwitchDefaults.colors(),
-    onCheckedChange: () -> Unit,
 ) {
     Row(
-        modifier =
-            modifier.clip(RoundedCornerShape(10.dp)).clickable { onCheckedChange() }.padding(15.dp),
+        modifier = modifier.clip(RoundedCornerShape(10.dp)).clickable { onClick() }.padding(15.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column {
@@ -99,7 +90,7 @@ fun Switch(
 
         Switch(
             checked = isSelected,
-            onCheckedChange = { onCheckedChange() },
+            onCheckedChange = { onClick() },
             enabled = isEnabled,
             colors = colors,
         )
@@ -116,27 +107,18 @@ fun Switch(
     descriptionStyle: TextStyle = TextStyle.S14,
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
-    Row(
-        modifier =
-            modifier
-                .clip(RoundedCornerShape(10.dp))
-                .clickable { control.setValue(!control.value) }
-                .padding(15.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column {
-            Text(text = label, style = labelStyle)
+    val isSelected = control.valueFlow.collectAsState().value
+    val isEnabled = control.isEnabledFlow.collectAsState().value
 
-            Text(text = description, style = descriptionStyle)
-        }
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        Switch(
-            checked = control.valueFlow.collectAsState().value,
-            onCheckedChange = { control.setValue(!control.value) },
-            enabled = control.isEnabledFlow.collectAsState().value,
-            colors = colors,
-        )
-    }
+    Switch(
+        isSelected = isSelected,
+        isEnabled = isEnabled,
+        onClick = { control.setValue(!control.value) },
+        modifier = modifier,
+        label = label,
+        labelStyle = labelStyle,
+        description = description,
+        descriptionStyle = descriptionStyle,
+        colors = colors,
+    )
 }
