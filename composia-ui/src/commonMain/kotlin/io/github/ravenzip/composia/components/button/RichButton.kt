@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.config.IconConfig
+import io.github.ravenzip.composia.config.IconStyle
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.extension.S18Medium
 import io.github.ravenzip.composia.extension.S20
@@ -26,7 +26,8 @@ fun RichButton(
     description: String,
     descriptionStyle: TextStyle = TextStyle.S20,
     icon: Painter,
-    iconConfig: IconConfig = IconConfig.Default,
+    iconDescription: String? = null,
+    iconStyle: IconStyle = IconStyle.Default,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     shape: Shape = RoundedCornerShape(10.dp),
     contentPadding: PaddingValues = PaddingValues(18.dp),
@@ -57,9 +58,9 @@ fun RichButton(
         ) {
             Icon(
                 painter = icon,
-                contentDescription = iconConfig.description,
-                modifier = Modifier.size(iconConfig.size.dp),
-                tint = iconConfig.color ?: colors.contentColor,
+                contentDescription = iconDescription,
+                modifier = Modifier.size(iconStyle.size.dp),
+                tint = iconStyle.color ?: colors.contentColor,
             )
 
             Column(
