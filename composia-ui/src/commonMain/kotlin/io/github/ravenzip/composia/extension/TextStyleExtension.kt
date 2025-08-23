@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 val TextStyle.Companion.S14: TextStyle
     @Composable get() = LocalTextStyle.current.merge(fontSize = 14.sp)
 
-fun TextStyle.s14(): TextStyle = this.merge(fontSize = 14.sp)
+@Stable fun TextStyle.s14(): TextStyle = this.merge(fontSize = 14.sp)
 
 // S16Medium
 @Stable
@@ -20,6 +20,7 @@ val TextStyle.Companion.S16Medium: TextStyle
     @Composable
     get() = LocalTextStyle.current.merge(fontSize = 16.sp, fontWeight = FontWeight.Medium)
 
+@Stable
 fun TextStyle.s16Medium(): TextStyle = this.merge(fontSize = 16.sp, fontWeight = FontWeight.Medium)
 
 // S18
@@ -27,7 +28,7 @@ fun TextStyle.s16Medium(): TextStyle = this.merge(fontSize = 16.sp, fontWeight =
 val TextStyle.Companion.S18: TextStyle
     @Composable get() = LocalTextStyle.current.merge(fontSize = 18.sp)
 
-fun TextStyle.s18(): TextStyle = this.merge(fontSize = 18.sp)
+@Stable fun TextStyle.s18(): TextStyle = this.merge(fontSize = 18.sp)
 
 // S18Medium
 @Stable
@@ -35,6 +36,7 @@ val TextStyle.Companion.S18Medium: TextStyle
     @Composable
     get() = LocalTextStyle.current.merge(fontSize = 18.sp, fontWeight = FontWeight.Medium)
 
+@Stable
 fun TextStyle.s18Medium(): TextStyle = this.merge(fontSize = 18.sp, fontWeight = FontWeight.Medium)
 
 // S20
@@ -42,11 +44,11 @@ fun TextStyle.s18Medium(): TextStyle = this.merge(fontSize = 18.sp, fontWeight =
 val TextStyle.Companion.S20: TextStyle
     @Composable get() = LocalTextStyle.current.merge(fontSize = 20.sp)
 
-fun TextStyle.s20(): TextStyle = this.merge(fontSize = 20.sp)
+@Stable fun TextStyle.s20(): TextStyle = this.merge(fontSize = 20.sp)
 
 // WithoutLetterSpacing
 @Stable
 val TextStyle.Companion.WithoutLetterSpacing: TextStyle
     @Composable get() = LocalTextStyle.current.merge(letterSpacing = 0.sp)
 
-fun TextStyle.withoutLetterSpacing(): TextStyle = this.merge(letterSpacing = 0.sp)
+@Stable fun TextStyle.withoutLetterSpacing(): TextStyle = this.merge(letterSpacing = 0.sp)
