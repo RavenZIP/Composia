@@ -12,10 +12,10 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.config.IconStyle
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.extension.S18Medium
 import io.github.ravenzip.composia.extension.S20
+import io.github.ravenzip.composia.style.IconStyle
 
 @Composable
 fun RichButton(

@@ -1,16 +1,16 @@
-package io.github.ravenzip.composia.config
+package io.github.ravenzip.composia.style
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
-import io.github.ravenzip.composia.config.IconStyle.Companion.Default
-import io.github.ravenzip.composia.config.IconStyle.Companion.Primary
-import io.github.ravenzip.composia.config.IconStyle.Companion.PrimaryS20
-import io.github.ravenzip.composia.config.IconStyle.Companion.PrimaryS22
-import io.github.ravenzip.composia.config.IconStyle.Companion.S20
-import io.github.ravenzip.composia.config.IconStyle.Companion.S22
+import io.github.ravenzip.composia.style.IconStyle.Companion.Default
+import io.github.ravenzip.composia.style.IconStyle.Companion.Primary
+import io.github.ravenzip.composia.style.IconStyle.Companion.PrimaryS20
+import io.github.ravenzip.composia.style.IconStyle.Companion.PrimaryS22
+import io.github.ravenzip.composia.style.IconStyle.Companion.S20
+import io.github.ravenzip.composia.style.IconStyle.Companion.S22
 
 @Immutable
 class IconStyle(val size: Int = 25, val color: Color? = null) {

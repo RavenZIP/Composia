@@ -7,12 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import io.github.ravenzip.composia.style.PagerIndicatorStyle
 
 @Composable
 private fun PagerIndicator(
     pagerState: PagerState,
-    selectedIndicatorConfig: PagerIndicatorConfig,
-    unselectedIndicatorConfig: PagerIndicatorConfig,
+    selectedIndicatorConfig: PagerIndicatorStyle,
+    unselectedIndicatorConfig: PagerIndicatorStyle,
 ) {
     repeat(pagerState.pageCount) { page ->
         val config =
@@ -32,10 +33,9 @@ private fun PagerIndicator(
 @Composable
 fun HorizontalPagerIndicator(
     pagerState: PagerState,
-    selectedIndicatorConfig: PagerIndicatorConfig =
-        PagerIndicatorConfig.SelectedHorizontalRectangle,
-    unselectedIndicatorConfig: PagerIndicatorConfig =
-        PagerIndicatorConfig.UnselectedHorizontalRectangle,
+    selectedIndicatorConfig: PagerIndicatorStyle = PagerIndicatorStyle.SelectedHorizontalRectangle,
+    unselectedIndicatorConfig: PagerIndicatorStyle =
+        PagerIndicatorStyle.UnselectedHorizontalRectangle,
     padding: PaddingValues = PaddingValues(bottom = 10.dp),
 ) {
     Row(
@@ -49,9 +49,9 @@ fun HorizontalPagerIndicator(
 @Composable
 fun VerticalPagerIndicator(
     pagerState: PagerState,
-    selectedIndicatorConfig: PagerIndicatorConfig = PagerIndicatorConfig.SelectedVerticalRectangle,
-    unselectedIndicatorConfig: PagerIndicatorConfig =
-        PagerIndicatorConfig.UnselectedVerticalRectangle,
+    selectedIndicatorConfig: PagerIndicatorStyle = PagerIndicatorStyle.SelectedVerticalRectangle,
+    unselectedIndicatorConfig: PagerIndicatorStyle =
+        PagerIndicatorStyle.UnselectedVerticalRectangle,
     padding: PaddingValues = PaddingValues(end = 10.dp),
 ) {
     Column(

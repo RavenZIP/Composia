@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.components.pager
+package io.github.ravenzip.composia.style
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
 @Stable
-data class PagerIndicatorConfig(
+data class PagerIndicatorStyle(
     val height: Int,
     val width: Int,
     val color: Color,
@@ -17,48 +17,50 @@ data class PagerIndicatorConfig(
     companion object {
         @Stable
         val UnselectedCircle =
-            PagerIndicatorConfig(
+            PagerIndicatorStyle(
                 height = 10,
                 width = 10,
-                color = Color.LightGray,
+                color = Color.Companion.LightGray,
                 shape = CircleShape,
             )
 
-        @Stable val SelectedCircle = UnselectedCircle.copy(color = Color.DarkGray)
+        @Stable val SelectedCircle = UnselectedCircle.copy(color = Color.Companion.DarkGray)
 
         @Stable
         val UnselectedSquare =
-            PagerIndicatorConfig(
+            PagerIndicatorStyle(
                 height = 10,
                 width = 10,
-                color = Color.LightGray,
+                color = Color.Companion.LightGray,
                 shape = RoundedCornerShape(12.dp),
             )
 
-        @Stable val SelectedSquare = UnselectedSquare.copy(color = Color.DarkGray)
+        @Stable val SelectedSquare = UnselectedSquare.copy(color = Color.Companion.DarkGray)
 
         @Stable
         val UnselectedHorizontalRectangle =
-            PagerIndicatorConfig(
+            PagerIndicatorStyle(
                 height = 10,
                 width = 20,
-                color = Color.LightGray,
+                color = Color.Companion.LightGray,
                 shape = CircleShape,
             )
 
         @Stable
-        val SelectedHorizontalRectangle = UnselectedHorizontalRectangle.copy(color = Color.DarkGray)
+        val SelectedHorizontalRectangle =
+            UnselectedHorizontalRectangle.copy(color = Color.Companion.DarkGray)
 
         @Stable
         val UnselectedVerticalRectangle =
-            PagerIndicatorConfig(
+            PagerIndicatorStyle(
                 height = 20,
                 width = 10,
-                color = Color.LightGray,
+                color = Color.Companion.LightGray,
                 shape = CircleShape,
             )
 
         @Stable
-        val SelectedVerticalRectangle = UnselectedVerticalRectangle.copy(color = Color.DarkGray)
+        val SelectedVerticalRectangle =
+            UnselectedVerticalRectangle.copy(color = Color.Companion.DarkGray)
     }
 }

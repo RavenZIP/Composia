@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.layout.RoundedBox
-import io.github.ravenzip.composia.config.IconStyle
 import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.style.IconStyle
 
 // TODO реализовать enabled\disabled
 @Composable
