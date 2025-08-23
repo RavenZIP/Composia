@@ -13,7 +13,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.textField.shared.TextFieldWrapper
-import io.github.ravenzip.composia.control.formControl.FormControl
+import io.github.ravenzip.composia.control.formControl.CompositeControl
 import io.github.ravenzip.composia.state.TextFieldState
 
 @Composable
@@ -61,7 +61,7 @@ fun OutlinedMultiLineTextField(
 
 @Composable
 fun OutlinedMultiLineTextField(
-    control: FormControl<String>,
+    control: CompositeControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     maxLength: Int? = null,

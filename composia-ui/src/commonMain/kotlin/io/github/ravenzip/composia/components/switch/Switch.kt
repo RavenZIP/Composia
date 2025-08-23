@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.formControl.FormControl
+import io.github.ravenzip.composia.control.formControl.CompositeControl
 import io.github.ravenzip.composia.extension.S14
 import io.github.ravenzip.composia.extension.S16Medium
 
@@ -44,7 +44,7 @@ fun Switch(
 
 @Composable
 fun Switch(
-    control: FormControl<Boolean>,
+    control: CompositeControl<Boolean>,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     text: String,
     textStyle: TextStyle = LocalTextStyle.current,
@@ -99,7 +99,7 @@ fun Switch(
 
 @Composable
 fun Switch(
-    control: FormControl<Boolean>,
+    control: CompositeControl<Boolean>,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     label: String,
     labelStyle: TextStyle = TextStyle.S16Medium,

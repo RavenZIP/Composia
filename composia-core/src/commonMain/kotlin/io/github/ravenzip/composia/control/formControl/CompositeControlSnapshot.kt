@@ -4,7 +4,7 @@ import io.github.ravenzip.composia.ControlStatus
 import io.github.ravenzip.composia.ValueChangeType
 import io.github.ravenzip.composia.ValueWithTypeChanges
 
-data class FormControlSnapshot<T>(
+data class CompositeControlSnapshot<T>(
     override val value: T,
     override val typeChange: ValueChangeType,
     override val hasChanges: Boolean,
@@ -15,7 +15,7 @@ data class FormControlSnapshot<T>(
     override val isInvalid: Boolean,
     override val errorMessage: String,
 ) :
-    AbstractFormControlSnapshot<T>(
+    AbstractCompositeControlSnapshot<T>(
         value = value,
         typeChange = typeChange,
         hasChanges = hasChanges,
@@ -28,7 +28,7 @@ data class FormControlSnapshot<T>(
     ) {
     companion object {
         fun <T> createDefault(value: T) =
-            FormControlSnapshot(
+            CompositeControlSnapshot(
                 value = value,
                 typeChange = ValueChangeType.Initialize,
                 hasChanges = false,
@@ -45,7 +45,7 @@ data class FormControlSnapshot<T>(
             status: ControlStatus,
             errorMessage: String,
         ) =
-            FormControlSnapshot(
+            CompositeControlSnapshot(
                 value = valueWithTypeChanges.value,
                 typeChange = valueWithTypeChanges.typeChange,
                 hasChanges = valueWithTypeChanges.typeChange !is ValueChangeType.Initialize,

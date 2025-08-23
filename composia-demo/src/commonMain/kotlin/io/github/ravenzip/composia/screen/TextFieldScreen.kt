@@ -15,7 +15,7 @@ import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.components.textField.base.SingleLineTextField
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.simple.SimpleTextField
-import io.github.ravenzip.composia.control.formControl.FormControl
+import io.github.ravenzip.composia.control.formControl.CompositeControl
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.control.valueControl.ValueControl
 import io.github.ravenzip.composia.state.TextFieldState
@@ -24,21 +24,21 @@ class TextFieldScreenViewModel : ViewModel() {
     val simpleTextFieldControl = ValueControl("", coroutineScope = viewModelScope)
 
     val singlenessTextFieldControl =
-        FormControl(
+        CompositeControl(
             initialValue = "",
             validators = listOf { x -> Validator.required(x) },
             coroutineScope = viewModelScope,
         )
 
     val outlinedSinglenessTextFieldControl =
-        FormControl(
+        CompositeControl(
             initialValue = "",
             validators = listOf { x -> Validator.required(x) },
             coroutineScope = viewModelScope,
         )
 
     val outlinedSinglenessTextFieldControl2 =
-        FormControl(
+        CompositeControl(
             initialValue = "",
             validators = listOf { x -> Validator.required(x) },
             coroutineScope = viewModelScope,

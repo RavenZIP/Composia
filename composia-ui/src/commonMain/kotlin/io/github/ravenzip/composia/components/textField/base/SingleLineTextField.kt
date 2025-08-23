@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.textField.shared.ErrorMessageWithSymbolsCounter
 import io.github.ravenzip.composia.components.textField.shared.TextFieldWrapper
 import io.github.ravenzip.composia.components.textField.shared.acceptInput
-import io.github.ravenzip.composia.control.formControl.FormControl
+import io.github.ravenzip.composia.control.formControl.CompositeControl
 import io.github.ravenzip.composia.state.TextFieldState
 
 @Composable
@@ -84,7 +84,7 @@ fun SingleLineTextField(
 
 @Composable
 fun SingleLineTextField(
-    control: FormControl<String>,
+    control: CompositeControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     maxLength: Int? = null,

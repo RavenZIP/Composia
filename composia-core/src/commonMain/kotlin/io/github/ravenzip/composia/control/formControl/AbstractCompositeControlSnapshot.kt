@@ -4,7 +4,7 @@ import io.github.ravenzip.composia.ControlStatus
 import io.github.ravenzip.composia.ValueChangeType
 import io.github.ravenzip.composia.control.valueControl.AbstractValueControlSnapshot
 
-abstract class AbstractFormControlSnapshot<T>(
+abstract class AbstractCompositeControlSnapshot<T>(
     override val value: T,
     override val typeChange: ValueChangeType,
     override val hasChanges: Boolean,

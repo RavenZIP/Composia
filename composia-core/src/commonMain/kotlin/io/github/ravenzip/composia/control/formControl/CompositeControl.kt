@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
-class FormControl<T>(
+class CompositeControl<T>(
     private val initialValue: T,
     private val validators: List<(T) -> String?> = emptyList(),
     disabled: Boolean = false,
@@ -37,7 +37,7 @@ class FormControl<T>(
                 valueWithTypeChanges,
                 status,
                 errorMessage ->
-                FormControlSnapshot.create(
+                CompositeControlSnapshot.create(
                     valueWithTypeChanges = valueWithTypeChanges,
                     status = status,
                     errorMessage = errorMessage,
@@ -45,7 +45,7 @@ class FormControl<T>(
             }
             .stateInDefault(
                 scope = coroutineScope,
-                initialValue = FormControlSnapshot.createDefault(initialValue),
+                initialValue = CompositeControlSnapshot.createDefault(initialValue),
             )
 
     val snapshot
