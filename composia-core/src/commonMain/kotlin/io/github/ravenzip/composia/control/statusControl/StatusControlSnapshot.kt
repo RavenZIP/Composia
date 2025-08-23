@@ -1,6 +1,6 @@
 package io.github.ravenzip.composia.control.statusControl
 
-import io.github.ravenzip.composia.ControlStatus
+import io.github.ravenzip.composia.control.shared.ControlStatus
 
 data class StatusControlSnapshot(
     override val status: ControlStatus,

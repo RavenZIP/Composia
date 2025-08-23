@@ -1,8 +1,8 @@
 package io.github.ravenzip.composia.control.valueControl
 
-import io.github.ravenzip.composia.ControlStatus
-import io.github.ravenzip.composia.ValueChangeType
-import io.github.ravenzip.composia.ValueWithTypeChanges
+import io.github.ravenzip.composia.control.shared.ControlStatus
+import io.github.ravenzip.composia.control.shared.ValueChangeType
+import io.github.ravenzip.composia.control.shared.ValueWithTypeChanges
 
 data class ValueControlSnapshot<T>(
     override val value: T,

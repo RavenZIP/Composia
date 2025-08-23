@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia
+package io.github.ravenzip.composia.control.shared
 
 /** Типы изменений значения в контролах */
 sealed class ValueChangeType {

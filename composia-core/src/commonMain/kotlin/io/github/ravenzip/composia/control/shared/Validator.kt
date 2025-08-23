@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia
+package io.github.ravenzip.composia.control.shared
 
 private val emailRegex =
     Regex(

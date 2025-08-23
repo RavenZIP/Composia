@@ -10,12 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.ravenzip.composia.Validator
 import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.components.textField.base.SingleLineTextField
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.simple.SimpleTextField
 import io.github.ravenzip.composia.control.formControl.CompositeControl
+import io.github.ravenzip.composia.control.shared.Validator
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.control.valueControl.ValueControl
 import io.github.ravenzip.composia.state.TextFieldState

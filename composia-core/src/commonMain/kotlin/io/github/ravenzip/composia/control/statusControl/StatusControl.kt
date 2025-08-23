@@ -1,7 +1,7 @@
 package io.github.ravenzip.composia.control.statusControl
 
-import io.github.ravenzip.composia.ControlStatus
 import io.github.ravenzip.composia.control.extension.stateInDefault
+import io.github.ravenzip.composia.control.shared.ControlStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
 

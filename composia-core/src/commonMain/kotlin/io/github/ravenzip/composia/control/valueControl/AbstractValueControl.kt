@@ -1,7 +1,7 @@
 package io.github.ravenzip.composia.control.valueControl
 
-import io.github.ravenzip.composia.ValueWithTypeChanges
 import io.github.ravenzip.composia.control.extension.stateInDefault
+import io.github.ravenzip.composia.control.shared.ValueWithTypeChanges
 import io.github.ravenzip.composia.control.statusControl.AbstractStatusControl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
