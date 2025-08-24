@@ -1,2 +1,4 @@
+jdk:
+  - openjdk22
 install:
   - ./gradlew :composia-core:build :composia-ui:build
