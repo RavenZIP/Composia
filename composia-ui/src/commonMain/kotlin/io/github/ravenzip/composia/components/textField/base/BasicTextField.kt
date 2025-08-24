@@ -1,12 +1,12 @@
-package io.github.ravenzip.composia.components.textField.outlined
+package io.github.ravenzip.composia.components.textField.base
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
@@ -19,7 +19,7 @@ import io.github.ravenzip.composia.components.textField.shared.ErrorMessageWithS
 import io.github.ravenzip.composia.components.textField.shared.acceptInput
 
 @Composable
-internal fun BasicOutlinedTextField(
+internal fun BasicTextField(
     value: String,
     onValueChange: (String) -> Unit,
     isEnabled: Boolean = true,
@@ -40,11 +40,11 @@ internal fun BasicOutlinedTextField(
     isHiddenText: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     shape: Shape = RoundedCornerShape(10.dp),
-    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    colors: TextFieldColors = TextFieldDefaults.colors(),
     showTextLengthCounter: Boolean = false,
 ) {
     Column(modifier = modifier) {
-        OutlinedTextField(
+        TextField(
             value = value,
             onValueChange = { x ->
                 if (acceptInput(currentLength = x.length, maxLength = maxLength)) {
