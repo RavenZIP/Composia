@@ -69,10 +69,6 @@ kotlin {
             // https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-viewmodel.html#using-viewmodel-in-common-code
             implementation(libs.kotlinx.coroutines.swing)
         }
-
-        wasmJsMain.dependencies {
-            implementation(libs.compose.components.ui.tooling.preview.wasmJs)
-        }
     }
 }
 
