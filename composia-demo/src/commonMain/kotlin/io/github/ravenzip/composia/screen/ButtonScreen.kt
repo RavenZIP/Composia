@@ -11,11 +11,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.github.ravenzip.composia.components.button.IconButton
 import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia_demo.composia_demo.generated.resources.Res
+import io.github.ravenzip.composia_demo.composia_demo.generated.resources.outline_settings_24
+import org.jetbrains.compose.resources.painterResource
 
 class ButtonScreenViewModel : ViewModel() {
     val simpleButtonControl = StatusControl(coroutineScope = viewModelScope)
+
+    val iconButtonControl = StatusControl(coroutineScope = viewModelScope)
 }
 
 @Composable
@@ -45,6 +51,11 @@ fun ButtonScreen(
                     viewModel.simpleButtonControl.enable()
                 }
             }
+
+            IconButton(
+                control = viewModel.iconButtonControl,
+                icon = painterResource(Res.drawable.outline_settings_24),
+            ) {}
 
             OutlinedTextField(value = c.value.toString(), onValueChange = {})
             OutlinedTextField(value = t.toString(), onValueChange = {})
