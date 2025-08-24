@@ -22,9 +22,21 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlin.coroutines)
-            implementation(libs.kotlin.reflect)
+            //            implementation(libs.kotlin.reflect)
         }
 
         commonTest.dependencies { implementation(libs.kotlin.test) }
+    }
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "io.github.ravenzip.composia-core"
+            artifactId = "composia-core"
+            version = "0.0.1"
+
+            afterEvaluate { from(components["kotlin"]) }
+        }
     }
 }

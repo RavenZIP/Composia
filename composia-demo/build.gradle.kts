@@ -44,14 +44,11 @@ kotlin {
     }
 
     sourceSets {
-        androidMain.dependencies { implementation(libs.androidx.activity.compose) }
-
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
-            implementation(compose.components.uiToolingPreview)
             implementation(compose.preview)
             implementation(compose.components.resources)
 
@@ -71,6 +68,10 @@ kotlin {
             // Нужно для корректной работы корутин в ViewModel на десктопе
             // https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-viewmodel.html#using-viewmodel-in-common-code
             implementation(libs.kotlinx.coroutines.swing)
+        }
+
+        wasmJsMain.dependencies {
+            implementation(libs.compose.components.ui.tooling.preview.wasmJs)
         }
     }
 }
@@ -105,5 +106,3 @@ compose.desktop {
         }
     }
 }
-
-dependencies { debugImplementation(compose.uiTooling) }

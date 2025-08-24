@@ -27,10 +27,22 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
-            implementation(compose.components.uiToolingPreview)
+
             implementation(project(":composia-core"))
         }
 
         commonTest.dependencies { implementation(libs.kotlin.test) }
+    }
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "io.github.ravenzip.composia-ui"
+            artifactId = "composia-ui"
+            version = "0.0.1"
+
+            afterEvaluate { from(components["kotlin"]) }
+        }
     }
 }
