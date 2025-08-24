@@ -1,6 +1,5 @@
 jdk:
   - openjdk22
 install:
+  - echo "Running a custom install command"
   - ./gradlew :composia-core:build :composia-ui:build
-build:
-  - echo "Skipping default build step"
