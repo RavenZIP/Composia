@@ -1,6 +1,2 @@
 install:
-  - ./gradlew :composia-core:publishToMavenLocal \
-    :composia-ui:publishToMavenLocal
-
-script:
   - ./gradlew :composia-core:build :composia-ui:build
