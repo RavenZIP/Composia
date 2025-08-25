@@ -17,17 +17,15 @@ import io.github.ravenzip.composia.extension.S16Medium
 
 @Composable
 fun SimpleButton(
-    control: StatusControl,
-    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
     text: String,
+    modifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle.S16Medium,
+    isEnabled: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     shape: Shape = RoundedCornerShape(14.dp),
     contentPadding: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
-    onClick: () -> Unit = {},
 ) {
-    val isEnabled = control.isEnabledFlow.collectAsState().value
-
     Button(
         onClick = { onClick() },
         modifier = modifier,
@@ -40,4 +38,29 @@ fun SimpleButton(
         // contentColor
         Text(text = text, style = textStyle.merge(color = colors.contentColor))
     }
+}
+
+@Composable
+fun SimpleButton(
+    control: StatusControl,
+    onClick: () -> Unit = {},
+    text: String,
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = TextStyle.S16Medium,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    shape: Shape = RoundedCornerShape(14.dp),
+    contentPadding: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
+) {
+    val isEnabled = control.isEnabledFlow.collectAsState().value
+
+    SimpleButton(
+        onClick = { onClick() },
+        text = text,
+        modifier = modifier,
+        textStyle = textStyle,
+        isEnabled = isEnabled,
+        colors = colors,
+        shape = shape,
+        contentPadding = contentPadding,
+    )
 }
