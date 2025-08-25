@@ -27,7 +27,7 @@ fun SimpleButton(
     contentPadding: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
 ) {
     Button(
-        onClick = { onClick() },
+        onClick = onClick,
         modifier = modifier,
         enabled = isEnabled,
         colors = colors,
@@ -54,7 +54,7 @@ fun SimpleButton(
     val isEnabled = control.isEnabledFlow.collectAsState().value
 
     SimpleButton(
-        onClick = { onClick() },
+        onClick = onClick,
         text = text,
         modifier = modifier,
         textStyle = textStyle,
