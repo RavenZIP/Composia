@@ -9,11 +9,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.components.textField.shared.ErrorMessage
+import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.shared.LoadSearchResultOnExpand
 import io.github.ravenzip.composia.components.textField.shared.UpdateSearchQueryOnControlOrExpandChange
 import io.github.ravenzip.composia.control.formControl.CompositeControl
@@ -39,6 +38,7 @@ fun <T> DropDownTextField(
     isReadonly: Boolean = false,
     isInvalid: Boolean = false,
     errorMessage: String = "",
+    isFocused: Boolean,
     onFocusChange: (FocusState) -> Unit = {},
     isExpanded: Boolean = false,
     onExpandedChange: (Boolean) -> Unit,
@@ -49,22 +49,23 @@ fun <T> DropDownTextField(
 ) {
     Column(modifier = modifier) {
         ExposedDropdownMenuBox(expanded = isExpanded, onExpandedChange = onExpandedChange) {
-            OutlinedTextField(
+            OutlinedSingleLineTextField(
                 value = searchQuery,
                 onValueChange = { x -> onSearchQueryChange(x) },
                 modifier =
                     Modifier.fillMaxWidth()
-                        .onFocusChanged(onFocusChange)
                         .menuAnchor(
                             if (isReadonly) MenuAnchorType.PrimaryNotEditable
                             else MenuAnchorType.PrimaryEditable
                         ),
-                enabled = isEnabled,
-                readOnly = isReadonly,
+                isEnabled = isEnabled,
+                isReadonly = isReadonly,
+                isInvalid = isInvalid,
+                errorMessage = errorMessage,
+                isFocused = isFocused,
+                onFocusChange = onFocusChange,
                 label = { label() },
                 trailingIcon = { dropDownIcon() },
-                isError = isInvalid,
-                singleLine = true,
                 shape = shape,
                 colors = colors,
             )
@@ -90,12 +91,6 @@ fun <T> DropDownTextField(
                 }
             }
         }
-
-        ErrorMessage(
-            isInvalid = isInvalid,
-            errorMessage = errorMessage,
-            color = colors.errorLabelColor,
-        )
     }
 }
 
@@ -135,6 +130,7 @@ fun <T> DropDownTextField(
         isReadonly = isReadonly,
         isInvalid = isInvalid,
         errorMessage = errorMessage,
+        isFocused = isFocused,
         onFocusChange = onFocusChange,
         isExpanded = isExpanded,
         onExpandedChange = onExpandedChange,

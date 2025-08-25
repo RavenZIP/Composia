@@ -12,12 +12,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.components.textField.base.SingleLineTextField
+import io.github.ravenzip.composia.components.textField.dropdown.DropDownTextField
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.simple.SimpleTextField
 import io.github.ravenzip.composia.control.formControl.CompositeControl
 import io.github.ravenzip.composia.control.shared.Validator
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.control.valueControl.ValueControl
+import io.github.ravenzip.composia.sample.Item
 import io.github.ravenzip.composia.state.TextFieldState
 
 class TextFieldScreenViewModel : ViewModel() {
@@ -43,6 +45,9 @@ class TextFieldScreenViewModel : ViewModel() {
             validators = listOf { x -> Validator.required(x) },
             coroutineScope = viewModelScope,
         )
+
+    val dropDownTextFieldControl =
+        CompositeControl(initialValue = Item.createEmptyModel(), coroutineScope = viewModelScope)
 
     val textFieldState = TextFieldState()
 
@@ -101,6 +106,14 @@ fun TextFieldScreen(
                 },
                 showTextLengthCounter = true,
                 label = { Text("OutlinedSinglenessTextField 2") },
+            )
+
+            val source = remember { Item.createItems() }
+
+            DropDownTextField(
+                control = viewModel.dropDownTextFieldControl,
+                source = source,
+                sourceItemToString = { x -> x.name },
             )
 
             SimpleButton(control = viewModel.simpleButtonControl, text = "Back to menu") {
