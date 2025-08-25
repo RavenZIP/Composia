@@ -35,7 +35,11 @@ abstract class AbstractValueControl<T>(
     }
 
     override fun reset() {
+        reset(initialValue)
+    }
+
+    fun reset(value: T) {
         super.reset()
-        _valueFlow.update { ValueWithTypeChanges.createResetChange(initialValue) }
+        _valueFlow.update { ValueWithTypeChanges.createResetChange(value) }
     }
 }

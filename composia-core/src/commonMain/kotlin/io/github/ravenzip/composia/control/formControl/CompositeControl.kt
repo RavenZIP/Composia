@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
 class CompositeControl<T>(
-    private val initialValue: T,
+    val initialValue: T,
     private val validators: List<(T) -> String?> = emptyList(),
     disabled: Boolean = false,
     coroutineScope: CoroutineScope,
