@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
 abstract class AbstractValueControl<T>(
-    private val initialValue: T,
+    open val initialValue: T,
     disabled: Boolean = false,
     coroutineScope: CoroutineScope,
 ) : AbstractStatusControl(disabled, coroutineScope) {

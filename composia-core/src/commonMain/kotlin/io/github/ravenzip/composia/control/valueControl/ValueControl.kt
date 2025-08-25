@@ -4,8 +4,11 @@ import io.github.ravenzip.composia.control.extension.stateInDefault
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.combine
 
-class ValueControl<T>(initialValue: T, disabled: Boolean = false, coroutineScope: CoroutineScope) :
-    AbstractValueControl<T>(initialValue, disabled, coroutineScope) {
+class ValueControl<T>(
+    override val initialValue: T,
+    disabled: Boolean = false,
+    coroutineScope: CoroutineScope,
+) : AbstractValueControl<T>(initialValue, disabled, coroutineScope) {
     val snapshotFlow =
         combine(valueWithTypeChangesFlow, statusFlow) { valueWithTypeChanges, status ->
                 ValueControlSnapshot.create(
