@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.shared.LoadSearchResultOnExpand
+import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
 import io.github.ravenzip.composia.components.textField.shared.UpdateSearchQueryOnControlOrExpandChange
 import io.github.ravenzip.composia.control.formControl.CompositeControl
 import io.github.ravenzip.composia.extension.update
@@ -185,6 +186,8 @@ fun <T> DropDownTextField(
     val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
     val isExpanded = initializedState.expandedState.valueFlow.collectAsState().value
     val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+
+    ResetReadonlyStateOnResetValue(control, initializedState)
 
     LoadSearchResultOnExpand(
         control = control,
