@@ -13,14 +13,14 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.extension.S14
 import io.github.ravenzip.composia.extension.S18Medium
-import io.github.ravenzip.composia.extension.S20
 import io.github.ravenzip.composia.style.IconStyle
 
 @Composable
 fun RichButton(
     onClick: () -> Unit = {},
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     label: @Composable () -> Unit,
     description: @Composable () -> Unit,
     icon: @Composable () -> Unit,
@@ -58,11 +58,11 @@ fun RichButton(
 @Composable
 fun RichButton(
     onClick: () -> Unit = {},
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     label: String,
     labelStyle: TextStyle = TextStyle.S18Medium,
     description: String,
-    descriptionStyle: TextStyle = TextStyle.S20,
+    descriptionStyle: TextStyle = TextStyle.S14,
     icon: Painter,
     iconDescription: String? = null,
     iconStyle: IconStyle = IconStyle.Default,
@@ -103,7 +103,7 @@ fun RichButton(
 @Composable
 fun RichButton(
     control: StatusControl,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     label: @Composable () -> Unit,
     description: @Composable () -> Unit,
     icon: @Composable () -> Unit,
@@ -130,11 +130,11 @@ fun RichButton(
 @Composable
 fun RichButton(
     control: StatusControl,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     label: String,
     labelStyle: TextStyle = TextStyle.S18Medium,
     description: String,
-    descriptionStyle: TextStyle = TextStyle.S20,
+    descriptionStyle: TextStyle = TextStyle.S14,
     icon: Painter,
     iconDescription: String? = null,
     iconStyle: IconStyle = IconStyle.Default,
