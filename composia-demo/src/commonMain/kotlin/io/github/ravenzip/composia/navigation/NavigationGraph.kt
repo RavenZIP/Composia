@@ -9,6 +9,7 @@ import io.github.ravenzip.composia.screen.ButtonScreen
 import io.github.ravenzip.composia.screen.MenuScreen
 import io.github.ravenzip.composia.screen.PagerScreen
 import io.github.ravenzip.composia.screen.TextFieldScreen
+import io.github.ravenzip.composia.screen.dropDownTextField.DropDownTextFieldScreen
 
 @Composable
 fun NavigationGraph(navController: NavHostController, padding: PaddingValues) {
@@ -35,7 +36,20 @@ fun NavigationGraph(navController: NavHostController, padding: PaddingValues) {
         }
 
         composable(route = NavigationPath.TEXT_FIELD) {
-            TextFieldScreen(padding = padding, backToMenu = { navController.popBackStack() })
+            TextFieldScreen(
+                padding = padding,
+                navigateToDropDownTextFieldScreen = {
+                    navController.navigate(NavigationPath.DROP_DOWN_TEXT_FIELD)
+                },
+                backToMenu = { navController.popBackStack() },
+            )
+        }
+
+        composable(route = NavigationPath.DROP_DOWN_TEXT_FIELD) {
+            DropDownTextFieldScreen(
+                padding = padding,
+                backToMenu = { navController.popBackStack() },
+            )
         }
     }
 }

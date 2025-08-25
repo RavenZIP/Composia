@@ -40,17 +40,18 @@ fun ButtonScreen(
 
             SimpleButton(
                 control = viewModel.simpleButtonControl,
+                onClick = {
+                    c.value += 1
+
+                    if (t) {
+                        viewModel.simpleButtonControl.disable()
+                    } else {
+                        viewModel.simpleButtonControl.enable()
+                    }
+                },
                 text = "Click me",
                 modifier = Modifier.fillMaxWidth(0.9f),
-            ) {
-                c.value += 1
-
-                if (t) {
-                    viewModel.simpleButtonControl.disable()
-                } else {
-                    viewModel.simpleButtonControl.enable()
-                }
-            }
+            )
 
             IconButton(
                 control = viewModel.iconButtonControl,
@@ -60,9 +61,11 @@ fun ButtonScreen(
             OutlinedTextField(value = c.value.toString(), onValueChange = {})
             OutlinedTextField(value = t.toString(), onValueChange = {})
 
-            SimpleButton(control = viewModel.simpleButtonControl, text = "Back to menu") {
-                backToMenu()
-            }
+            SimpleButton(
+                control = viewModel.simpleButtonControl,
+                onClick = { backToMenu() },
+                text = "Back to menu",
+            )
         }
     }
 }
