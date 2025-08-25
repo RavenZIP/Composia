@@ -78,8 +78,8 @@ fun OutlinedMultiLineTextField(
 
     TextFieldWrapper(control, initializedState) {
         val controlSnapshot = control.snapshotFlow.collectAsState().value
-        val isReadonly = initializedState.isReadonly.collectAsState().value
-        val isFocused = initializedState.isFocused.collectAsState().value
+        val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
+        val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
 
         OutlinedMultiLineTextField(
             value = controlSnapshot.value,
@@ -88,7 +88,7 @@ fun OutlinedMultiLineTextField(
             isEnabled = controlSnapshot.isEnabled,
             isReadonly = isReadonly,
             isFocused = isFocused,
-            onFocusChange = { x -> initializedState.setFocus(x.isFocused) },
+            onFocusChange = { x -> initializedState.focusedState.setValue(x.isFocused) },
             errorMessage = controlSnapshot.errorMessage,
             maxLength = maxLength,
             maxLines = maxLines,

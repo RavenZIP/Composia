@@ -28,7 +28,7 @@ internal fun <T> TextFieldWrapper(
     LaunchedEffect(control, state) {
         control.valueWithTypeChangesFlow
             .filter { x -> x.typeChange is ValueChangeType.Reset }
-            .collect { state.setReadonly(state.readonly) }
+            .collect { state.readonlyState.setValue(state.readonlyState.initialValue) }
     }
 
     content()
@@ -43,7 +43,7 @@ internal fun <T> TextFieldWrapper(
     LaunchedEffect(control, state) {
         control.valueWithTypeChangesFlow
             .filter { x -> x.typeChange is ValueChangeType.Reset }
-            .collect { state.setReadonly(state.readonly) }
+            .collect { state.readonlyState.setValue(state.readonlyState.initialValue) }
     }
 
     content()

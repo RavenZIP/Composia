@@ -70,8 +70,8 @@ fun TextFieldScreen(
                 viewModel.outlinedSinglenessTextFieldControl2.errorMessageFlow
                     .collectAsState()
                     .value
-            val isFocused = viewModel.textFieldState.isFocused.collectAsState().value
-            val isReadonly = viewModel.textFieldState.isReadonly.collectAsState().value
+            val isFocused = viewModel.textFieldState.focusedState.valueFlow.collectAsState().value
+            val isReadonly = viewModel.textFieldState.readonlyState.valueFlow.collectAsState().value
 
             SimpleTextField(control = viewModel.simpleTextFieldControl)
 
@@ -96,7 +96,9 @@ fun TextFieldScreen(
                 errorMessage = errorMessage,
                 isFocused = isFocused,
                 isReadonly = isReadonly,
-                onFocusChange = { x -> viewModel.textFieldState.setFocus(x.isFocused) },
+                onFocusChange = { x ->
+                    viewModel.textFieldState.focusedState.setValue(x.isFocused)
+                },
                 showTextLengthCounter = true,
                 label = { Text("OutlinedSinglenessTextField 2") },
             )

@@ -81,7 +81,7 @@ fun SimpleTextField(
 
     TextFieldWrapper(control, initializedState) {
         val controlSnapshot = control.snapshotFlow.collectAsState().value
-        val isReadonly = initializedState.isReadonly.collectAsState().value
+        val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
 
         SimpleTextField(
             value = controlSnapshot.value,

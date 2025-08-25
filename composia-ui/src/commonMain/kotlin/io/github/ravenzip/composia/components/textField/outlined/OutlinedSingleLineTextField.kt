@@ -82,8 +82,8 @@ fun OutlinedSingleLineTextField(
 
     TextFieldWrapper(control, initializedState) {
         val controlSnapshot = control.snapshotFlow.collectAsState().value
-        val isReadonly = initializedState.isReadonly.collectAsState().value
-        val isFocused = initializedState.isFocused.collectAsState().value
+        val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
+        val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
 
         OutlinedSingleLineTextField(
             value = controlSnapshot.value,
@@ -93,7 +93,9 @@ fun OutlinedSingleLineTextField(
             isInvalid = controlSnapshot.isInvalid,
             errorMessage = controlSnapshot.errorMessage,
             isFocused = isFocused,
-            onFocusChange = { focusState -> initializedState.setFocus(focusState.isFocused) },
+            onFocusChange = { focusState ->
+                initializedState.focusedState.setValue(focusState.isFocused)
+            },
             modifier = modifier,
             maxLength = maxLength,
             label = label,
