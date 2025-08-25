@@ -1,7 +1,6 @@
 package io.github.ravenzip.composia.screen
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -9,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.ravenzip.composia.components.button.SimpleButton
 
 @Composable
 fun MenuScreen(
@@ -17,21 +17,22 @@ fun MenuScreen(
     navigateToButtonScreen: () -> Unit,
     navigateToTextFieldScreen: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(padding),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Spacer(modifier = Modifier.height(5.dp))
+    Box(modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Spacer(modifier = Modifier.height(5.dp))
 
-        Text(text = "ComposiaDemo menu", fontSize = 25.sp, fontWeight = FontWeight.W500)
+            Text(text = "Composia menu", fontSize = 25.sp, fontWeight = FontWeight.W500)
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Button(onClick = { navigateToPagerScreen() }) { Text("Pager") }
+            SimpleButton(onClick = { navigateToPagerScreen() }, text = "Pager")
 
-        Button(onClick = { navigateToButtonScreen() }) { Text("Button") }
+            SimpleButton(onClick = { navigateToButtonScreen() }, text = "Button")
 
-        Button(onClick = { navigateToTextFieldScreen() }) { Text("TextField") }
+            SimpleButton(onClick = { navigateToTextFieldScreen() }, text = "TextField")
+        }
     }
 }

@@ -22,6 +22,7 @@ import io.github.ravenzip.composia.style.IconStyle
 
 @Composable
 fun IconButton(
+    onClick: () -> Unit = {},
     icon: Painter,
     iconDescription: String? = null,
     iconStyle: IconStyle = IconStyle.Default,
@@ -31,7 +32,6 @@ fun IconButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     interactionSource: MutableInteractionSource? = null,
     contentPadding: PaddingValues = PaddingValues(10.dp),
-    onClick: () -> Unit,
 ) {
     val color = iconStyle.color ?: colors.contentColor
     val containerColor = if (isEnabled) colors.containerColor else colors.disabledContainerColor
@@ -62,6 +62,7 @@ fun IconButton(
 @Composable
 fun IconButton(
     control: StatusControl,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     icon: Painter,
     iconDescription: String? = null,
@@ -69,7 +70,6 @@ fun IconButton(
     shape: Shape = RoundedCornerShape(10.dp),
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     interactionSource: MutableInteractionSource? = null,
-    onClick: () -> Unit,
 ) {
     val modifiedColors = colors.copy(contentColor = iconStyle.color ?: colors.contentColor)
     val isEnabled = control.isEnabledFlow.collectAsState().value
