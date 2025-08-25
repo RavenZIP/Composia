@@ -28,7 +28,7 @@ fun IconButton(
     iconStyle: IconStyle = IconStyle.Default,
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     interactionSource: MutableInteractionSource? = null,
     contentPadding: PaddingValues = PaddingValues(10.dp),
@@ -67,7 +67,7 @@ fun IconButton(
     icon: Painter,
     iconDescription: String? = null,
     iconStyle: IconStyle = IconStyle.Default,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     interactionSource: MutableInteractionSource? = null,
 ) {

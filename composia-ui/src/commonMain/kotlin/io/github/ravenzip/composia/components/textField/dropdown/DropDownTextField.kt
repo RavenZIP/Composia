@@ -46,7 +46,7 @@ fun <T> DropDownTextField(
     onExpandedChange: (Boolean) -> Unit,
     label: @Composable () -> Unit,
     dropDownIcon: @Composable () -> Unit,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
     Column(modifier = modifier) {
@@ -118,7 +118,7 @@ fun <T> DropDownTextField(
     collapsedIcon: Painter = painterResource(Res.drawable.i_angle_down),
     dropDownIconDescription: String? = null,
     dropDownIconStyle: IconStyle = IconStyle.S20,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
     DropDownTextField(
@@ -169,7 +169,7 @@ fun <T> DropDownTextField(
     sourceItemToString: (T) -> String,
     label: @Composable () -> Unit,
     dropDownIcon: @Composable () -> Unit,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
     val searchQuery = remember { mutableStateOf("") }
@@ -243,7 +243,7 @@ fun <T> DropDownTextField(
     collapsedIcon: Painter = painterResource(Res.drawable.i_angle_down),
     dropDownIconDescription: String? = null,
     dropDownIconStyle: IconStyle = IconStyle.S20,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
     val initializedState = state ?: remember { DropDownTextFieldState() }

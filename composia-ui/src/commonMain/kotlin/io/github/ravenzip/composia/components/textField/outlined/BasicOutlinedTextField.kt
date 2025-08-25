@@ -39,7 +39,7 @@ internal fun BasicOutlinedTextField(
     trailingIcon: (@Composable () -> Unit)? = null,
     isHiddenText: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     colors: TextFieldColors = TextFieldDefaults.colors(),
     showTextLengthCounter: Boolean = false,
 ) {

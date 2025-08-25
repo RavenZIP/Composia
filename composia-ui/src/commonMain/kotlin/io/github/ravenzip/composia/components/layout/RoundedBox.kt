@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 fun RoundedBox(
     modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colorScheme.secondary,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     content: @Composable BoxScope.() -> Unit,
 ) {
     Box(modifier = Modifier.clip(shape).background(backgroundColor).then(modifier)) { content() }

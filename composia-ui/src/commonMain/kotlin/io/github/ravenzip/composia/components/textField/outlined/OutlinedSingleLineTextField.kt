@@ -34,7 +34,7 @@ fun OutlinedSingleLineTextField(
     trailingIcon: (@Composable () -> Unit)? = null,
     isHiddenText: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     showTextLengthCounter: Boolean = false,
 ) {
@@ -74,7 +74,7 @@ fun OutlinedSingleLineTextField(
     trailingIcon: (@Composable () -> Unit)? = null,
     isHiddenText: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     showTextLengthCounter: Boolean = false,
 ) {

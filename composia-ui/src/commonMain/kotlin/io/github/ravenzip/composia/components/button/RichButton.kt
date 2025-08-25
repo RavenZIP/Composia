@@ -26,7 +26,7 @@ fun RichButton(
     icon: @Composable () -> Unit,
     isEnabled: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     contentPadding: PaddingValues = PaddingValues(18.dp),
 ) {
     Button(
@@ -68,7 +68,7 @@ fun RichButton(
     iconStyle: IconStyle = IconStyle.Default,
     isEnabled: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     contentPadding: PaddingValues = PaddingValues(18.dp),
 ) {
     val labelColor =
@@ -108,7 +108,7 @@ fun RichButton(
     description: @Composable () -> Unit,
     icon: @Composable () -> Unit,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     contentPadding: PaddingValues = PaddingValues(18.dp),
     onClick: () -> Unit = {},
 ) {
@@ -139,7 +139,7 @@ fun RichButton(
     iconDescription: String? = null,
     iconStyle: IconStyle = IconStyle.Default,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(10.dp),
+    shape: Shape = RoundedCornerShape(14.dp),
     contentPadding: PaddingValues = PaddingValues(18.dp),
     onClick: () -> Unit = {},
 ) {
