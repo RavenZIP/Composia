@@ -20,33 +20,24 @@ import kotlinx.coroutines.flow.filter
 
 /** Обертка над текстовыми полями, которые используют контролы напрямую */
 @Composable
-internal fun <T> TextFieldWrapper(
+internal fun <T> ResetReadonlyStateOnResetValue(
     control: CompositeControl<T>,
     state: TextFieldState,
-    content: @Composable () -> Unit,
 ) {
     LaunchedEffect(control, state) {
         control.valueWithTypeChangesFlow
             .filter { x -> x.typeChange is ValueChangeType.Reset }
             .collect { state.readonlyState.setValue(state.readonlyState.initialValue) }
     }
-
-    content()
 }
 
 @Composable
-internal fun <T> TextFieldWrapper(
-    control: ValueControl<T>,
-    state: TextFieldState,
-    content: @Composable () -> Unit,
-) {
+internal fun <T> ResetReadonlyStateOnResetValue(control: ValueControl<T>, state: TextFieldState) {
     LaunchedEffect(control, state) {
         control.valueWithTypeChangesFlow
             .filter { x -> x.typeChange is ValueChangeType.Reset }
             .collect { state.readonlyState.setValue(state.readonlyState.initialValue) }
     }
-
-    content()
 }
 
 /** Сообщение с описанием ошибки + счетчик введенных символов */

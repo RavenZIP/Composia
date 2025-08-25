@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.components.textField.shared.TextFieldWrapper
+import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
 import io.github.ravenzip.composia.control.formControl.CompositeControl
 import io.github.ravenzip.composia.state.TextFieldState
 
@@ -76,30 +76,30 @@ fun OutlinedMultiLineTextField(
 ) {
     val initializedState = state ?: remember { TextFieldState() }
 
-    TextFieldWrapper(control, initializedState) {
-        val controlSnapshot = control.snapshotFlow.collectAsState().value
-        val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
-        val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+    ResetReadonlyStateOnResetValue(control, initializedState)
 
-        OutlinedMultiLineTextField(
-            value = controlSnapshot.value,
-            onValueChange = { x -> control.setValue(x) },
-            modifier = modifier,
-            isEnabled = controlSnapshot.isEnabled,
-            isReadonly = isReadonly,
-            isFocused = isFocused,
-            onFocusChange = { x -> initializedState.focusedState.setValue(x.isFocused) },
-            errorMessage = controlSnapshot.errorMessage,
-            maxLength = maxLength,
-            maxLines = maxLines,
-            minLines = minLines,
-            label = label,
-            placeholder = placeholder,
-            isInvalid = controlSnapshot.isInvalid,
-            showTextLengthCounter = showTextLengthCounter,
-            keyboardOptions = keyboardOptions,
-            shape = shape,
-            colors = colors,
-        )
-    }
+    val controlSnapshot = control.snapshotFlow.collectAsState().value
+    val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
+    val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+
+    OutlinedMultiLineTextField(
+        value = controlSnapshot.value,
+        onValueChange = { x -> control.setValue(x) },
+        modifier = modifier,
+        isEnabled = controlSnapshot.isEnabled,
+        isReadonly = isReadonly,
+        isFocused = isFocused,
+        onFocusChange = { x -> initializedState.focusedState.setValue(x.isFocused) },
+        errorMessage = controlSnapshot.errorMessage,
+        maxLength = maxLength,
+        maxLines = maxLines,
+        minLines = minLines,
+        label = label,
+        placeholder = placeholder,
+        isInvalid = controlSnapshot.isInvalid,
+        showTextLengthCounter = showTextLengthCounter,
+        keyboardOptions = keyboardOptions,
+        shape = shape,
+        colors = colors,
+    )
 }

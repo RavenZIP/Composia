@@ -17,7 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.ravenzip.composia.components.textField.shared.TextFieldWrapper
+import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
 import io.github.ravenzip.composia.control.valueControl.ValueControl
 import io.github.ravenzip.composia.state.TextFieldState
 
@@ -79,23 +79,23 @@ fun SimpleTextField(
 ) {
     val initializedState = state ?: remember { TextFieldState() }
 
-    TextFieldWrapper(control, initializedState) {
-        val controlSnapshot = control.snapshotFlow.collectAsState().value
-        val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
+    ResetReadonlyStateOnResetValue(control, initializedState)
 
-        SimpleTextField(
-            value = controlSnapshot.value,
-            onValueChange = { value -> control.setValue(value) },
-            modifier = modifier,
-            isEnabled = controlSnapshot.isEnabled,
-            isReadonly = isReadonly,
-            placeholder = placeholder,
-            interactionSource = interactionSource,
-            colors = colors,
-            textStyle = textStyle,
-            showLine = showLine,
-        )
-    }
+    val controlSnapshot = control.snapshotFlow.collectAsState().value
+    val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
+
+    SimpleTextField(
+        value = controlSnapshot.value,
+        onValueChange = { value -> control.setValue(value) },
+        modifier = modifier,
+        isEnabled = controlSnapshot.isEnabled,
+        isReadonly = isReadonly,
+        placeholder = placeholder,
+        interactionSource = interactionSource,
+        colors = colors,
+        textStyle = textStyle,
+        showLine = showLine,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

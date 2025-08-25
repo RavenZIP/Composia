@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.components.textField.shared.TextFieldWrapper
+import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
 import io.github.ravenzip.composia.control.formControl.CompositeControl
 import io.github.ravenzip.composia.state.TextFieldState
 
@@ -80,33 +80,33 @@ fun OutlinedSingleLineTextField(
 ) {
     val initializedState = state ?: remember { TextFieldState() }
 
-    TextFieldWrapper(control, initializedState) {
-        val controlSnapshot = control.snapshotFlow.collectAsState().value
-        val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
-        val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+    ResetReadonlyStateOnResetValue(control, initializedState)
 
-        OutlinedSingleLineTextField(
-            value = controlSnapshot.value,
-            onValueChange = { x -> control.setValue(x) },
-            isEnabled = controlSnapshot.isEnabled,
-            isReadonly = isReadonly,
-            isInvalid = controlSnapshot.isInvalid,
-            errorMessage = controlSnapshot.errorMessage,
-            isFocused = isFocused,
-            onFocusChange = { focusState ->
-                initializedState.focusedState.setValue(focusState.isFocused)
-            },
-            modifier = modifier,
-            maxLength = maxLength,
-            label = label,
-            placeholder = placeholder,
-            leadingIcon = leadingIcon,
-            trailingIcon = trailingIcon,
-            isHiddenText = isHiddenText,
-            keyboardOptions = keyboardOptions,
-            showTextLengthCounter = showTextLengthCounter,
-            shape = shape,
-            colors = colors,
-        )
-    }
+    val controlSnapshot = control.snapshotFlow.collectAsState().value
+    val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
+    val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+
+    OutlinedSingleLineTextField(
+        value = controlSnapshot.value,
+        onValueChange = { x -> control.setValue(x) },
+        isEnabled = controlSnapshot.isEnabled,
+        isReadonly = isReadonly,
+        isInvalid = controlSnapshot.isInvalid,
+        errorMessage = controlSnapshot.errorMessage,
+        isFocused = isFocused,
+        onFocusChange = { focusState ->
+            initializedState.focusedState.setValue(focusState.isFocused)
+        },
+        modifier = modifier,
+        maxLength = maxLength,
+        label = label,
+        placeholder = placeholder,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        isHiddenText = isHiddenText,
+        keyboardOptions = keyboardOptions,
+        showTextLengthCounter = showTextLengthCounter,
+        shape = shape,
+        colors = colors,
+    )
 }
