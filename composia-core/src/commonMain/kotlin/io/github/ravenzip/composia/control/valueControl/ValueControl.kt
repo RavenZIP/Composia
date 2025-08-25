@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.combine
 
 class ValueControl<T>(
-    override val initialValue: T,
+    val initialValue: T,
     disabled: Boolean = false,
     coroutineScope: CoroutineScope,
 ) : AbstractValueControl<T>(initialValue, disabled, coroutineScope) {
