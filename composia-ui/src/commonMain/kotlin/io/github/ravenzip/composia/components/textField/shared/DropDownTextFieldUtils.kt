@@ -52,3 +52,5 @@ internal fun <T> UpdateSearchQueryOnControlOrExpandChange(
             .launchIn(this)
     }
 }
+
+internal fun calculateLabelColor() {}

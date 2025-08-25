@@ -2,7 +2,6 @@ package io.github.ravenzip.composia.components.textField.dropdown
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -12,10 +11,12 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
+import io.github.ravenzip.composia.components.icon.ConditionalIcon
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.shared.LoadSearchResultOnExpand
 import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
 import io.github.ravenzip.composia.components.textField.shared.UpdateSearchQueryOnControlOrExpandChange
+import io.github.ravenzip.composia.components.textField.shared.calculateLabelColor
 import io.github.ravenzip.composia.control.formControl.CompositeControl
 import io.github.ravenzip.composia.extension.update
 import io.github.ravenzip.composia.function.searchElementsByQuery
@@ -138,24 +139,20 @@ fun <T> DropDownTextField(
         label = { Text(text = label) },
         dropDownIcon = {
             val color =
-                if (isFocused) dropDownIconStyle.color ?: colors.focusedLabelColor
-                else colors.unfocusedLabelColor
+                colors.calculateLabelColor(
+                    customIndicatorColor = dropDownIconStyle.color,
+                    isInvalid = isInvalid,
+                    isFocused = isFocused,
+                )
 
-            if (isExpanded) {
-                Icon(
-                    painter = expandedIcon,
-                    contentDescription = dropDownIconDescription,
-                    modifier = Modifier.size(dropDownIconStyle.size.dp),
-                    tint = color,
-                )
-            } else {
-                Icon(
-                    painter = collapsedIcon,
-                    contentDescription = dropDownIconDescription,
-                    modifier = Modifier.size(dropDownIconStyle.size.dp),
-                    tint = color,
-                )
-            }
+            ConditionalIcon(
+                condition = isExpanded,
+                trueIcon = expandedIcon,
+                falseIcon = collapsedIcon,
+                iconDescription = dropDownIconDescription,
+                size = dropDownIconStyle.size.dp,
+                color = color,
+            )
         },
         shape = shape,
         colors = colors,
@@ -170,11 +167,8 @@ fun <T> DropDownTextField(
     state: DropDownTextFieldState? = null,
     source: SnapshotStateList<T>,
     sourceItemToString: (T) -> String,
-    label: String = "DropDownTextField",
-    collapsedIcon: Painter = painterResource(Res.drawable.i_angle_up),
-    expandedIcon: Painter = painterResource(Res.drawable.i_angle_down),
-    dropDownIconDescription: String? = null,
-    dropDownIconStyle: IconStyle = IconStyle.S20,
+    label: @Composable () -> Unit,
+    dropDownIcon: @Composable () -> Unit,
     shape: Shape = RoundedCornerShape(10.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
@@ -187,7 +181,7 @@ fun <T> DropDownTextField(
     val isExpanded = initializedState.expandedState.valueFlow.collectAsState().value
     val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
 
-    ResetReadonlyStateOnResetValue(control, initializedState)
+    ResetReadonlyStateOnResetValue(control = control, state = initializedState)
 
     LoadSearchResultOnExpand(
         control = control,
@@ -230,10 +224,58 @@ fun <T> DropDownTextField(
         isExpanded = isExpanded,
         onExpandedChange = { x -> initializedState.expandedState.setValue(x) },
         label = label,
-        collapsedIcon = collapsedIcon,
-        expandedIcon = expandedIcon,
-        dropDownIconDescription = dropDownIconDescription,
-        dropDownIconStyle = dropDownIconStyle,
+        dropDownIcon = dropDownIcon,
+        shape = shape,
+        colors = colors,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun <T> DropDownTextField(
+    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    control: CompositeControl<T>,
+    state: DropDownTextFieldState? = null,
+    source: SnapshotStateList<T>,
+    sourceItemToString: (T) -> String,
+    label: String = "DropDownTextField",
+    collapsedIcon: Painter = painterResource(Res.drawable.i_angle_up),
+    expandedIcon: Painter = painterResource(Res.drawable.i_angle_down),
+    dropDownIconDescription: String? = null,
+    dropDownIconStyle: IconStyle = IconStyle.S20,
+    shape: Shape = RoundedCornerShape(10.dp),
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+) {
+    val initializedState = state ?: remember { DropDownTextFieldState() }
+
+    DropDownTextField(
+        modifier = modifier,
+        control = control,
+        state = initializedState,
+        source = source,
+        sourceItemToString = sourceItemToString,
+        label = { Text(label) },
+        dropDownIcon = {
+            val isInvalid = control.isInvalidFlow.collectAsState().value
+            val isExpanded = initializedState.expandedState.valueFlow.collectAsState().value
+            val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+
+            val color =
+                colors.calculateLabelColor(
+                    customIndicatorColor = dropDownIconStyle.color,
+                    isInvalid = isInvalid,
+                    isFocused = isFocused,
+                )
+
+            ConditionalIcon(
+                condition = isExpanded,
+                trueIcon = expandedIcon,
+                falseIcon = collapsedIcon,
+                iconDescription = dropDownIconDescription,
+                size = dropDownIconStyle.size.dp,
+                color = color,
+            )
+        },
         shape = shape,
         colors = colors,
     )

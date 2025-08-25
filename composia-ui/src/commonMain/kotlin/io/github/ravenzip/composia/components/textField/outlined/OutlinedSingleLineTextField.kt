@@ -80,7 +80,7 @@ fun OutlinedSingleLineTextField(
 ) {
     val initializedState = state ?: remember { TextFieldState() }
 
-    ResetReadonlyStateOnResetValue(control, initializedState)
+    ResetReadonlyStateOnResetValue(control = control, state = initializedState)
 
     val controlSnapshot = control.snapshotFlow.collectAsState().value
     val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value

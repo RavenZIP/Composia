@@ -67,7 +67,7 @@ internal fun ErrorMessageWithSymbolsCounter(
                     current = currentLength,
                     max = maxLength,
                     textAlign = TextAlign.End,
-                    color = colors.calculateLabelColor(isInvalid, isFocused),
+                    color = colors.calculateLabelColor(isInvalid = isInvalid, isFocused = isFocused),
                 )
             }
         }
@@ -87,10 +87,14 @@ internal fun ErrorMessage(
     }
 }
 
-internal fun TextFieldColors.calculateLabelColor(isError: Boolean, isFocused: Boolean): Color =
+internal fun TextFieldColors.calculateLabelColor(
+    customIndicatorColor: Color? = null,
+    isInvalid: Boolean,
+    isFocused: Boolean,
+): Color =
     when {
-        isError -> this.errorLabelColor
-        isFocused -> this.focusedIndicatorColor
+        isInvalid -> this.errorLabelColor
+        isFocused -> customIndicatorColor ?: this.focusedIndicatorColor
         else -> this.unfocusedIndicatorColor
     }
 
