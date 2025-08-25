@@ -3,7 +3,7 @@ package io.github.ravenzip.composia.components.textField.shared
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import io.github.ravenzip.composia.control.formControl.CompositeControl
+import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.extension.update
 import io.github.ravenzip.composia.function.searchElementsByQuery
 import io.github.ravenzip.composia.state.DropDownTextFieldState

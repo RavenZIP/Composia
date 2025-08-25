@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.formControl.CompositeControl
+import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 
 @Composable
 fun <T, K> RadioGroup(

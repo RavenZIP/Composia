@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.control.formControl
+package io.github.ravenzip.composia.control.compositeControl
 
 import io.github.ravenzip.composia.control.extension.stateInDefault
 import io.github.ravenzip.composia.control.shared.ControlStatus

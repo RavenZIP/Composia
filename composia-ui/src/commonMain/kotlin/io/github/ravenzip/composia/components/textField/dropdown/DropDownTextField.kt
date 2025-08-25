@@ -17,7 +17,7 @@ import io.github.ravenzip.composia.components.textField.shared.LoadSearchResultO
 import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
 import io.github.ravenzip.composia.components.textField.shared.UpdateSearchQueryOnControlOrExpandChange
 import io.github.ravenzip.composia.components.textField.shared.calculateLabelColor
-import io.github.ravenzip.composia.control.formControl.CompositeControl
+import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.extension.update
 import io.github.ravenzip.composia.function.searchElementsByQuery
 import io.github.ravenzip.composia.state.DropDownTextFieldState

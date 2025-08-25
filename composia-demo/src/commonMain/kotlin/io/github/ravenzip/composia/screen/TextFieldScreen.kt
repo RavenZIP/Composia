@@ -15,7 +15,7 @@ import io.github.ravenzip.composia.components.textField.base.SingleLineTextField
 import io.github.ravenzip.composia.components.textField.dropdown.DropDownTextField
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.simple.SimpleTextField
-import io.github.ravenzip.composia.control.formControl.CompositeControl
+import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.control.shared.Validator
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.control.valueControl.ValueControl

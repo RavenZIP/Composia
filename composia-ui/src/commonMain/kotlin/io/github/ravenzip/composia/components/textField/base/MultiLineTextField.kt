@@ -13,7 +13,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
-import io.github.ravenzip.composia.control.formControl.CompositeControl
+import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.state.TextFieldState
 
 @Composable
