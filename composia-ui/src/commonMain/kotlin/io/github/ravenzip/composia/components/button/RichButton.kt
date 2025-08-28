@@ -89,7 +89,7 @@ fun RichButton(
             Icon(
                 painter = icon,
                 contentDescription = iconDescription,
-                modifier = Modifier.size(iconStyle.size.dp),
+                modifier = Modifier.size(iconStyle.size),
                 tint = iconStyle.color ?: colors.contentColor,
             )
         },

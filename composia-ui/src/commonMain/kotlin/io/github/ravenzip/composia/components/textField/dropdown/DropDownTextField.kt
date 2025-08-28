@@ -147,7 +147,7 @@ fun <T> DropDownTextField(
                 trueIcon = expandedIcon,
                 falseIcon = collapsedIcon,
                 iconDescription = dropDownIconDescription,
-                size = dropDownIconStyle.size.dp,
+                size = dropDownIconStyle.size,
                 color = color,
             )
         },
@@ -298,13 +298,13 @@ fun <T> DropDownTextField(
                 trueIcon = expandedIcon,
                 falseIcon = collapsedIcon,
                 iconDescription = dropDownIconDescription,
-                size = dropDownIconStyle.size.dp,
+                size = dropDownIconStyle.size,
                 color = color,
             )
         },
         dropDownIconWithProgressIndicator = { generatedDropDownIcon, isLoading ->
             val containerWidth =
-                dropDownIconStyle.size.dp +
+                dropDownIconStyle.size +
                     progressIndicatorStyle.size +
                     progressIndicatorStyle.strokeWith * 2 +
                     trailingContainerSpacing * 2

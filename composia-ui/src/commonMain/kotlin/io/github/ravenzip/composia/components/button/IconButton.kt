@@ -53,7 +53,7 @@ fun IconButton(
         Icon(
             painter = icon,
             contentDescription = iconDescription,
-            modifier = Modifier.size(iconStyle.size.dp),
+            modifier = Modifier.size(iconStyle.size),
             tint = contentColor,
         )
     }
