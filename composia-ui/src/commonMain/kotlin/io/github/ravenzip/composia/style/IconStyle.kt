@@ -47,7 +47,7 @@ class IconStyle(val size: Int = 25, val color: Color? = null) {
         /**
          * [S20]
          *
-         * [size] - 22
+         * [size] - 20
          *
          * [color] - null
          */

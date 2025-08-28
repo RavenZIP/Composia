@@ -1,7 +1,6 @@
 package io.github.ravenzip.composia.components.textField.dropdown
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -10,18 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.icon.ConditionalIcon
+import io.github.ravenzip.composia.components.model.DataSource
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
-import io.github.ravenzip.composia.components.textField.shared.LoadSearchResultOnExpand
-import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
-import io.github.ravenzip.composia.components.textField.shared.UpdateSearchQueryOnControlOrExpandChange
-import io.github.ravenzip.composia.components.textField.shared.calculateLabelColor
+import io.github.ravenzip.composia.components.textField.shared.*
 import io.github.ravenzip.composia.control.compositeControl.CompositeControl
-import io.github.ravenzip.composia.extension.update
-import io.github.ravenzip.composia.function.searchElementsByQuery
 import io.github.ravenzip.composia.state.DropDownTextFieldState
 import io.github.ravenzip.composia.style.IconStyle
+import io.github.ravenzip.composia.style.ProgressIndicatorStyle
 import io.github.ravenzip.composia_ui.composia_ui.generated.resources.Res
 import io.github.ravenzip.composia_ui.composia_ui.generated.resources.i_angle_down
 import io.github.ravenzip.composia_ui.composia_ui.generated.resources.i_angle_up
@@ -66,8 +63,8 @@ fun <T> DropDownTextField(
                 errorMessage = errorMessage,
                 isFocused = isFocused,
                 onFocusChange = onFocusChange,
-                label = { label() },
-                trailingIcon = { dropDownIcon() },
+                label = label,
+                trailingIcon = dropDownIcon,
                 shape = shape,
                 colors = colors,
             )
@@ -165,17 +162,23 @@ fun <T> DropDownTextField(
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     control: CompositeControl<T>,
     state: DropDownTextFieldState? = null,
-    source: SnapshotStateList<T>,
+    source: DataSource<T>,
     sourceItemToString: (T) -> String,
     label: @Composable () -> Unit,
     dropDownIcon: @Composable () -> Unit,
+    dropDownIconWithProgressIndicator:
+        (@Composable
+        (generatedDropDownIcon: @Composable () -> Unit, isLoading: Boolean) -> Unit)? =
+        null,
     shape: Shape = RoundedCornerShape(14.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
     val searchQuery = remember { mutableStateOf("") }
     val results = remember { mutableStateListOf<T>() }
     val initializedState = state ?: remember { DropDownTextFieldState() }
+    val isLoading = remember { mutableStateOf(false) }
 
+    val searchQueryFlow = remember { snapshotFlow { searchQuery.value } }
     val controlSnapshot = control.snapshotFlow.collectAsState().value
     val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
     val isExpanded = initializedState.expandedState.valueFlow.collectAsState().value
@@ -183,20 +186,39 @@ fun <T> DropDownTextField(
 
     ResetReadonlyStateOnResetValue(control = control, state = initializedState)
 
-    LoadSearchResultOnExpand(
-        control = control,
-        state = initializedState,
-        source = source,
-        sourceItemToString = sourceItemToString,
-        searchQuery = searchQuery.value,
-        results = results,
-    )
+    when (source) {
+        is DataSource.Predefined -> {
+            LoadSearchResult(
+                state = initializedState,
+                source = source,
+                sourceItemToString = sourceItemToString,
+                searchQueryFlow = searchQueryFlow,
+                results = results,
+            )
+        }
+
+        is DataSource.ByQuery -> {
+            LoadSearchResult(
+                state = initializedState,
+                source = source,
+                searchQueryFlow = searchQueryFlow,
+                changeIsLoadingTo = { x -> isLoading.value = x },
+                results = results,
+            )
+        }
+    }
 
     UpdateSearchQueryOnControlOrExpandChange(
         control = control,
         state = initializedState,
         sourceItemToString = sourceItemToString,
         onSearchQueryChange = { x -> searchQuery.value = x },
+    )
+
+    TurnOffProgressIndicatorStateOnSourceChange(
+        source = source,
+        isLoading = isLoading.value,
+        turnOffProgressIndicator = { isLoading.value = false },
     )
 
     DropDownTextField(
@@ -210,8 +232,6 @@ fun <T> DropDownTextField(
             control.setValue(control.initialValue)
             searchQuery.value = query
             initializedState.expandedState.expand()
-
-            results.update(searchElementsByQuery(source, sourceItemToString, searchQuery.value))
         },
         searchResults = results,
         sourceItemToString = sourceItemToString,
@@ -224,7 +244,11 @@ fun <T> DropDownTextField(
         isExpanded = isExpanded,
         onExpandedChange = { x -> initializedState.expandedState.setValue(x) },
         label = label,
-        dropDownIcon = dropDownIcon,
+        dropDownIcon = {
+            if (source is DataSource.ByQuery && dropDownIconWithProgressIndicator != null)
+                dropDownIconWithProgressIndicator(dropDownIcon, isLoading.value)
+            else dropDownIcon()
+        },
         shape = shape,
         colors = colors,
     )
@@ -236,13 +260,15 @@ fun <T> DropDownTextField(
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     control: CompositeControl<T>,
     state: DropDownTextFieldState? = null,
-    source: SnapshotStateList<T>,
+    source: DataSource<T>,
     sourceItemToString: (T) -> String,
     label: String = "DropDownTextField",
     expandedIcon: Painter = painterResource(Res.drawable.i_angle_up),
     collapsedIcon: Painter = painterResource(Res.drawable.i_angle_down),
     dropDownIconDescription: String? = null,
     dropDownIconStyle: IconStyle = IconStyle.S20,
+    progressIndicatorStyle: ProgressIndicatorStyle = ProgressIndicatorStyle.Default,
+    trailingContainerSpacing: Dp = 10.dp,
     shape: Shape = RoundedCornerShape(14.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
@@ -275,6 +301,29 @@ fun <T> DropDownTextField(
                 size = dropDownIconStyle.size.dp,
                 color = color,
             )
+        },
+        dropDownIconWithProgressIndicator = { generatedDropDownIcon, isLoading ->
+            val containerWidth =
+                dropDownIconStyle.size.dp +
+                    progressIndicatorStyle.size +
+                    progressIndicatorStyle.strokeWith * 2 +
+                    trailingContainerSpacing * 2
+
+            FlowRow(
+                modifier = Modifier.width(containerWidth).padding(end = 14.dp),
+                horizontalArrangement = Arrangement.End,
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(progressIndicatorStyle.size),
+                        strokeWidth = progressIndicatorStyle.strokeWith,
+                    )
+
+                    Spacer(modifier = Modifier.width(trailingContainerSpacing))
+                }
+
+                generatedDropDownIcon()
+            }
         },
         shape = shape,
         colors = colors,

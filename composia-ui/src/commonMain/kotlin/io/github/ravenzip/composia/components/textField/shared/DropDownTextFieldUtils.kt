@@ -3,31 +3,68 @@ package io.github.ravenzip.composia.components.textField.shared
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import io.github.ravenzip.composia.components.model.DataSource
 import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.extension.update
 import io.github.ravenzip.composia.function.searchElementsByQuery
 import io.github.ravenzip.composia.state.DropDownTextFieldState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 
+@OptIn(FlowPreview::class)
+private fun combineExpandedStateWithSearchQuery(
+    expandedStateFlow: Flow<Boolean>,
+    searchQueryFlow: Flow<String>,
+): Flow<Pair<Boolean, String>> {
+    return combine(expandedStateFlow, searchQueryFlow.debounce { 500 }.distinctUntilChanged()) {
+            expanded,
+            searchQuery ->
+            Pair(expanded, searchQuery)
+        }
+        .filter { x -> x.first }
+}
+
 @Composable
-internal fun <T> LoadSearchResultOnExpand(
-    control: CompositeControl<T>,
+internal fun <T> LoadSearchResult(
     state: DropDownTextFieldState,
-    source: SnapshotStateList<T>,
+    source: DataSource.Predefined<T>,
     sourceItemToString: (T) -> String,
-    searchQuery: String,
+    searchQueryFlow: Flow<String>,
     results: SnapshotStateList<T>,
 ) {
-    LaunchedEffect(control, state, searchQuery) {
-        state.expandedState.valueFlow
-            .filter { expanded -> expanded }
-            .onEach {
-                if (searchQuery.isEmpty()) {
-                    results.update(source)
-                } else {
-                    results.update(searchElementsByQuery(source, sourceItemToString, searchQuery))
-                }
+    LaunchedEffect(state) {
+        combineExpandedStateWithSearchQuery(state.expandedState.valueFlow, searchQueryFlow)
+            .map { x ->
+                if (x.second.isEmpty()) source.items
+                else searchElementsByQuery(source.items, sourceItemToString, x.second)
             }
+            .onEach { items -> results.update(items) }
+            .launchIn(this)
+    }
+}
+
+@OptIn(ExperimentalCoroutinesApi::class)
+@Composable
+internal fun <T> LoadSearchResult(
+    state: DropDownTextFieldState,
+    source: DataSource.ByQuery<T>,
+    searchQueryFlow: Flow<String>,
+    changeIsLoadingTo: (Boolean) -> Unit,
+    results: SnapshotStateList<T>,
+) {
+    LaunchedEffect(state) {
+        combineExpandedStateWithSearchQuery(state.expandedState.valueFlow, searchQueryFlow)
+            .onEach {
+                changeIsLoadingTo(true)
+                results.clear()
+            }
+            .flatMapLatest { x -> source.query(x.second) }
+            .onEach { response ->
+                results.addAll(response)
+                changeIsLoadingTo(false)
+            }
+            .onEach { print("expand results is $results") }
             .launchIn(this)
     }
 }
@@ -51,4 +88,13 @@ internal fun <T> UpdateSearchQueryOnControlOrExpandChange(
             .onEach { value -> onSearchQueryChange(value) }
             .launchIn(this)
     }
+}
+
+@Composable
+internal fun <T> TurnOffProgressIndicatorStateOnSourceChange(
+    source: DataSource<T>,
+    isLoading: Boolean,
+    turnOffProgressIndicator: () -> Unit,
+) {
+    LaunchedEffect(source) { if (isLoading) turnOffProgressIndicator() }
 }

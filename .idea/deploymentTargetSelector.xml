@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="composia-android">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-08-16T16:43:10.397640400Z">
+        <DropdownSelection timestamp="2025-08-28T07:46:58.417212500Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Alexander\.android\avd\Pixel_9.avd" />
