@@ -1,7 +1,6 @@
 package io.github.ravenzip.composia.components.overlay
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import io.github.ravenzip.composia.extension.S16Medium
 import io.github.ravenzip.composia.extension.withoutLetterSpacing
+import io.github.ravenzip.composia.style.DefaultComponentShape
 
 @Composable
 fun Spinner(
@@ -20,7 +20,7 @@ fun Spinner(
     textStyle: TextStyle = TextStyle.S16Medium.withoutLetterSpacing(),
     indicatorSize: Dp = 50.dp,
     containerColors: CardColors = CardDefaults.cardColors(),
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
 ) {
     Dialog(onDismissRequest = {}) {
         Card(shape = shape, colors = containerColors) {

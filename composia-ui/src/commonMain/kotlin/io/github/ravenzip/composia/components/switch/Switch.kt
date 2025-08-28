@@ -2,7 +2,6 @@ package io.github.ravenzip.composia.components.switch
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.extension.S14
 import io.github.ravenzip.composia.extension.S16Medium
+import io.github.ravenzip.composia.style.DefaultComponentShape
 
 @Composable
 fun Switch(
@@ -26,7 +26,7 @@ fun Switch(
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
     Row(
-        modifier = modifier.clip(RoundedCornerShape(10.dp)).clickable { onClick() }.padding(15.dp),
+        modifier = modifier.clip(DefaultComponentShape).clickable { onClick() }.padding(15.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(text = text, style = textStyle)
@@ -77,7 +77,7 @@ fun Switch(
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
     Row(
-        modifier = modifier.clip(RoundedCornerShape(10.dp)).clickable { onClick() }.padding(15.dp),
+        modifier = modifier.clip(DefaultComponentShape).clickable { onClick() }.padding(15.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column {

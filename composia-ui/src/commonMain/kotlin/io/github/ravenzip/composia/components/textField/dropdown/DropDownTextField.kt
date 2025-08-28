@@ -1,7 +1,7 @@
 package io.github.ravenzip.composia.components.textField.dropdown
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -17,6 +17,7 @@ import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleL
 import io.github.ravenzip.composia.components.textField.shared.*
 import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.state.DropDownTextFieldState
+import io.github.ravenzip.composia.style.DefaultComponentShape
 import io.github.ravenzip.composia.style.IconStyle
 import io.github.ravenzip.composia.style.ProgressIndicatorStyle
 import io.github.ravenzip.composia_ui.composia_ui.generated.resources.Res
@@ -43,7 +44,7 @@ fun <T> DropDownTextField(
     onExpandedChange: (Boolean) -> Unit,
     label: @Composable () -> Unit,
     dropDownIcon: @Composable () -> Unit,
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
     Column(modifier = modifier) {
@@ -72,6 +73,13 @@ fun <T> DropDownTextField(
             ExposedDropdownMenu(
                 expanded = isExpanded,
                 onDismissRequest = { onExpandedChange(false) },
+                modifier =
+                    Modifier.border(
+                        2.dp,
+                        color = colors.focusedLabelColor,
+                        shape = DefaultComponentShape,
+                    ),
+                shape = DefaultComponentShape,
                 containerColor = MaterialTheme.colorScheme.surface,
             ) {
                 if (searchResults.isNotEmpty()) {
@@ -115,7 +123,7 @@ fun <T> DropDownTextField(
     collapsedIcon: Painter = painterResource(Res.drawable.i_angle_down),
     dropDownIconDescription: String? = null,
     dropDownIconStyle: IconStyle = IconStyle.S20,
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
     DropDownTextField(
@@ -170,7 +178,7 @@ fun <T> DropDownTextField(
         (@Composable
         (generatedDropDownIcon: @Composable () -> Unit, isLoading: Boolean) -> Unit)? =
         null,
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
     val searchQuery = remember { mutableStateOf("") }
@@ -269,7 +277,7 @@ fun <T> DropDownTextField(
     dropDownIconStyle: IconStyle = IconStyle.S20,
     progressIndicatorStyle: ProgressIndicatorStyle = ProgressIndicatorStyle.Default,
     trailingContainerSpacing: Dp = 10.dp,
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
     val initializedState = state ?: remember { DropDownTextFieldState() }

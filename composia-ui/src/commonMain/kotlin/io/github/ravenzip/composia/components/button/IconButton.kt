@@ -5,7 +5,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -18,6 +17,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.layout.RoundedBox
 import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.style.DefaultComponentShape
 import io.github.ravenzip.composia.style.IconStyle
 
 @Composable
@@ -28,7 +28,7 @@ fun IconButton(
     iconStyle: IconStyle = IconStyle.Default,
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     interactionSource: MutableInteractionSource? = null,
     contentPadding: PaddingValues = PaddingValues(10.dp),
@@ -67,7 +67,7 @@ fun IconButton(
     icon: Painter,
     iconDescription: String? = null,
     iconStyle: IconStyle = IconStyle.Default,
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     interactionSource: MutableInteractionSource? = null,
 ) {

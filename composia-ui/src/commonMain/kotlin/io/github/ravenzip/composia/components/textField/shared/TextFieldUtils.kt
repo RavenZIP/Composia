@@ -2,14 +2,12 @@ package io.github.ravenzip.composia.components.textField.shared
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.text.CounterLabel
 import io.github.ravenzip.composia.components.text.HintText
 import io.github.ravenzip.composia.control.compositeControl.CompositeControl
@@ -55,7 +53,7 @@ internal fun ErrorMessageWithSymbolsCounter(
     if (isInvalid || showTextLengthCounter) {
         Row(horizontalArrangement = Arrangement.SpaceBetween) {
             ErrorMessage(
-                modifier = Modifier.weight(1f).padding(start = 10.dp),
+                modifier = Modifier.weight(1f),
                 isInvalid = isInvalid,
                 errorMessage = errorMessage,
                 color = colors.errorLabelColor,
@@ -63,7 +61,7 @@ internal fun ErrorMessageWithSymbolsCounter(
 
             if (showTextLengthCounter) {
                 CounterLabel(
-                    modifier = Modifier.weight(1f).padding(end = 10.dp),
+                    modifier = Modifier.weight(1f),
                     current = currentLength,
                     max = maxLength,
                     textAlign = TextAlign.End,

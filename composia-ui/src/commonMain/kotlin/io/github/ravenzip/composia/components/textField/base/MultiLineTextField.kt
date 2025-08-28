@@ -1,7 +1,6 @@
 package io.github.ravenzip.composia.components.textField.base
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
@@ -11,10 +10,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
 import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.state.TextFieldState
+import io.github.ravenzip.composia.style.DefaultComponentShape
 
 @Composable
 fun MultiLineTextField(
@@ -33,7 +32,7 @@ fun MultiLineTextField(
     label: (@Composable () -> Unit)? = null,
     placeholder: (@Composable () -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = TextFieldDefaults.colors(),
     showTextLengthCounter: Boolean = false,
 ) {
@@ -70,7 +69,7 @@ fun MultiLineTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     maxLines: Int = Int.MAX_VALUE,
     minLines: Int = 1,
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = TextFieldDefaults.colors(),
     showTextLengthCounter: Boolean = false,
 ) {

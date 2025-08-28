@@ -2,7 +2,6 @@ package io.github.ravenzip.composia.components.textField.outlined
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextFieldColors
@@ -14,9 +13,9 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.textField.shared.ErrorMessageWithSymbolsCounter
 import io.github.ravenzip.composia.components.textField.shared.acceptInput
+import io.github.ravenzip.composia.style.DefaultComponentShape
 
 @Composable
 internal fun BasicOutlinedTextField(
@@ -39,7 +38,7 @@ internal fun BasicOutlinedTextField(
     trailingIcon: (@Composable () -> Unit)? = null,
     isHiddenText: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = TextFieldDefaults.colors(),
     showTextLengthCounter: Boolean = false,
 ) {
@@ -60,21 +59,22 @@ internal fun BasicOutlinedTextField(
             placeholder = placeholder,
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon,
+            supportingText = {
+                ErrorMessageWithSymbolsCounter(
+                    errorMessage = errorMessage,
+                    isFocused = isFocused,
+                    showTextLengthCounter = showTextLengthCounter,
+                    maxLength = maxLength,
+                    currentLength = value.length,
+                    colors = colors,
+                )
+            },
             isError = isInvalid,
             visualTransformation =
                 if (isHiddenText) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = keyboardOptions,
             singleLine = singleLine,
             shape = shape,
-            colors = colors,
-        )
-
-        ErrorMessageWithSymbolsCounter(
-            errorMessage = errorMessage,
-            isFocused = isFocused,
-            showTextLengthCounter = showTextLengthCounter,
-            maxLength = maxLength,
-            currentLength = value.length,
             colors = colors,
         )
     }

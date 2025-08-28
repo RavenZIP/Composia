@@ -1,7 +1,6 @@
 package io.github.ravenzip.composia.components.button
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -15,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.extension.S14
 import io.github.ravenzip.composia.extension.S18Medium
+import io.github.ravenzip.composia.style.DefaultComponentShape
 import io.github.ravenzip.composia.style.IconStyle
 
 @Composable
@@ -26,7 +26,7 @@ fun RichButton(
     icon: @Composable () -> Unit,
     isEnabled: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     contentPadding: PaddingValues = PaddingValues(18.dp),
 ) {
     Button(
@@ -68,7 +68,7 @@ fun RichButton(
     iconStyle: IconStyle = IconStyle.Default,
     isEnabled: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     contentPadding: PaddingValues = PaddingValues(18.dp),
 ) {
     val labelColor =
@@ -108,7 +108,7 @@ fun RichButton(
     description: @Composable () -> Unit,
     icon: @Composable () -> Unit,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     contentPadding: PaddingValues = PaddingValues(18.dp),
     onClick: () -> Unit = {},
 ) {
@@ -139,7 +139,7 @@ fun RichButton(
     iconDescription: String? = null,
     iconStyle: IconStyle = IconStyle.Default,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     contentPadding: PaddingValues = PaddingValues(18.dp),
     onClick: () -> Unit = {},
 ) {

@@ -1,7 +1,6 @@
 package io.github.ravenzip.composia.components.button
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -14,6 +13,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.extension.S16Medium
+import io.github.ravenzip.composia.style.DefaultComponentShape
 
 @Composable
 fun SimpleButton(
@@ -23,7 +23,7 @@ fun SimpleButton(
     textStyle: TextStyle = TextStyle.S16Medium,
     isEnabled: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     contentPadding: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
 ) {
     Button(
@@ -48,7 +48,7 @@ fun SimpleButton(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle.S16Medium,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     contentPadding: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
 ) {
     val isEnabled = control.isEnabledFlow.collectAsState().value

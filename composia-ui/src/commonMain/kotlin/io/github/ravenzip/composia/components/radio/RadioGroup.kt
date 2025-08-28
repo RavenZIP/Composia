@@ -2,7 +2,6 @@ package io.github.ravenzip.composia.components.radio
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -13,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.control.compositeControl.CompositeControl
+import io.github.ravenzip.composia.style.DefaultComponentShape
 
 @Composable
 fun <T, K> RadioGroup(
@@ -33,7 +33,7 @@ fun <T, K> RadioGroup(
             Row(
                 modifier =
                     Modifier.fillMaxWidth()
-                        .clip(RoundedCornerShape(10.dp))
+                        .clip(DefaultComponentShape)
                         .clickable { control.setValue(item) }
                         .padding(top = 5.dp, bottom = 5.dp),
                 verticalAlignment = Alignment.CenterVertically,

@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -22,6 +21,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.extension.S18Medium
+import io.github.ravenzip.composia.style.DefaultComponentShape
 import io.github.ravenzip.composia.style.IconStyle
 
 @Composable
@@ -33,7 +33,7 @@ fun ColIconButton(
     iconStyle: IconStyle = IconStyle.Default,
     isEnabled: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     interactionSource: MutableInteractionSource? = null,
     contentPadding: PaddingValues = PaddingValues(10.dp),
     onClick: () -> Unit = {},
@@ -79,7 +79,7 @@ fun ColIconButton(
     iconDescription: String? = null,
     iconStyle: IconStyle = IconStyle.Default,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    shape: Shape = RoundedCornerShape(14.dp),
+    shape: Shape = DefaultComponentShape,
     interactionSource: MutableInteractionSource? = null,
     contentPadding: PaddingValues = PaddingValues(10.dp),
     onClick: () -> Unit = {},

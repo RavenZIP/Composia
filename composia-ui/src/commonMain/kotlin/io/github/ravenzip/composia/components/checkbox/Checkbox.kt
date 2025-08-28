@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.extension.S18
+import io.github.ravenzip.composia.style.DefaultComponentShape
 
 @Composable
 fun Checkbox(
@@ -32,7 +32,7 @@ fun Checkbox(
     Row(
         modifier =
             modifier
-                .clip(RoundedCornerShape(10.dp))
+                .clip(DefaultComponentShape)
                 .clickable { onClick() }
                 .padding(top = 5.dp, bottom = 5.dp),
         verticalAlignment = Alignment.CenterVertically,
