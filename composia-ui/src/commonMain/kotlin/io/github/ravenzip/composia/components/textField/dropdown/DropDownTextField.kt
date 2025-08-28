@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.icon.ConditionalIcon
@@ -44,6 +45,8 @@ fun <T> DropDownTextField(
     onExpandedChange: (Boolean) -> Unit,
     label: @Composable () -> Unit,
     dropDownIcon: @Composable () -> Unit,
+    dropDownMenuItem: @Composable (String) -> Unit = { text -> Text(text = text) },
+    dropDownMenuPlaceholder: @Composable () -> Unit = { Text(text = "Нет результатов") },
     shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
@@ -85,13 +88,13 @@ fun <T> DropDownTextField(
                 if (searchResults.isNotEmpty()) {
                     searchResults.forEach { item ->
                         DropdownMenuItem(
-                            text = { Text(text = sourceItemToString(item)) },
+                            text = { dropDownMenuItem(sourceItemToString(item)) },
                             onClick = { onSelectItem(item) },
                         )
                     }
                 } else {
                     DropdownMenuItem(
-                        text = { Text(text = "Нет результатов") },
+                        text = { dropDownMenuPlaceholder() },
                         onClick = {},
                         enabled = false,
                     )
@@ -123,6 +126,9 @@ fun <T> DropDownTextField(
     collapsedIcon: Painter = painterResource(Res.drawable.i_angle_down),
     dropDownIconDescription: String? = null,
     dropDownIconStyle: IconStyle = IconStyle.S20,
+    dropDownMenuItemStyle: TextStyle = LocalTextStyle.current,
+    dropDownMenuPlaceholder: String = "Нет результатов",
+    dropDownMenuPlaceholderStyle: TextStyle = LocalTextStyle.current,
     shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
@@ -159,6 +165,10 @@ fun <T> DropDownTextField(
                 color = color,
             )
         },
+        dropDownMenuItem = { text -> Text(text = text, style = dropDownMenuItemStyle) },
+        dropDownMenuPlaceholder = {
+            Text(text = dropDownMenuPlaceholder, style = dropDownMenuPlaceholderStyle)
+        },
         shape = shape,
         colors = colors,
     )
@@ -178,6 +188,8 @@ fun <T> DropDownTextField(
         (@Composable
         (generatedDropDownIcon: @Composable () -> Unit, isLoading: Boolean) -> Unit)? =
         null,
+    dropDownMenuItem: @Composable (String) -> Unit = { text -> Text(text = text) },
+    dropDownMenuPlaceholder: (@Composable () -> Unit)? = null,
     shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
@@ -257,6 +269,17 @@ fun <T> DropDownTextField(
                 dropDownIconWithProgressIndicator(dropDownIcon, isLoading.value)
             else dropDownIcon()
         },
+        dropDownMenuItem = dropDownMenuItem,
+        dropDownMenuPlaceholder = {
+            if (dropDownMenuPlaceholder == null) {
+                val dropDownMenuPlaceholderText =
+                    if (isLoading.value) "Загрузка..." else "Нет результатов"
+
+                Text(text = dropDownMenuPlaceholderText)
+            } else {
+                dropDownMenuPlaceholder()
+            }
+        },
         shape = shape,
         colors = colors,
     )
@@ -277,6 +300,9 @@ fun <T> DropDownTextField(
     dropDownIconStyle: IconStyle = IconStyle.S20,
     progressIndicatorStyle: ProgressIndicatorStyle = ProgressIndicatorStyle.Default,
     trailingContainerSpacing: Dp = 10.dp,
+    dropDownMenuItemStyle: TextStyle = LocalTextStyle.current,
+    dropDownMenuPlaceholder: String? = null,
+    dropDownMenuPlaceholderStyle: TextStyle = LocalTextStyle.current,
     shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
@@ -333,6 +359,11 @@ fun <T> DropDownTextField(
                 generatedDropDownIcon()
             }
         },
+        dropDownMenuItem = { text -> Text(text = text, style = dropDownMenuItemStyle) },
+        dropDownMenuPlaceholder =
+            dropDownMenuPlaceholder?.let {
+                { Text(text = dropDownMenuPlaceholder, style = dropDownMenuPlaceholderStyle) }
+            },
         shape = shape,
         colors = colors,
     )
