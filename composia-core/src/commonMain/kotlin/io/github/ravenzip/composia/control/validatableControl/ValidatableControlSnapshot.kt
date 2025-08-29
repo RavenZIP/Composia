@@ -1,10 +1,10 @@
-package io.github.ravenzip.composia.control.compositeControl
+package io.github.ravenzip.composia.control.validatableControl
 
 import io.github.ravenzip.composia.control.shared.ControlStatus
 import io.github.ravenzip.composia.control.shared.ValueChangeType
 import io.github.ravenzip.composia.control.shared.ValueWithTypeChanges
 
-data class CompositeControlSnapshot<T>(
+data class ValidatableControlSnapshot<T>(
     override val value: T,
     override val typeChange: ValueChangeType,
     override val hasChanges: Boolean,
@@ -15,7 +15,7 @@ data class CompositeControlSnapshot<T>(
     override val isInvalid: Boolean,
     override val errorMessage: String,
 ) :
-    AbstractCompositeControlSnapshot<T>(
+    AbstractValidatableControlSnapshot<T>(
         value = value,
         typeChange = typeChange,
         hasChanges = hasChanges,
@@ -28,7 +28,7 @@ data class CompositeControlSnapshot<T>(
     ) {
     companion object {
         fun <T> createDefault(value: T) =
-            CompositeControlSnapshot(
+            ValidatableControlSnapshot(
                 value = value,
                 typeChange = ValueChangeType.Initialize,
                 hasChanges = false,
@@ -45,7 +45,7 @@ data class CompositeControlSnapshot<T>(
             status: ControlStatus,
             errorMessage: String,
         ) =
-            CompositeControlSnapshot(
+            ValidatableControlSnapshot(
                 value = valueWithTypeChanges.value,
                 typeChange = valueWithTypeChanges.typeChange,
                 hasChanges = valueWithTypeChanges.typeChange !is ValueChangeType.Initialize,

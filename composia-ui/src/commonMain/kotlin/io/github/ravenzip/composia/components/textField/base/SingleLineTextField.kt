@@ -12,7 +12,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
 import io.github.ravenzip.composia.components.textField.shared.acceptInput
-import io.github.ravenzip.composia.control.compositeControl.CompositeControl
+import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
 import io.github.ravenzip.composia.state.TextFieldState
 import io.github.ravenzip.composia.style.DefaultComponentShape
 
@@ -64,7 +64,7 @@ fun SingleLineTextField(
 
 @Composable
 fun SingleLineTextField(
-    control: CompositeControl<String>,
+    control: ValidatableControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     maxLength: Int? = null,

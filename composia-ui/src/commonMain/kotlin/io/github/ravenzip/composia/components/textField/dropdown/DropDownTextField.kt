@@ -16,7 +16,7 @@ import io.github.ravenzip.composia.components.icon.ConditionalIcon
 import io.github.ravenzip.composia.components.model.DataSource
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.shared.*
-import io.github.ravenzip.composia.control.compositeControl.CompositeControl
+import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
 import io.github.ravenzip.composia.state.DropDownTextFieldState
 import io.github.ravenzip.composia.style.DefaultComponentShape
 import io.github.ravenzip.composia.style.IconStyle
@@ -178,7 +178,7 @@ fun <T> DropDownTextField(
 @Composable
 fun <T> DropDownTextField(
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
-    control: CompositeControl<T>,
+    control: ValidatableControl<T>,
     state: DropDownTextFieldState? = null,
     source: DataSource<T>,
     sourceItemToString: (T) -> String,
@@ -288,7 +288,7 @@ fun <T> DropDownTextField(
 @Composable
 fun <T> DropDownTextField(
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
-    control: CompositeControl<T>,
+    control: ValidatableControl<T>,
     state: DropDownTextFieldState? = null,
     source: DataSource<T>,
     sourceItemToString: (T) -> String,

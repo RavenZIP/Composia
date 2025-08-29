@@ -13,23 +13,23 @@ import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.components.textField.base.SingleLineTextField
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.simple.SimpleTextField
-import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.control.shared.Validator
 import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
 import io.github.ravenzip.composia.control.valueControl.ValueControl
 
 class TextFieldScreenViewModel : ViewModel() {
     val simpleTextFieldControl = ValueControl("", coroutineScope = viewModelScope)
 
     val singlenessTextFieldControl =
-        CompositeControl(
+        ValidatableControl(
             initialValue = "",
             validators = listOf { x -> Validator.required(x) },
             coroutineScope = viewModelScope,
         )
 
     val outlinedSinglenessTextFieldControl =
-        CompositeControl(
+        ValidatableControl(
             initialValue = "",
             validators = listOf { x -> Validator.required(x) },
             coroutineScope = viewModelScope,

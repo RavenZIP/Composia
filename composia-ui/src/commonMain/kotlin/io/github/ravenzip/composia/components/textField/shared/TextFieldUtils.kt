@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import io.github.ravenzip.composia.components.text.CounterLabel
 import io.github.ravenzip.composia.components.text.HintText
-import io.github.ravenzip.composia.control.compositeControl.CompositeControl
 import io.github.ravenzip.composia.control.shared.ValueChangeType
+import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
 import io.github.ravenzip.composia.control.valueControl.ValueControl
 import io.github.ravenzip.composia.state.TextFieldState
 import kotlinx.coroutines.flow.filter
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.filter
 /** Обертка над текстовыми полями, которые используют контролы напрямую */
 @Composable
 internal fun <T> ResetReadonlyStateOnResetValue(
-    control: CompositeControl<T>,
+    control: ValidatableControl<T>,
     state: TextFieldState,
 ) {
     LaunchedEffect(control, state) {

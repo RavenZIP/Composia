@@ -1,10 +1,10 @@
-package io.github.ravenzip.composia.control.compositeControl
+package io.github.ravenzip.composia.control.validatableControl
 
 import io.github.ravenzip.composia.control.shared.ControlStatus
 import io.github.ravenzip.composia.control.shared.ValueChangeType
 import io.github.ravenzip.composia.control.valueControl.AbstractValueControlSnapshot
 
-abstract class AbstractCompositeControlSnapshot<T>(
+abstract class AbstractValidatableControlSnapshot<T>(
     override val value: T,
     override val typeChange: ValueChangeType,
     override val hasChanges: Boolean,

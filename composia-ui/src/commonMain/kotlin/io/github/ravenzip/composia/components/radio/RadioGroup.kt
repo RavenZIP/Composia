@@ -11,12 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.compositeControl.CompositeControl
+import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
 import io.github.ravenzip.composia.style.DefaultComponentShape
 
 @Composable
 fun <T, K> RadioGroup(
-    control: CompositeControl<T>,
+    control: ValidatableControl<T>,
     source: List<T>,
     view: (T) -> String,
     keySelector: (T) -> K,

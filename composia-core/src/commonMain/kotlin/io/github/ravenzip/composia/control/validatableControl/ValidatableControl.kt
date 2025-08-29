@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.control.compositeControl
+package io.github.ravenzip.composia.control.validatableControl
 
 import io.github.ravenzip.composia.control.extension.stateInDefault
 import io.github.ravenzip.composia.control.shared.ControlStatus
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
-class CompositeControl<T>(
+class ValidatableControl<T>(
     val initialValue: T,
     private val validators: List<(T) -> String?> = emptyList(),
     val resetValue: T = initialValue,
@@ -38,7 +38,7 @@ class CompositeControl<T>(
                 valueWithTypeChanges,
                 status,
                 errorMessage ->
-                CompositeControlSnapshot.create(
+                ValidatableControlSnapshot.create(
                     valueWithTypeChanges = valueWithTypeChanges,
                     status = status,
                     errorMessage = errorMessage,
@@ -46,7 +46,7 @@ class CompositeControl<T>(
             }
             .stateInDefault(
                 scope = coroutineScope,
-                initialValue = CompositeControlSnapshot.createDefault(initialValue),
+                initialValue = ValidatableControlSnapshot.createDefault(initialValue),
             )
 
     val snapshot
