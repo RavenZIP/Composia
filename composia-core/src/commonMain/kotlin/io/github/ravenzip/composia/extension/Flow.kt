@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.control.extension
+package io.github.ravenzip.composia.extension
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

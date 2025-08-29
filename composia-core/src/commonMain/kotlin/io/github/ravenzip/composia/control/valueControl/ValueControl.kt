@@ -1,6 +1,6 @@
 package io.github.ravenzip.composia.control.valueControl
 
-import io.github.ravenzip.composia.control.extension.stateInDefault
+import io.github.ravenzip.composia.extension.stateInDefault
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.combine
 
