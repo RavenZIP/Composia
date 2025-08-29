@@ -251,7 +251,6 @@ fun <T> DropDownTextField(
         onSearchQueryChange = { query ->
             control.setValue(control.resetValue)
             searchQuery.value = query
-            initializedState.expandedState.expand()
         },
         searchResults = results,
         sourceItemToString = sourceItemToString,
