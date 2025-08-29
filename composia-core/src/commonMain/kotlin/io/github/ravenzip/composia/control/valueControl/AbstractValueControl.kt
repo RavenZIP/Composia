@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.update
 
 abstract class AbstractValueControl<T>(
     private val initialValue: T,
+    private val resetValue: T = initialValue,
     disabled: Boolean = false,
     coroutineScope: CoroutineScope,
 ) : AbstractStatusControl(disabled, coroutineScope) {
@@ -35,7 +36,7 @@ abstract class AbstractValueControl<T>(
     }
 
     override fun reset() {
-        reset(initialValue)
+        reset(resetValue)
     }
 
     fun reset(value: T) {

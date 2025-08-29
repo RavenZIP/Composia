@@ -6,9 +6,10 @@ import kotlinx.coroutines.flow.combine
 
 class ValueControl<T>(
     val initialValue: T,
+    val resetValue: T = initialValue,
     disabled: Boolean = false,
     coroutineScope: CoroutineScope,
-) : AbstractValueControl<T>(initialValue, disabled, coroutineScope) {
+) : AbstractValueControl<T>(initialValue, resetValue, disabled, coroutineScope) {
     val snapshotFlow =
         combine(valueWithTypeChangesFlow, statusFlow) { valueWithTypeChanges, status ->
                 ValueControlSnapshot.create(

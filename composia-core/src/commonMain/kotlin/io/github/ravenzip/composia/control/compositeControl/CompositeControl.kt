@@ -13,9 +13,10 @@ import kotlinx.coroutines.flow.merge
 class CompositeControl<T>(
     val initialValue: T,
     private val validators: List<(T) -> String?> = emptyList(),
+    val resetValue: T = initialValue,
     disabled: Boolean = false,
     coroutineScope: CoroutineScope,
-) : AbstractValueControl<T>(initialValue, disabled, coroutineScope) {
+) : AbstractValueControl<T>(initialValue, resetValue, disabled, coroutineScope) {
     private val _errorMessage =
         this.valueWithTypeChangesFlow
             .filter { x -> x.typeChange is ValueChangeType.Set }

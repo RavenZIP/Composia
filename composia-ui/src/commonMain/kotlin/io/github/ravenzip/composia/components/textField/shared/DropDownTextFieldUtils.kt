@@ -64,7 +64,6 @@ internal fun <T> LoadSearchResult(
                 results.addAll(response)
                 changeIsLoadingTo(false)
             }
-            .onEach { print("expand results is $results") }
             .launchIn(this)
     }
 }
@@ -83,7 +82,7 @@ internal fun <T> UpdateSearchQueryOnControlOrExpandChange(
                     .filter { value -> value.isNotEmpty() },
                 state.expandedState.valueFlow
                     .filter { expanded -> !expanded && control.isInvalid }
-                    .map { sourceItemToString(control.initialValue) },
+                    .map { sourceItemToString(control.resetValue) },
             )
             .onEach { value -> onSearchQueryChange(value) }
             .launchIn(this)
