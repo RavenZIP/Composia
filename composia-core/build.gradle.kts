@@ -20,12 +20,13 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(libs.kotlin.coroutines)
-            //            implementation(libs.kotlin.reflect)
-        }
+        commonMain.dependencies { implementation(libs.kotlin.coroutines) }
 
-        commonTest.dependencies { implementation(libs.kotlin.test) }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.turbine)
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
 }
 

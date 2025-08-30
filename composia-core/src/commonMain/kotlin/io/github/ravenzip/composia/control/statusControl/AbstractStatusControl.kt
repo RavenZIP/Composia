@@ -23,18 +23,18 @@ abstract class AbstractStatusControl(
     val isDisabledFlow =
         _statusFlow
             .map { value -> value is ControlStatus.Disabled }
-            .stateInDefault(scope = coroutineScope, initialValue = false)
+            .stateInDefault(scope = coroutineScope, initialValue = disabled)
 
     val isDisabled
-        get() = isDisabledFlow.value
+        get() = status is ControlStatus.Disabled
 
     val isEnabledFlow =
         _statusFlow
             .map { value -> value !is ControlStatus.Disabled }
-            .stateInDefault(scope = coroutineScope, initialValue = true)
+            .stateInDefault(scope = coroutineScope, initialValue = !disabled)
 
     val isEnabled
-        get() = isEnabledFlow.value
+        get() = status is ControlStatus.Valid
 
     fun disable() {
         _statusFlow.update { ControlStatus.Disabled }
