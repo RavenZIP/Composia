@@ -42,7 +42,7 @@ class ValidatableControl<T>(
             }
             .stateInDefault(
                 scope = coroutineScope,
-                initialValue = ValidatableControlSnapshot.createDefault(initialValue),
+                initialValue = ValidatableControlSnapshot.create(initialValue, status, errorMessage),
             )
 
     val snapshot

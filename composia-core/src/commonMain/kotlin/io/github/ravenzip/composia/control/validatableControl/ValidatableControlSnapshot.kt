@@ -27,18 +27,6 @@ data class ValidatableControlSnapshot<T>(
         errorMessage = errorMessage,
     ) {
     companion object {
-        fun <T> createDefault(value: T) =
-            ValidatableControlSnapshot(
-                value = value,
-                typeChange = ValueChangeType.Initialize,
-                hasChanges = false,
-                status = ControlStatus.Valid,
-                isEnabled = true,
-                isDisabled = false,
-                isValid = true,
-                isInvalid = false,
-                errorMessage = "",
-            )
 
         fun <T> create(
             valueWithTypeChanges: ValueWithTypeChanges<T>,
@@ -56,5 +44,16 @@ data class ValidatableControlSnapshot<T>(
                 isInvalid = status is ControlStatus.Invalid,
                 errorMessage = errorMessage,
             )
+
+        fun <T> create(value: T, status: ControlStatus, errorMessage: String) =
+            create(
+                valueWithTypeChanges =
+                    ValueWithTypeChanges(value = value, typeChange = ValueChangeType.Initialize),
+                status = status,
+                errorMessage = errorMessage,
+            )
+
+        fun <T> createDefault(value: T) =
+            create(value = value, status = ControlStatus.Valid, errorMessage = "")
     }
 }

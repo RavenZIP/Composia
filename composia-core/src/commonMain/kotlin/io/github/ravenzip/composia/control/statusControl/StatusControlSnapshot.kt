@@ -15,12 +15,5 @@ data class StatusControlSnapshot(
                 isEnabled = !isDisabled,
                 isDisabled = isDisabled,
             )
-
-        fun createDefault() =
-            StatusControlSnapshot(
-                status = ControlStatus.Valid,
-                isEnabled = true,
-                isDisabled = false,
-            )
     }
 }

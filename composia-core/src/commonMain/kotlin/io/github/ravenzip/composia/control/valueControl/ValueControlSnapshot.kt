@@ -21,16 +21,6 @@ data class ValueControlSnapshot<T>(
         isDisabled = isDisabled,
     ) {
     companion object {
-        fun <T> createDefault(value: T) =
-            ValueControlSnapshot(
-                value = value,
-                typeChange = ValueChangeType.Initialize,
-                hasChanges = false,
-                status = ControlStatus.Valid,
-                isEnabled = true,
-                isDisabled = false,
-            )
-
         fun <T> create(valueWithTypeChanges: ValueWithTypeChanges<T>, status: ControlStatus) =
             ValueControlSnapshot(
                 value = valueWithTypeChanges.value,
@@ -40,5 +30,14 @@ data class ValueControlSnapshot<T>(
                 isEnabled = status !is ControlStatus.Disabled,
                 isDisabled = status is ControlStatus.Disabled,
             )
+
+        fun <T> create(value: T, status: ControlStatus) =
+            create(
+                valueWithTypeChanges =
+                    ValueWithTypeChanges(value = value, typeChange = ValueChangeType.Initialize),
+                status = status,
+            )
+
+        fun <T> createDefault(value: T) = create(value = value, status = ControlStatus.Valid)
     }
 }
