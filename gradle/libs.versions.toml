@@ -14,9 +14,13 @@ androidx-lifecycle = "2.9.2"
 navigationCompose = "2.9.0-beta05"
 coroutinesSwing = "1.10.2"
 
+kotlinCoroutinesTest = "1.10.2"
+turbine = "1.2.1"
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutinesTest" }
 
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx: kotlinx-coroutines-swing", version.ref = "coroutinesSwing" }
 
@@ -24,7 +28,13 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-viewmodel-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-viewmodel" }
 androidx-lifecycle-lifecycle = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+
+#TODO разобраться с preview
+compose-components-ui-tooling-preview-desktop = { module = "org.jetbrains.compose.components:components-ui-tooling-preview-desktop", version.ref = "compose-multiplatform" }
+compose-components-ui-tooling-preview-android = { module = "org.jetbrains.compose.components:components-ui-tooling-preview-android", version.ref = "compose-multiplatform" }
+compose-components-ui-tooling-preview-wasmJs = { module = "org.jetbrains.compose.components:components-ui-tooling-preview-wasmJs", version.ref = "compose-multiplatform" }
 
 [plugins]
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

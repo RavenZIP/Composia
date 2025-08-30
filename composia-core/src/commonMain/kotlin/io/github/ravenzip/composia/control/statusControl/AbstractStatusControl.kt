@@ -2,6 +2,7 @@ package io.github.ravenzip.composia.control.statusControl
 
 import io.github.ravenzip.composia.control.shared.ControlStatus
 import io.github.ravenzip.composia.extension.stateInDefault
+import io.github.ravenzip.composia.utils.calculateControlStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -11,8 +12,7 @@ abstract class AbstractStatusControl(
     private val disabled: Boolean = false,
     coroutineScope: CoroutineScope,
 ) {
-    private val _statusFlow =
-        MutableStateFlow(if (disabled) ControlStatus.Disabled else ControlStatus.Valid)
+    private val _statusFlow = MutableStateFlow(calculateControlStatus(disabled))
 
     open val statusFlow =
         _statusFlow.stateInDefault(scope = coroutineScope, initialValue = ControlStatus.Valid)
@@ -45,6 +45,6 @@ abstract class AbstractStatusControl(
     }
 
     open fun reset() {
-        _statusFlow.update { if (disabled) ControlStatus.Disabled else ControlStatus.Valid }
+        _statusFlow.update { calculateControlStatus(disabled) }
     }
 }

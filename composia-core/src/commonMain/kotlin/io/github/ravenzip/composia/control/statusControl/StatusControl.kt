@@ -16,7 +16,7 @@ class StatusControl(disabled: Boolean = false, coroutineScope: CoroutineScope) :
             }
             .stateInDefault(
                 scope = coroutineScope,
-                initialValue = StatusControlSnapshot.createDefault(),
+                initialValue = StatusControlSnapshot.create(disabled),
             )
 
     val snapshot

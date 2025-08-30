@@ -81,7 +81,7 @@ class AbstractStatusControlTest {
     }
 
     @Test
-    fun `statusFlow emits updates`() = runTest {
+    fun `statusFlow emits changes`() = runTest {
         turbineScope {
             val control = BaseStatusControl(scope = backgroundScope)
 
@@ -98,7 +98,7 @@ class AbstractStatusControlTest {
     }
 
     @Test
-    fun `isDisabledFlow emits updates`() = runTest {
+    fun `isDisabledFlow emits changes`() = runTest {
         turbineScope {
             val control = BaseStatusControl(scope = backgroundScope)
 
@@ -115,7 +115,7 @@ class AbstractStatusControlTest {
     }
 
     @Test
-    fun `isEnabledFlow emits updates`() = runTest {
+    fun `isEnabledFlow emits changes`() = runTest {
         turbineScope {
             val control = BaseStatusControl(disabled = true, scope = backgroundScope)
 

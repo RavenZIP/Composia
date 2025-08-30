@@ -4,6 +4,7 @@ import io.github.ravenzip.composia.control.shared.ControlStatus
 import io.github.ravenzip.composia.control.shared.ValueChangeType
 import io.github.ravenzip.composia.control.valueControl.AbstractValueControl
 import io.github.ravenzip.composia.extension.stateInDefault
+import io.github.ravenzip.composia.utils.calculateControlStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
@@ -25,12 +26,7 @@ class ValidatableControl<T>(
             }
 
     private val _statusFlow =
-        merge(
-                super.statusFlow,
-                _errorMessage.map { value ->
-                    if (value.isNotEmpty()) ControlStatus.Invalid(value) else ControlStatus.Valid
-                },
-            )
+        merge(super.statusFlow, _errorMessage.map { value -> calculateControlStatus(value) })
             .stateInDefault(scope = coroutineScope, initialValue = ControlStatus.Valid)
 
     val snapshotFlow =
