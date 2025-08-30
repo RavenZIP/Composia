@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia
+package io.github.ravenzip.composia.statusControl
 
 import app.cash.turbine.test
 import app.cash.turbine.turbineScope
