@@ -1,6 +1,5 @@
 package io.github.ravenzip.composia.components.textField.base
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.TextField
@@ -42,40 +41,38 @@ internal fun BasicTextField(
     colors: TextFieldColors = TextFieldDefaults.colors(),
     showTextLengthCounter: Boolean = false,
 ) {
-    Column(modifier = modifier) {
-        TextField(
-            value = value,
-            onValueChange = { x ->
-                if (acceptInput(currentLength = x.length, maxLength = maxLength)) {
-                    onValueChange(x)
-                }
-            },
-            modifier = Modifier.fillMaxWidth().onFocusChanged(onFocusChange),
-            enabled = isEnabled,
-            readOnly = isReadonly,
-            maxLines = maxLines,
-            minLines = minLines,
-            label = label,
-            placeholder = placeholder,
-            leadingIcon = leadingIcon,
-            trailingIcon = trailingIcon,
-            supportingText = {
-                ErrorMessageWithSymbolsCounter(
-                    errorMessage = errorMessage,
-                    isFocused = isFocused,
-                    showTextLengthCounter = showTextLengthCounter,
-                    maxLength = maxLength,
-                    currentLength = value.length,
-                    colors = colors,
-                )
-            },
-            isError = isInvalid,
-            visualTransformation =
-                if (isHiddenText) PasswordVisualTransformation() else VisualTransformation.None,
-            keyboardOptions = keyboardOptions,
-            singleLine = singleLine,
-            shape = shape,
-            colors = colors,
-        )
-    }
+    TextField(
+        value = value,
+        onValueChange = { x ->
+            if (acceptInput(currentLength = x.length, maxLength = maxLength)) {
+                onValueChange(x)
+            }
+        },
+        modifier = modifier.onFocusChanged(onFocusChange),
+        enabled = isEnabled,
+        readOnly = isReadonly,
+        maxLines = maxLines,
+        minLines = minLines,
+        label = label,
+        placeholder = placeholder,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        supportingText = {
+            ErrorMessageWithSymbolsCounter(
+                errorMessage = errorMessage,
+                isFocused = isFocused,
+                showTextLengthCounter = showTextLengthCounter,
+                maxLength = maxLength,
+                currentLength = value.length,
+                colors = colors,
+            )
+        },
+        isError = isInvalid,
+        visualTransformation =
+            if (isHiddenText) PasswordVisualTransformation() else VisualTransformation.None,
+        keyboardOptions = keyboardOptions,
+        singleLine = singleLine,
+        shape = shape,
+        colors = colors,
+    )
 }
