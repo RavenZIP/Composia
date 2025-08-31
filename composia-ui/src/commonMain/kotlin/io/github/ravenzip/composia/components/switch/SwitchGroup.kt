@@ -49,7 +49,7 @@ fun <T, K> SwitchGroup(
     source: List<T>,
     sourceItemToString: (T) -> String,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle,
+    textStyle: TextStyle = TextStyle.S18,
     contentPadding: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(10.dp),
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
