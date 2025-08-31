@@ -7,4 +7,5 @@ object NavigationPath {
     const val BUTTON = "BUTTON"
     const val TEXT_FIELD = "TEXT_FIELD"
     const val DROP_DOWN_TEXT_FIELD = "DROP_DOWN_TEXT_FIELD"
+    const val CHECKBOX = "CHECKBOX"
 }

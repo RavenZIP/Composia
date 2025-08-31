@@ -16,6 +16,7 @@ fun MenuScreen(
     navigateToPagerScreen: () -> Unit,
     navigateToButtonScreen: () -> Unit,
     navigateToTextFieldScreen: () -> Unit,
+    navigateToCheckboxScreen: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
         Column(
@@ -28,11 +29,13 @@ fun MenuScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            SimpleButton(onClick = { navigateToPagerScreen() }, text = "Pager")
+            SimpleButton(onClick = navigateToPagerScreen, text = "Pager")
 
-            SimpleButton(onClick = { navigateToButtonScreen() }, text = "Button")
+            SimpleButton(onClick = navigateToButtonScreen, text = "Button")
 
-            SimpleButton(onClick = { navigateToTextFieldScreen() }, text = "TextField")
+            SimpleButton(onClick = navigateToTextFieldScreen, text = "TextField")
+
+            SimpleButton(onClick = navigateToCheckboxScreen, text = "Checkbox")
         }
     }
 }

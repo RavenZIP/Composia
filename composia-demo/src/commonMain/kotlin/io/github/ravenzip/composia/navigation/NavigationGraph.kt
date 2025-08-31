@@ -9,6 +9,7 @@ import io.github.ravenzip.composia.screen.ButtonScreen
 import io.github.ravenzip.composia.screen.MenuScreen
 import io.github.ravenzip.composia.screen.PagerScreen
 import io.github.ravenzip.composia.screen.TextFieldScreen
+import io.github.ravenzip.composia.screen.checkbox.CheckboxScreen
 import io.github.ravenzip.composia.screen.dropDownTextField.DropDownTextFieldScreen
 
 @Composable
@@ -24,6 +25,7 @@ fun NavigationGraph(navController: NavHostController, padding: PaddingValues) {
                 navigateToPagerScreen = { navController.navigate(NavigationPath.PAGER) },
                 navigateToButtonScreen = { navController.navigate(NavigationPath.BUTTON) },
                 navigateToTextFieldScreen = { navController.navigate(NavigationPath.TEXT_FIELD) },
+                navigateToCheckboxScreen = { navController.navigate(NavigationPath.CHECKBOX) },
             )
         }
 
@@ -50,6 +52,10 @@ fun NavigationGraph(navController: NavHostController, padding: PaddingValues) {
                 padding = padding,
                 backToMenu = { navController.popBackStack() },
             )
+        }
+
+        composable(route = NavigationPath.CHECKBOX) {
+            CheckboxScreen(padding = padding, backToMenu = { navController.popBackStack() })
         }
     }
 }

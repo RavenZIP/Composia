@@ -33,7 +33,7 @@ fun Checkbox(
         modifier =
             modifier
                 .clip(DefaultComponentShape)
-                .clickable { onClick() }
+                .clickable(enabled = enabled, onClick = onClick)
                 .padding(top = 5.dp, bottom = 5.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
