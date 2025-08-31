@@ -19,7 +19,7 @@ class ValueControl<T>(
             }
             .stateInDefault(
                 scope = coroutineScope,
-                initialValue = ValueControlSnapshot.create(initialValue, status),
+                initialValue = ValueControlSnapshot.createDefault(initialValue),
             )
 
     val snapshot
