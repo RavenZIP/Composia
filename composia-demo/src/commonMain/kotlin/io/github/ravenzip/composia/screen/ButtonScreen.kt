@@ -34,11 +34,7 @@ fun ButtonScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            SimpleButton(
-                control = viewModel.simpleButtonControl,
-                text = "SimpleButton",
-                modifier = Modifier.fillMaxWidth(0.9f),
-            )
+            SimpleButton(control = viewModel.simpleButtonControl, text = "SimpleButton")
 
             RichButton(
                 control = viewModel.richButtonControl,

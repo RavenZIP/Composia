@@ -20,7 +20,7 @@ import io.github.ravenzip.composia.style.IconStyle
 @Composable
 fun RichButton(
     onClick: () -> Unit = {},
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     label: @Composable () -> Unit,
     description: @Composable () -> Unit,
     icon: @Composable () -> Unit,
@@ -43,10 +43,7 @@ fun RichButton(
         ) {
             icon()
 
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(5.dp),
-            ) {
+            Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
                 label()
 
                 description()
@@ -58,7 +55,7 @@ fun RichButton(
 @Composable
 fun RichButton(
     onClick: () -> Unit = {},
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     label: String,
     labelStyle: TextStyle = TextStyle.S18Medium,
     description: String,
@@ -103,7 +100,7 @@ fun RichButton(
 @Composable
 fun RichButton(
     control: StatusControl,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     label: @Composable () -> Unit,
     description: @Composable () -> Unit,
     icon: @Composable () -> Unit,
@@ -130,7 +127,7 @@ fun RichButton(
 @Composable
 fun RichButton(
     control: StatusControl,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     label: String,
     labelStyle: TextStyle = TextStyle.S18Medium,
     description: String,

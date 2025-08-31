@@ -1,7 +1,10 @@
 package io.github.ravenzip.composia.components.switch
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,7 +23,7 @@ fun Switch(
     isSelected: Boolean,
     isEnabled: Boolean = true,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     text: String,
     textStyle: TextStyle = LocalTextStyle.current,
     colors: SwitchColors = SwitchDefaults.colors(),
@@ -45,7 +48,7 @@ fun Switch(
 @Composable
 fun Switch(
     control: ValidatableSingleControl<Boolean>,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     text: String,
     textStyle: TextStyle = LocalTextStyle.current,
     colors: SwitchColors = SwitchDefaults.colors(),
@@ -69,7 +72,7 @@ fun Switch(
     isSelected: Boolean,
     isEnabled: Boolean = true,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     label: String,
     labelStyle: TextStyle = TextStyle.S16Medium,
     description: String,
@@ -100,7 +103,7 @@ fun Switch(
 @Composable
 fun Switch(
     control: ValidatableSingleControl<Boolean>,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     label: String,
     labelStyle: TextStyle = TextStyle.S16Medium,
     description: String,

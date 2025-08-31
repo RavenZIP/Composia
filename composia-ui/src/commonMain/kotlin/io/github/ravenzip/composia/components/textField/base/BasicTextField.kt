@@ -1,6 +1,5 @@
 package io.github.ravenzip.composia.components.textField.base
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
@@ -26,7 +25,7 @@ internal fun BasicTextField(
     errorMessage: String = "",
     isFocused: Boolean = false,
     onFocusChange: (FocusState) -> Unit = {},
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     maxLength: Int? = null,
     maxLines: Int = Int.MAX_VALUE,
     minLines: Int = 1,

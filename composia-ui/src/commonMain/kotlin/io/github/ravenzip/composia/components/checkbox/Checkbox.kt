@@ -2,7 +2,6 @@ package io.github.ravenzip.composia.components.checkbox
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxColors
@@ -23,7 +22,7 @@ import io.github.ravenzip.composia.style.DefaultComponentShape
 fun Checkbox(
     isSelected: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     text: String,
     textStyle: TextStyle = TextStyle.S18,
     enabled: Boolean = true,
@@ -50,7 +49,7 @@ fun Checkbox(
 @Composable
 fun Checkbox(
     control: ValidatableSingleControl<Boolean>,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     text: String,
     textStyle: TextStyle = TextStyle.S18,
     colors: CheckboxColors = CheckboxDefaults.colors(),

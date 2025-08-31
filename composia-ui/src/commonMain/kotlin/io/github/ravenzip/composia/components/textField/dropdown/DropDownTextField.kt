@@ -29,7 +29,7 @@ import org.jetbrains.compose.resources.painterResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> DropDownTextField(
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     onSelectItem: (T) -> Unit,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
@@ -50,55 +50,52 @@ fun <T> DropDownTextField(
     shape: Shape = DefaultComponentShape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
-    Column(modifier = modifier) {
-        ExposedDropdownMenuBox(expanded = isExpanded, onExpandedChange = onExpandedChange) {
-            OutlinedSingleLineTextField(
-                value = searchQuery,
-                onValueChange = { x -> onSearchQueryChange(x) },
-                modifier =
-                    Modifier.fillMaxWidth()
-                        .menuAnchor(
-                            if (isReadonly) MenuAnchorType.PrimaryNotEditable
-                            else MenuAnchorType.PrimaryEditable
-                        ),
-                isEnabled = isEnabled,
-                isReadonly = isReadonly,
-                isInvalid = isInvalid,
-                errorMessage = errorMessage,
-                isFocused = isFocused,
-                onFocusChange = onFocusChange,
-                label = label,
-                trailingIcon = dropDownIcon,
-                shape = shape,
-                colors = colors,
-            )
+    ExposedDropdownMenuBox(expanded = isExpanded, onExpandedChange = onExpandedChange) {
+        OutlinedSingleLineTextField(
+            value = searchQuery,
+            onValueChange = { x -> onSearchQueryChange(x) },
+            modifier =
+                modifier.menuAnchor(
+                    if (isReadonly) MenuAnchorType.PrimaryNotEditable
+                    else MenuAnchorType.PrimaryEditable
+                ),
+            isEnabled = isEnabled,
+            isReadonly = isReadonly,
+            isInvalid = isInvalid,
+            errorMessage = errorMessage,
+            isFocused = isFocused,
+            onFocusChange = onFocusChange,
+            label = label,
+            trailingIcon = dropDownIcon,
+            shape = shape,
+            colors = colors,
+        )
 
-            ExposedDropdownMenu(
-                expanded = isExpanded,
-                onDismissRequest = { onExpandedChange(false) },
-                modifier =
-                    Modifier.border(
-                        2.dp,
-                        color = colors.focusedLabelColor,
-                        shape = DefaultComponentShape,
-                    ),
-                shape = DefaultComponentShape,
-                containerColor = MaterialTheme.colorScheme.surface,
-            ) {
-                if (searchResults.isNotEmpty()) {
-                    searchResults.forEach { item ->
-                        DropdownMenuItem(
-                            text = { dropDownMenuItem(sourceItemToString(item)) },
-                            onClick = { onSelectItem(item) },
-                        )
-                    }
-                } else {
+        ExposedDropdownMenu(
+            expanded = isExpanded,
+            onDismissRequest = { onExpandedChange(false) },
+            modifier =
+                Modifier.border(
+                    2.dp,
+                    color = colors.focusedLabelColor,
+                    shape = DefaultComponentShape,
+                ),
+            shape = DefaultComponentShape,
+            containerColor = MaterialTheme.colorScheme.surface,
+        ) {
+            if (searchResults.isNotEmpty()) {
+                searchResults.forEach { item ->
                     DropdownMenuItem(
-                        text = { dropDownMenuPlaceholder() },
-                        onClick = {},
-                        enabled = false,
+                        text = { dropDownMenuItem(sourceItemToString(item)) },
+                        onClick = { onSelectItem(item) },
                     )
                 }
+            } else {
+                DropdownMenuItem(
+                    text = { dropDownMenuPlaceholder() },
+                    onClick = {},
+                    enabled = false,
+                )
             }
         }
     }
@@ -107,7 +104,7 @@ fun <T> DropDownTextField(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> DropDownTextField(
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     onSelectItem: (T) -> Unit,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
@@ -177,7 +174,7 @@ fun <T> DropDownTextField(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> DropDownTextField(
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     control: ValidatableSingleControl<T>,
     state: DropDownTextFieldState? = null,
     source: DataSource<T>,
@@ -287,7 +284,7 @@ fun <T> DropDownTextField(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> DropDownTextField(
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     control: ValidatableSingleControl<T>,
     state: DropDownTextFieldState? = null,
     source: DataSource<T>,

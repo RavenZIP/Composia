@@ -2,7 +2,6 @@ package io.github.ravenzip.composia.components.checkbox
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.runtime.Composable
@@ -22,7 +21,7 @@ fun <T, K> CheckboxGroup(
     onClick: (T) -> Unit,
     keySelector: (T) -> K,
     sourceItemToString: (T) -> String,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
     textStyle: TextStyle = TextStyle.S18,
     contentPadding: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(10.dp),
@@ -49,7 +48,7 @@ fun <T, K> CheckboxGroup(
     control: MultiValueControl<T, K>,
     source: List<T>,
     sourceItemToString: (T) -> String,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle.S18,
     contentPadding: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(10.dp),
     colors: CheckboxColors = CheckboxDefaults.colors(),

@@ -1,6 +1,5 @@
 package io.github.ravenzip.composia.components.textField.outlined
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextFieldColors
@@ -25,7 +24,7 @@ fun OutlinedSingleLineTextField(
     errorMessage: String = "",
     isFocused: Boolean = false,
     onFocusChange: (FocusState) -> Unit = {},
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     maxLength: Int? = null,
     label: (@Composable () -> Unit)? = null,
     placeholder: (@Composable () -> Unit)? = null,
@@ -65,7 +64,7 @@ fun OutlinedSingleLineTextField(
 fun OutlinedSingleLineTextField(
     control: ValidatableSingleControl<String>,
     state: TextFieldState? = null,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     maxLength: Int? = null,
     label: (@Composable () -> Unit)? = null,
     placeholder: (@Composable () -> Unit)? = null,

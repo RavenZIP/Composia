@@ -20,7 +20,7 @@ fun <T, K> RadioGroup(
     source: List<T>,
     view: (T) -> String,
     keySelector: (T) -> K,
-    modifier: Modifier = Modifier.fillMaxWidth(0.9f),
+    modifier: Modifier = Modifier,
     textStyle: TextStyle = LocalTextStyle.current,
     contentPadding: Arrangement.Vertical = Arrangement.spacedBy(10.dp),
     colors: RadioButtonColors = RadioButtonDefaults.colors(),
