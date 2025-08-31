@@ -2,7 +2,7 @@ package io.github.ravenzip.composia.control.validatableControl
 
 import io.github.ravenzip.composia.control.shared.ControlStatus
 import io.github.ravenzip.composia.control.shared.ValueChangeType
-import io.github.ravenzip.composia.control.valueControl.AbstractValueControl
+import io.github.ravenzip.composia.control.valueControl.AbstractSingleValueControl
 import io.github.ravenzip.composia.extension.stateInDefault
 import io.github.ravenzip.composia.utils.calculateControlStatus
 import kotlinx.coroutines.CoroutineScope
@@ -11,13 +11,13 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
-class ValidatableControl<T>(
+class ValidatableSingleControl<T>(
     val initialValue: T,
     private val validators: List<(T) -> String?> = emptyList(),
     val resetValue: T = initialValue,
     disabled: Boolean = false,
     coroutineScope: CoroutineScope,
-) : AbstractValueControl<T>(initialValue, resetValue, disabled, coroutineScope) {
+) : AbstractSingleValueControl<T>(initialValue, resetValue, disabled, coroutineScope) {
     private val _errorMessage =
         this.valueWithTypeChangesFlow
             .filter { x -> x.typeChange is ValueChangeType.Set }
@@ -34,7 +34,7 @@ class ValidatableControl<T>(
                 valueWithTypeChanges,
                 status,
                 errorMessage ->
-                ValidatableControlSnapshot.create(
+                ValidatableSingleControlSnapshot.create(
                     valueWithTypeChanges = valueWithTypeChanges,
                     status = status,
                     errorMessage = errorMessage,
@@ -42,7 +42,7 @@ class ValidatableControl<T>(
             }
             .stateInDefault(
                 scope = coroutineScope,
-                initialValue = ValidatableControlSnapshot.createDefault(initialValue),
+                initialValue = ValidatableSingleControlSnapshot.createDefault(initialValue),
             )
 
     val snapshot

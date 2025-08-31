@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
-import io.github.ravenzip.composia.control.valueControl.ValueControl
+import io.github.ravenzip.composia.control.valueControl.SingleValueControl
 import io.github.ravenzip.composia.state.TextFieldState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,7 +68,7 @@ fun SimpleTextField(
 
 @Composable
 fun SimpleTextField(
-    control: ValueControl<String>,
+    control: SingleValueControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier,
     placeholder: @Composable (() -> Unit)? = null,

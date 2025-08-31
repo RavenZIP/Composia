@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
-import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
+import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
 import io.github.ravenzip.composia.state.TextFieldState
 import io.github.ravenzip.composia.style.DefaultComponentShape
 
@@ -60,7 +60,7 @@ fun MultiLineTextField(
 
 @Composable
 fun MultiLineTextField(
-    control: ValidatableControl<String>,
+    control: ValidatableSingleControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     maxLength: Int? = null,

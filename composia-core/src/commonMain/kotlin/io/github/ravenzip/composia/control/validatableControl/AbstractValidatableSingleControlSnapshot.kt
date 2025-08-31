@@ -2,9 +2,9 @@ package io.github.ravenzip.composia.control.validatableControl
 
 import io.github.ravenzip.composia.control.shared.ControlStatus
 import io.github.ravenzip.composia.control.shared.ValueChangeType
-import io.github.ravenzip.composia.control.valueControl.AbstractValueControlSnapshot
+import io.github.ravenzip.composia.control.valueControl.AbstractSingleValueControlSnapshot
 
-abstract class AbstractValidatableControlSnapshot<T>(
+abstract class AbstractValidatableSingleControlSnapshot<T>(
     override val value: T,
     override val typeChange: ValueChangeType,
     override val hasChanges: Boolean,
@@ -15,7 +15,7 @@ abstract class AbstractValidatableControlSnapshot<T>(
     open val isInvalid: Boolean,
     open val errorMessage: String,
 ) :
-    AbstractValueControlSnapshot<T>(
+    AbstractSingleValueControlSnapshot<T>(
         value = value,
         typeChange = typeChange,
         hasChanges = hasChanges,

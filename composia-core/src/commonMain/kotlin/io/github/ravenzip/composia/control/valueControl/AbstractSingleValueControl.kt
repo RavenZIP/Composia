@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
-abstract class AbstractValueControl<T>(
+abstract class AbstractSingleValueControl<T>(
     private val initialValue: T,
     private val resetValue: T = initialValue,
     disabled: Boolean = false,

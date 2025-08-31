@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
+import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
 import io.github.ravenzip.composia.extension.S18
 import io.github.ravenzip.composia.style.DefaultComponentShape
 
@@ -49,7 +49,7 @@ fun Checkbox(
 
 @Composable
 fun Checkbox(
-    control: ValidatableControl<Boolean>,
+    control: ValidatableSingleControl<Boolean>,
     modifier: Modifier = Modifier.fillMaxWidth(0.9f),
     text: String,
     textStyle: TextStyle = TextStyle.S18,

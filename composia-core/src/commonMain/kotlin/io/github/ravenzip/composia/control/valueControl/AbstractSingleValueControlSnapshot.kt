@@ -4,7 +4,7 @@ import io.github.ravenzip.composia.control.shared.ControlStatus
 import io.github.ravenzip.composia.control.shared.ValueChangeType
 import io.github.ravenzip.composia.control.statusControl.AbstractStatusControlSnapshot
 
-abstract class AbstractValueControlSnapshot<T>(
+abstract class AbstractSingleValueControlSnapshot<T>(
     open val value: T,
     open val typeChange: ValueChangeType,
     open val hasChanges: Boolean,

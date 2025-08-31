@@ -24,7 +24,7 @@ fun CheckboxScreen(padding: PaddingValues, backToMenu: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            CheckboxGroup(control, source = source, sourceItemToString = { it })
+            CheckboxGroup(control = control, source = source, sourceItemToString = { it })
 
             SimpleButton(onClick = { backToMenu() }, text = "Back to menu")
         }
