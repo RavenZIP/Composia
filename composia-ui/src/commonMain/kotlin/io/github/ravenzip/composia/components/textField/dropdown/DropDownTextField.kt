@@ -201,11 +201,11 @@ fun <T> DropDownTextField(
     val isExpanded = initializedState.expandedState.valueFlow.collectAsState().value
     val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
 
-    ResetReadonlyStateOnResetValue(control = control, state = initializedState)
+    resetReadonlyStateOnResetValue(control = control, state = initializedState)
 
     when (source) {
         is DataSource.Predefined -> {
-            LoadSearchResult(
+            loadSearchResult(
                 state = initializedState,
                 source = source,
                 sourceItemToString = sourceItemToString,
@@ -215,7 +215,7 @@ fun <T> DropDownTextField(
         }
 
         is DataSource.ByQuery -> {
-            LoadSearchResult(
+            loadSearchResult(
                 state = initializedState,
                 source = source,
                 searchQueryFlow = searchQueryFlow,
@@ -225,14 +225,14 @@ fun <T> DropDownTextField(
         }
     }
 
-    UpdateSearchQueryOnControlOrExpandChange(
+    updateSearchQueryOnControlOrExpandChange(
         control = control,
         state = initializedState,
         sourceItemToString = sourceItemToString,
         onSearchQueryChange = { x -> searchQuery.value = x },
     )
 
-    TurnOffProgressIndicatorStateOnSourceChange(
+    turnOffProgressIndicatorStateOnSourceChange(
         source = source,
         isLoading = isLoading.value,
         turnOffProgressIndicator = { isLoading.value = false },

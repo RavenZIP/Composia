@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.filter
 
 /** Обертка над текстовыми полями, которые используют контролы напрямую */
 @Composable
-internal fun <T> ResetReadonlyStateOnResetValue(
+internal fun <T> resetReadonlyStateOnResetValue(
     control: ValidatableSingleControl<T>,
     state: TextFieldState,
 ) {
@@ -30,7 +30,7 @@ internal fun <T> ResetReadonlyStateOnResetValue(
 }
 
 @Composable
-internal fun <T> ResetReadonlyStateOnResetValue(
+internal fun <T> resetReadonlyStateOnResetValue(
     control: SingleValueControl<T>,
     state: TextFieldState,
 ) {

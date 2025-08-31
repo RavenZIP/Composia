@@ -26,7 +26,7 @@ private fun combineExpandedStateWithSearchQuery(
 }
 
 @Composable
-internal fun <T> LoadSearchResult(
+internal fun <T> loadSearchResult(
     state: DropDownTextFieldState,
     source: DataSource.Predefined<T>,
     sourceItemToString: (T) -> String,
@@ -46,7 +46,7 @@ internal fun <T> LoadSearchResult(
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Composable
-internal fun <T> LoadSearchResult(
+internal fun <T> loadSearchResult(
     state: DropDownTextFieldState,
     source: DataSource.ByQuery<T>,
     searchQueryFlow: Flow<String>,
@@ -69,7 +69,7 @@ internal fun <T> LoadSearchResult(
 }
 
 @Composable
-internal fun <T> UpdateSearchQueryOnControlOrExpandChange(
+internal fun <T> updateSearchQueryOnControlOrExpandChange(
     control: ValidatableSingleControl<T>,
     state: DropDownTextFieldState,
     sourceItemToString: (T) -> String,
@@ -90,7 +90,7 @@ internal fun <T> UpdateSearchQueryOnControlOrExpandChange(
 }
 
 @Composable
-internal fun <T> TurnOffProgressIndicatorStateOnSourceChange(
+internal fun <T> turnOffProgressIndicatorStateOnSourceChange(
     source: DataSource<T>,
     isLoading: Boolean,
     turnOffProgressIndicator: () -> Unit,

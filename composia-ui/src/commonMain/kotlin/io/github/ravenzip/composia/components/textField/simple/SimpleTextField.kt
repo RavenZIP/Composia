@@ -17,7 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
+import io.github.ravenzip.composia.components.textField.shared.resetReadonlyStateOnResetValue
 import io.github.ravenzip.composia.control.valueControl.SingleValueControl
 import io.github.ravenzip.composia.state.TextFieldState
 
@@ -79,7 +79,7 @@ fun SimpleTextField(
 ) {
     val initializedState = state ?: remember { TextFieldState() }
 
-    ResetReadonlyStateOnResetValue(control = control, state = initializedState)
+    resetReadonlyStateOnResetValue(control = control, state = initializedState)
 
     val controlSnapshot = control.snapshotFlow.collectAsState().value
     val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value

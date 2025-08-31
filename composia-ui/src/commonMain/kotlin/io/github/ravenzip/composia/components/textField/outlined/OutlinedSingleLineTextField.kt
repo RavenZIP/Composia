@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
-import io.github.ravenzip.composia.components.textField.shared.ResetReadonlyStateOnResetValue
+import io.github.ravenzip.composia.components.textField.shared.resetReadonlyStateOnResetValue
 import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
 import io.github.ravenzip.composia.state.TextFieldState
 import io.github.ravenzip.composia.style.DefaultComponentShape
@@ -78,7 +78,7 @@ fun OutlinedSingleLineTextField(
 ) {
     val initializedState = state ?: remember { TextFieldState() }
 
-    ResetReadonlyStateOnResetValue(control = control, state = initializedState)
+    resetReadonlyStateOnResetValue(control = control, state = initializedState)
 
     val controlSnapshot = control.snapshotFlow.collectAsState().value
     val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
