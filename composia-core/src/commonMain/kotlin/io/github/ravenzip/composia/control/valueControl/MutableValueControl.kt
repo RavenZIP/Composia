@@ -1,6 +1,5 @@
 package io.github.ravenzip.composia.control.valueControl
 
-import io.github.ravenzip.composia.control.enabledControl.EnablementControlSnapshot
 import io.github.ravenzip.composia.control.enabledControl.MutableEnablementControl
 import io.github.ravenzip.composia.control.enabledControl.MutableEnablementControlImpl
 import io.github.ravenzip.composia.control.shared.ValueChangeEvent
@@ -59,7 +58,7 @@ fun <T> ValueControl<T>.createSnapshotStateFlow(
     initialValue: T,
     initialState: EnablementState,
     coroutineScope: CoroutineScope,
-): StateFlow<EnablementControlSnapshot> =
+): StateFlow<ValueControlSnapshot<T>> =
     combine(valueChangeEvents, enablementFlow) { valueWithTypeChanges, enablementState ->
             ValueControlSnapshotImpl.create(
                 valueWithTypeChanges = valueWithTypeChanges,
