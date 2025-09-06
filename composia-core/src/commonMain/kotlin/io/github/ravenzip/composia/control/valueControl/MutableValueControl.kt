@@ -1,21 +1,15 @@
 package io.github.ravenzip.composia.control.valueControl
 
 import io.github.ravenzip.composia.control.enabledControl.EnablementControlSnapshot
+import io.github.ravenzip.composia.control.enabledControl.MutableEnablementControl
 import io.github.ravenzip.composia.control.enabledControl.MutableEnablementControlImpl
 import io.github.ravenzip.composia.control.shared.ValueChangeEvent
 import io.github.ravenzip.composia.control.shared.ValueChangeType
 import io.github.ravenzip.composia.control.shared.status.EnablementState
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 
-interface MutableValueControl<T> : ValueControl<T> {
+interface MutableValueControl<T> : ValueControl<T>, MutableEnablementControl {
     fun setValue(value: T)
 }
 
