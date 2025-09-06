@@ -11,10 +11,12 @@ import kotlinx.coroutines.flow.*
 
 interface MutableValueControl<T> : ValueControl<T>, MutableEnablementControl {
     fun setValue(value: T)
+
+    fun reset(value: T)
 }
 
-internal class MutableValueControlImpl<T>(
-    val initialValue: T,
+internal open class MutableValueControlImpl<T>(
+    initialValue: T,
     val resetValue: T = initialValue,
     enabled: Boolean = true,
 ) : MutableEnablementControlImpl(enabled), MutableValueControl<T> {
@@ -41,7 +43,7 @@ internal class MutableValueControlImpl<T>(
         reset(resetValue)
     }
 
-    fun reset(value: T) {
+    override fun reset(value: T) {
         super.reset()
         _valueChangeEvents.update { ValueChangeEvent.createResetChange(value) }
     }
@@ -58,7 +60,7 @@ fun <T> ValueControl<T>.createSnapshotStateFlow(
     initialState: EnablementState,
     coroutineScope: CoroutineScope,
 ): StateFlow<EnablementControlSnapshot> =
-    combine(this.valueChangeEvents, this.enablementFlow) { valueWithTypeChanges, enablementState ->
+    combine(valueChangeEvents, enablementFlow) { valueWithTypeChanges, enablementState ->
             ValueControlSnapshotImpl.create(
                 valueWithTypeChanges = valueWithTypeChanges,
                 state = enablementState,
@@ -74,7 +76,7 @@ fun <T> ValueControl<T>.createValueStateFlow(
     initialValue: T,
     coroutineScope: CoroutineScope,
 ): StateFlow<T> =
-    this.valueChangeEvents
+    valueChangeEvents
         .map { x -> x.value }
         .stateIn(
             scope = coroutineScope,
@@ -86,10 +88,33 @@ fun <T> ValueControl<T>.createTypeChangeStateFlow(
     initialTypeChange: ValueChangeType = ValueChangeType.Initialize,
     coroutineScope: CoroutineScope,
 ): StateFlow<ValueChangeType> =
-    this.valueChangeEvents
+    valueChangeEvents
         .map { x -> x.typeChange }
         .stateIn(
             scope = coroutineScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = initialTypeChange,
         )
+
+fun <T, K> MutableValueControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
+    val currentValues = currentValue.toMutableList()
+    val valueKey = keySelector(value)
+    val existingIndex = currentValues.indexOfFirst { keySelector(it) == valueKey }
+    val isExists = existingIndex >= 0
+
+    if (isExists) {
+        currentValues.removeAt(existingIndex)
+    } else {
+        currentValues.add(value)
+    }
+
+    setValue(currentValues)
+}
+
+fun <T> MutableValueControl<List<T>>.setValue(vararg values: T) {
+    setValue(values.toList())
+}
+
+fun <T> MutableValueControl<List<T>>.reset(vararg values: T) {
+    reset(values.toList())
+}
