@@ -5,6 +5,7 @@ import io.github.ravenzip.composia.control.enabledControl.MutableEnablementContr
 import io.github.ravenzip.composia.control.shared.ValueChangeEvent
 import io.github.ravenzip.composia.control.shared.ValueChangeType
 import io.github.ravenzip.composia.control.shared.status.EnablementState
+import io.github.ravenzip.composia.extension.addOrRemove
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
@@ -96,16 +97,7 @@ fun <T> ValueControl<T>.createTypeChangeStateFlow(
         )
 
 fun <T, K> MutableValueControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
-    val currentValues = currentValue.toMutableList()
-    val valueKey = keySelector(value)
-    val existingIndex = currentValues.indexOfFirst { keySelector(it) == valueKey }
-    val isExists = existingIndex >= 0
-
-    if (isExists) {
-        currentValues.removeAt(existingIndex)
-    } else {
-        currentValues.add(value)
-    }
+    val currentValues = currentValue.toMutableList().addOrRemove(value, keySelector)
 
     setValue(currentValues)
 }
