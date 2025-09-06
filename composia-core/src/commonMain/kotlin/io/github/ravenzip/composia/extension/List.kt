@@ -1,15 +1,16 @@
 package io.github.ravenzip.composia.extension
 
-fun <T, K> MutableList<T>.addOrRemove(value: T, keySelector: (T) -> K): MutableList<T> {
+fun <T, K> List<T>.addOrRemove(value: T, keySelector: (T) -> K): MutableList<T> {
+    val current = this.toMutableList()
     val valueKey = keySelector(value)
-    val existingIndex = this.indexOfFirst { keySelector(it) == valueKey }
+    val existingIndex = current.indexOfFirst { keySelector(it) == valueKey }
     val isExists = existingIndex >= 0
 
     if (isExists) {
-        this.removeAt(existingIndex)
+        current.removeAt(existingIndex)
     } else {
-        this.add(value)
+        current.add(value)
     }
 
-    return this
+    return current
 }

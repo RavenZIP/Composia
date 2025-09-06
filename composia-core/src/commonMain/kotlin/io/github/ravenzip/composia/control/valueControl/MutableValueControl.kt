@@ -97,7 +97,7 @@ fun <T> ValueControl<T>.createTypeChangeStateFlow(
         )
 
 fun <T, K> MutableValueControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
-    val currentValues = currentValue.toMutableList().addOrRemove(value, keySelector)
+    val currentValues = currentValue.addOrRemove(value, keySelector)
 
     setValue(currentValues)
 }

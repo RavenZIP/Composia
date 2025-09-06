@@ -82,7 +82,7 @@ fun <T> ValidatableValueControl<T>.createIsInvalidStateFlow(
         )
 
 fun <T, K> MutableValidatableValueControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
-    val currentValues = currentValue.toMutableList().addOrRemove(value, keySelector)
+    val currentValues = currentValue.addOrRemove(value, keySelector)
 
     setValue(currentValues)
     validate(currentValues)
