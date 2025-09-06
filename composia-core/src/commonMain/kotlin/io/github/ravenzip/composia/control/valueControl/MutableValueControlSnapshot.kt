@@ -25,20 +25,20 @@ internal open class ValueControlSnapshotImpl<T>(
 ) : ValueControlSnapshot<T> {
     companion object {
         fun <T> create(
-            valueWithTypeChanges: ValueChangeEvent<T>,
+            valueChangeEvent: ValueChangeEvent<T>,
             state: EnablementState,
         ): ValueControlSnapshot<T> =
             ValueControlSnapshotImpl(
-                value = valueWithTypeChanges.value,
-                typeChange = valueWithTypeChanges.typeChange,
-                hasChanges = !valueWithTypeChanges.typeChange.isInitialize(),
+                value = valueChangeEvent.value,
+                typeChange = valueChangeEvent.typeChange,
+                hasChanges = !valueChangeEvent.typeChange.isInitialize(),
                 isEnabled = state.isEnabled(),
                 isDisabled = state.isDisabled(),
             )
 
         fun <T> create(value: T, state: EnablementState): ValueControlSnapshot<T> =
             create(
-                valueWithTypeChanges =
+                valueChangeEvent =
                     ValueChangeEvent(value = value, typeChange = ValueChangeType.Initialize),
                 state = state,
             )

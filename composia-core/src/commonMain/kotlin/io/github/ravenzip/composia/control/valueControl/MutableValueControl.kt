@@ -60,9 +60,9 @@ fun <T> ValueControl<T>.createSnapshotStateFlow(
     initialState: EnablementState,
     coroutineScope: CoroutineScope,
 ): StateFlow<ValueControlSnapshot<T>> =
-    combine(valueChangeEvents, enablementFlow) { valueWithTypeChanges, enablementState ->
+    combine(valueChangeEvents, enablementEvents) { valueWithTypeChanges, enablementState ->
             ValueControlSnapshotImpl.create(
-                valueWithTypeChanges = valueWithTypeChanges,
+                valueChangeEvent = valueWithTypeChanges,
                 state = enablementState,
             )
         }
