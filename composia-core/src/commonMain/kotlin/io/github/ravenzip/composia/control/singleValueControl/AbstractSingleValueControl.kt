@@ -1,6 +1,6 @@
-package io.github.ravenzip.composia.control.valueControl
+package io.github.ravenzip.composia.control.singleValueControl
 
-import io.github.ravenzip.composia.control.shared.ValueWithTypeChanges
+import io.github.ravenzip.composia.control.shared.ValueChangeEvent
 import io.github.ravenzip.composia.control.statusControl.AbstractStatusControl
 import io.github.ravenzip.composia.extension.stateInDefault
 import kotlinx.coroutines.CoroutineScope
@@ -15,8 +15,7 @@ abstract class AbstractSingleValueControl<T>(
     disabled: Boolean = false,
     coroutineScope: CoroutineScope,
 ) : AbstractStatusControl(disabled, coroutineScope) {
-    private val _valueFlow =
-        MutableStateFlow(ValueWithTypeChanges.createInitializeChange(initialValue))
+    private val _valueFlow = MutableStateFlow(ValueChangeEvent.createInitializeChange(initialValue))
 
     val valueFlow =
         _valueFlow
@@ -32,7 +31,7 @@ abstract class AbstractSingleValueControl<T>(
         get() = _valueFlow.value
 
     fun setValue(value: T) {
-        _valueFlow.update { ValueWithTypeChanges.createSetChange(value) }
+        _valueFlow.update { ValueChangeEvent.createSetChange(value) }
     }
 
     override fun reset() {
@@ -41,6 +40,6 @@ abstract class AbstractSingleValueControl<T>(
 
     fun reset(value: T) {
         super.reset()
-        _valueFlow.update { ValueWithTypeChanges.createResetChange(value) }
+        _valueFlow.update { ValueChangeEvent.createResetChange(value) }
     }
 }

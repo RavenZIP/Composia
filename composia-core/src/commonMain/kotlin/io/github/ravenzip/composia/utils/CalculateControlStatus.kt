@@ -1,6 +1,6 @@
 package io.github.ravenzip.composia.utils
 
-import io.github.ravenzip.composia.control.shared.ControlStatus
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
 
 internal fun calculateControlStatus(errorMessage: String = "") =
     if (errorMessage.isNotEmpty()) ControlStatus.Invalid(errorMessage) else ControlStatus.Valid

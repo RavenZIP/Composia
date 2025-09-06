@@ -1,8 +1,8 @@
 package io.github.ravenzip.composia.control.multiValueControl
 
-import io.github.ravenzip.composia.control.shared.ControlStatus
+import io.github.ravenzip.composia.control.shared.ValueChangeEvent
 import io.github.ravenzip.composia.control.shared.ValueChangeType
-import io.github.ravenzip.composia.control.shared.ValueWithTypeChanges
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
 
 data class MultiValueControlSnapshot<T>(
     override val value: List<T>,
@@ -21,7 +21,7 @@ data class MultiValueControlSnapshot<T>(
         isDisabled = isDisabled,
     ) {
     companion object {
-        fun <T> create(valueWithTypeChanges: ValueWithTypeChanges<List<T>>, status: ControlStatus) =
+        fun <T> create(valueWithTypeChanges: ValueChangeEvent<List<T>>, status: ControlStatus) =
             MultiValueControlSnapshot(
                 value = valueWithTypeChanges.value,
                 typeChange = valueWithTypeChanges.typeChange,
@@ -34,7 +34,7 @@ data class MultiValueControlSnapshot<T>(
         fun <T> create(value: List<T>, status: ControlStatus) =
             create(
                 valueWithTypeChanges =
-                    ValueWithTypeChanges(value = value, typeChange = ValueChangeType.Initialize),
+                    ValueChangeEvent(value = value, typeChange = ValueChangeType.Initialize),
                 status = status,
             )
 

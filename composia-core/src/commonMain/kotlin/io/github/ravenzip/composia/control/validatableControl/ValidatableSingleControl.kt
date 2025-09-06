@@ -1,8 +1,8 @@
 package io.github.ravenzip.composia.control.validatableControl
 
-import io.github.ravenzip.composia.control.shared.ControlStatus
 import io.github.ravenzip.composia.control.shared.ValueChangeType
-import io.github.ravenzip.composia.control.valueControl.AbstractSingleValueControl
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
+import io.github.ravenzip.composia.control.singleValueControl.AbstractSingleValueControl
 import io.github.ravenzip.composia.extension.stateInDefault
 import io.github.ravenzip.composia.utils.calculateControlStatus
 import kotlinx.coroutines.CoroutineScope

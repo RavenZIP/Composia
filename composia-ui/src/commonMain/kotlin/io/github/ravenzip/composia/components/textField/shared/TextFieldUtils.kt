@@ -11,8 +11,8 @@ import androidx.compose.ui.text.style.TextAlign
 import io.github.ravenzip.composia.components.text.CounterLabel
 import io.github.ravenzip.composia.components.text.HintText
 import io.github.ravenzip.composia.control.shared.ValueChangeType
+import io.github.ravenzip.composia.control.singleValueControl.SingleValueControl
 import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
-import io.github.ravenzip.composia.control.valueControl.SingleValueControl
 import io.github.ravenzip.composia.state.TextFieldState
 import kotlinx.coroutines.flow.filter
 

@@ -1,8 +1,8 @@
-package io.github.ravenzip.composia.control.valueControl
+package io.github.ravenzip.composia.control.singleValueControl
 
-import io.github.ravenzip.composia.control.shared.ControlStatus
+import io.github.ravenzip.composia.control.shared.ValueChangeEvent
 import io.github.ravenzip.composia.control.shared.ValueChangeType
-import io.github.ravenzip.composia.control.shared.ValueWithTypeChanges
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
 
 data class SingleValueControlSnapshot<T>(
     override val value: T,
@@ -21,7 +21,7 @@ data class SingleValueControlSnapshot<T>(
         isDisabled = isDisabled,
     ) {
     companion object {
-        fun <T> create(valueWithTypeChanges: ValueWithTypeChanges<T>, status: ControlStatus) =
+        fun <T> create(valueWithTypeChanges: ValueChangeEvent<T>, status: ControlStatus) =
             SingleValueControlSnapshot(
                 value = valueWithTypeChanges.value,
                 typeChange = valueWithTypeChanges.typeChange,
@@ -34,7 +34,7 @@ data class SingleValueControlSnapshot<T>(
         fun <T> create(value: T, status: ControlStatus) =
             create(
                 valueWithTypeChanges =
-                    ValueWithTypeChanges(value = value, typeChange = ValueChangeType.Initialize),
+                    ValueChangeEvent(value = value, typeChange = ValueChangeType.Initialize),
                 status = status,
             )
 

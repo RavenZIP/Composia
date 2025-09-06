@@ -1,8 +1,8 @@
 package io.github.ravenzip.composia.control.validatableControl
 
-import io.github.ravenzip.composia.control.shared.ControlStatus
 import io.github.ravenzip.composia.control.shared.ValueChangeType
-import io.github.ravenzip.composia.control.valueControl.AbstractSingleValueControlSnapshot
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
+import io.github.ravenzip.composia.control.singleValueControl.AbstractSingleValueControlSnapshot
 
 abstract class AbstractValidatableSingleControlSnapshot<T>(
     override val value: T,

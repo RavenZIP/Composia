@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.control.valueControl
+package io.github.ravenzip.composia.control.singleValueControl
 
 import io.github.ravenzip.composia.extension.stateInDefault
 import kotlinx.coroutines.CoroutineScope

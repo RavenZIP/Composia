@@ -1,6 +1,6 @@
 package io.github.ravenzip.composia.control.multiValueControl
 
-import io.github.ravenzip.composia.control.shared.ControlStatus
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
 import io.github.ravenzip.composia.control.shared.ValueChangeType
 import io.github.ravenzip.composia.control.statusControl.AbstractStatusControlSnapshot
 

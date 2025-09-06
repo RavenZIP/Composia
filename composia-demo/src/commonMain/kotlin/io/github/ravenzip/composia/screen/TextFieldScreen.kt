@@ -14,9 +14,9 @@ import io.github.ravenzip.composia.components.textField.base.SingleLineTextField
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.simple.SimpleTextField
 import io.github.ravenzip.composia.control.shared.Validator
+import io.github.ravenzip.composia.control.singleValueControl.SingleValueControl
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
-import io.github.ravenzip.composia.control.valueControl.SingleValueControl
 
 class TextFieldScreenViewModel : ViewModel() {
     val simpleTextFieldControl = SingleValueControl("", coroutineScope = viewModelScope)

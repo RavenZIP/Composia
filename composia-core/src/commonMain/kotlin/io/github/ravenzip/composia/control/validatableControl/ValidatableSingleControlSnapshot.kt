@@ -1,8 +1,8 @@
 package io.github.ravenzip.composia.control.validatableControl
 
-import io.github.ravenzip.composia.control.shared.ControlStatus
+import io.github.ravenzip.composia.control.shared.ValueChangeEvent
 import io.github.ravenzip.composia.control.shared.ValueChangeType
-import io.github.ravenzip.composia.control.shared.ValueWithTypeChanges
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
 
 data class ValidatableSingleControlSnapshot<T>(
     override val value: T,
@@ -29,7 +29,7 @@ data class ValidatableSingleControlSnapshot<T>(
     companion object {
 
         fun <T> create(
-            valueWithTypeChanges: ValueWithTypeChanges<T>,
+            valueWithTypeChanges: ValueChangeEvent<T>,
             status: ControlStatus,
             errorMessage: String,
         ) =
@@ -48,7 +48,7 @@ data class ValidatableSingleControlSnapshot<T>(
         fun <T> create(value: T, status: ControlStatus, errorMessage: String) =
             create(
                 valueWithTypeChanges =
-                    ValueWithTypeChanges(value = value, typeChange = ValueChangeType.Initialize),
+                    ValueChangeEvent(value = value, typeChange = ValueChangeType.Initialize),
                 status = status,
                 errorMessage = errorMessage,
             )

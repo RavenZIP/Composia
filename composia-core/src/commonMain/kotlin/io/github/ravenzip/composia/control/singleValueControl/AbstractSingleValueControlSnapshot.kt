@@ -1,7 +1,7 @@
-package io.github.ravenzip.composia.control.valueControl
+package io.github.ravenzip.composia.control.singleValueControl
 
-import io.github.ravenzip.composia.control.shared.ControlStatus
 import io.github.ravenzip.composia.control.shared.ValueChangeType
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
 import io.github.ravenzip.composia.control.statusControl.AbstractStatusControlSnapshot
 
 abstract class AbstractSingleValueControlSnapshot<T>(

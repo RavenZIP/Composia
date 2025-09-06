@@ -1,6 +1,6 @@
 package io.github.ravenzip.composia.control.multiValueControl
 
-import io.github.ravenzip.composia.control.shared.ValueWithTypeChanges
+import io.github.ravenzip.composia.control.shared.ValueChangeEvent
 import io.github.ravenzip.composia.control.statusControl.AbstractStatusControl
 import io.github.ravenzip.composia.extension.stateInDefault
 import kotlinx.coroutines.CoroutineScope
@@ -16,8 +16,7 @@ abstract class AbstractMultiValueControl<T, K>(
     disabled: Boolean = false,
     coroutineScope: CoroutineScope,
 ) : AbstractStatusControl(disabled = disabled, coroutineScope = coroutineScope) {
-    private val _valueFlow =
-        MutableStateFlow(ValueWithTypeChanges.createInitializeChange(initialValue))
+    private val _valueFlow = MutableStateFlow(ValueChangeEvent.createInitializeChange(initialValue))
 
     val valueFlow =
         _valueFlow
@@ -45,16 +44,16 @@ abstract class AbstractMultiValueControl<T, K>(
                 currentValues.add(value)
             }
 
-            ValueWithTypeChanges.createSetChange(currentValues)
+            ValueChangeEvent.createSetChange(currentValues)
         }
     }
 
     fun setValue(vararg value: T) {
-        _valueFlow.update { ValueWithTypeChanges.createSetChange(value.toList()) }
+        _valueFlow.update { ValueChangeEvent.createSetChange(value.toList()) }
     }
 
     fun setValue(value: List<T>) {
-        _valueFlow.update { ValueWithTypeChanges.createSetChange(value) }
+        _valueFlow.update { ValueChangeEvent.createSetChange(value) }
     }
 
     override fun reset() {
@@ -63,11 +62,11 @@ abstract class AbstractMultiValueControl<T, K>(
 
     fun reset(value: List<T>) {
         super.reset()
-        _valueFlow.update { ValueWithTypeChanges.createResetChange(value) }
+        _valueFlow.update { ValueChangeEvent.createResetChange(value) }
     }
 
     fun reset(vararg value: T) {
         super.reset()
-        _valueFlow.update { ValueWithTypeChanges.createResetChange(value.toList()) }
+        _valueFlow.update { ValueChangeEvent.createResetChange(value.toList()) }
     }
 }

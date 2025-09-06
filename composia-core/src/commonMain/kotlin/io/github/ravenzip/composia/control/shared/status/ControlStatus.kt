@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.control.shared
+package io.github.ravenzip.composia.control.shared.status
 
 sealed class ControlStatus {
     object Disabled : ControlStatus()

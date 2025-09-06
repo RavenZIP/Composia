@@ -2,14 +2,14 @@ package io.github.ravenzip.composia.statusControl
 
 import app.cash.turbine.test
 import app.cash.turbine.turbineScope
-import io.github.ravenzip.composia.control.shared.ControlStatus
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
 import io.github.ravenzip.composia.control.statusControl.AbstractStatusControl
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.test.runTest
 
 class AbstractStatusControlTest {
     private class BaseStatusControl(disabled: Boolean = false, scope: CoroutineScope) :
@@ -128,6 +128,20 @@ class AbstractStatusControlTest {
                 control.disable()
                 assertFalse(awaitItem())
             }
+        }
+    }
+
+    @Test
+    fun `isEnabled has correct value by isEnabledFlow`() = runTest {
+        turbineScope {
+            val control = BaseStatusControl(disabled = true, scope = backgroundScope)
+
+            assertFalse(control.getIsEnabled())
+
+            control.enable()
+            println(control.status)
+
+            assertTrue(control.getIsEnabled())
         }
     }
 }

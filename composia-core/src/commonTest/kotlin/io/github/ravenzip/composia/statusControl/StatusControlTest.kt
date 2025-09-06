@@ -2,7 +2,7 @@ package io.github.ravenzip.composia.statusControl
 
 import app.cash.turbine.test
 import app.cash.turbine.turbineScope
-import io.github.ravenzip.composia.control.shared.ControlStatus
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
 import io.github.ravenzip.composia.control.statusControl.StatusControl
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test

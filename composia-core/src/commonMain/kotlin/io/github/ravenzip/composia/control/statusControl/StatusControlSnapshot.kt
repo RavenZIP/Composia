@@ -1,6 +1,6 @@
 package io.github.ravenzip.composia.control.statusControl
 
-import io.github.ravenzip.composia.control.shared.ControlStatus
+import io.github.ravenzip.composia.control.shared.status.ControlStatus
 import io.github.ravenzip.composia.utils.calculateControlStatus
 
 data class StatusControlSnapshot(
