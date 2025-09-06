@@ -7,3 +7,17 @@ sealed class ControlStatus {
 
     object Valid : ControlStatus()
 }
+
+fun ControlStatus.toEnablementState() =
+    when (this) {
+        is ControlStatus.Disabled -> EnablementState.Disabled
+        else -> EnablementState.Enabled
+    }
+
+fun ControlStatus.isEnabled() = this !is ControlStatus.Disabled
+
+fun ControlStatus.isDisabled() = this is ControlStatus.Disabled
+
+fun ControlStatus.isInvalid() = this is ControlStatus.Invalid
+
+fun ControlStatus.isValid() = this is ControlStatus.Valid
