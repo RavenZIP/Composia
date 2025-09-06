@@ -1,5 +1,6 @@
 package io.github.ravenzip.composia.control.validatableControl
 
+import io.github.ravenzip.composia.control.shared.status.EnablementState
 import io.github.ravenzip.composia.control.validation.*
 import io.github.ravenzip.composia.control.valueControl.MutableValueControl
 import io.github.ravenzip.composia.control.valueControl.MutableValueControlImpl
@@ -79,6 +80,33 @@ fun <T> ValidatableValueControl<T>.createIsInvalidStateFlow(
             scope = coroutineScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = initialValue,
+        )
+
+fun <T> ValidatableValueControl<T>.createSnapshotStateFlow(
+    initialValue: T,
+    initialState: EnablementState = EnablementState.Enabled,
+    initialValidationResult: ValidationResult = ValidationResult.Valid,
+    coroutineScope: CoroutineScope,
+): StateFlow<ValidatableControlSnapshot<T>> =
+    combine(valueChangeEvents, enablementEvents, validationResultEvents) {
+            valueWithTypeChanges,
+            enablementState,
+            validationResult ->
+            ValidatableControlSnapshotImpl.create(
+                valueChangeEvent = valueWithTypeChanges,
+                state = enablementState,
+                validationResult = validationResult,
+            )
+        }
+        .stateIn(
+            scope = coroutineScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue =
+                ValidatableControlSnapshotImpl.create(
+                    initialValue,
+                    initialState,
+                    initialValidationResult,
+                ),
         )
 
 fun <T, K> MutableValidatableValueControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
