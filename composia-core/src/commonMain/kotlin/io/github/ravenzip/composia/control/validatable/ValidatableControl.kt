@@ -10,9 +10,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
 interface ValidatableControl<T> : ValueControl<T>, Validatable<T> {
-    val isValidState: StateFlow<Boolean>
-    val isInvalidState: StateFlow<Boolean>
-    override val snapshotState: StateFlow<ValidatableControlSnapshot<T>>
+    val isValidFlow: StateFlow<Boolean>
+    val isInvalidFlow: StateFlow<Boolean>
+    override val snapshotFlow: StateFlow<ValidatableControlSnapshot<T>>
 }
 
 interface MutableValidatableControl<T> : ValidatableControl<T>, MutableValueControl<T>
@@ -26,22 +26,24 @@ internal class MutableValidatableValueControlImpl<T>(
 ) :
     MutableValueControlImpl<T>(initialValue, resetValue, enabled, coroutineScope),
     MutableValidatableControl<T> {
-    private val _validationResultState: MutableStateFlow<ValidationResult> =
+    private val _validationResult: MutableStateFlow<ValidationResult> =
         MutableStateFlow(ValidationResult.Valid)
-    override val validationResultState: StateFlow<ValidationResult> =
-        _validationResultState.asStateFlow()
+    override val validationResultFlow: StateFlow<ValidationResult> = _validationResult.asStateFlow()
 
-    override val currentErrorMessage: String?
-        get() = _validationResultState.value.getErrorMessage()
+    override val validationResult: ValidationResult
+        get() = _validationResult.value
+
+    override val errorMessage: String?
+        get() = _validationResult.value.getErrorMessage()
 
     override val isValid: Boolean
-        get() = _validationResultState.value.isValid()
+        get() = _validationResult.value.isValid()
 
     override val isInvalid: Boolean
-        get() = _validationResultState.value.isInvalid()
+        get() = _validationResult.value.isInvalid()
 
-    override val snapshotState: StateFlow<ValidatableControlSnapshot<T>> =
-        combine(valueChangeState, activationState, validationResultState) {
+    override val snapshotFlow: StateFlow<ValidatableControlSnapshot<T>> =
+        combine(valueChangeFlow, activationStateFlow, validationResultFlow) {
                 valueWithTypeChanges,
                 enablementState,
                 validationResult ->
@@ -57,17 +59,17 @@ internal class MutableValidatableValueControlImpl<T>(
                     ValidatableControlSnapshotImpl.create(
                         initialValue,
                         initialState,
-                        _validationResultState.value,
+                        _validationResult.value,
                     ),
             )
 
-    override val isValidState: StateFlow<Boolean> =
-        validationResultState
+    override val isValidFlow: StateFlow<Boolean> =
+        validationResultFlow
             .map { x -> x is ValidationResult.Valid }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = enabled)
 
-    override val isInvalidState: StateFlow<Boolean> =
-        validationResultState
+    override val isInvalidFlow: StateFlow<Boolean> =
+        validationResultFlow
             .map { x -> x is ValidationResult.Invalid }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = !enabled)
 
@@ -79,7 +81,7 @@ internal class MutableValidatableValueControlImpl<T>(
     override fun validate(value: T) {
         val errorMessage = validators.firstNotNullOfOrNull { validator -> validator(value) }
 
-        _validationResultState.update {
+        _validationResult.update {
             if (errorMessage == null) ValidationResult.Valid
             else ValidationResult.Invalid(errorMessage)
         }
@@ -104,7 +106,7 @@ fun <T> mutableValidatableControlOf(
 fun <T> MutableValidatableControl<T>.asReadonly(): ValidatableControl<T> = this
 
 fun <T, K> MutableValidatableControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
-    val currentValues = currentValue.addOrRemove(value, keySelector)
+    val currentValues = this.value.addOrRemove(value, keySelector)
 
     setValue(currentValues)
     validate(currentValues)

@@ -6,16 +6,16 @@ sealed interface ActivationState {
     object Disabled : ActivationState
 }
 
-fun activationStatusOf(value: Boolean) =
+fun activationStatusOf(value: Boolean): ActivationState =
     if (value) ActivationState.Enabled else ActivationState.Disabled
 
-fun ActivationState.toControlState(errorMessage: String) =
+fun ActivationState.toControlState(errorMessage: String): ControlState =
     when {
         this is ActivationState.Disabled -> ControlState.Disabled
         errorMessage.isNotEmpty() -> ControlState.Invalid(errorMessage)
         else -> ControlState.Valid
     }
 
-fun ActivationState.isEnabled() = this is ActivationState.Enabled
+fun ActivationState.isEnabled(): Boolean = this is ActivationState.Enabled
 
-fun ActivationState.isDisabled() = this is ActivationState.Disabled
+fun ActivationState.isDisabled(): Boolean = this is ActivationState.Disabled

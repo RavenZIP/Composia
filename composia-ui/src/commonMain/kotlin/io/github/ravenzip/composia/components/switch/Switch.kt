@@ -53,13 +53,13 @@ fun Switch(
     textStyle: TextStyle = LocalTextStyle.current,
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
-    val isSelected = control.valueState.collectAsState().value
-    val isEnabled = control.enabledState.collectAsState().value
+    val isSelected = control.valueFlow.collectAsState().value
+    val isEnabled = control.isEnabledFlow.collectAsState().value
 
     Switch(
         isSelected = isSelected,
         isEnabled = isEnabled,
-        onClick = { control.setValue(!control.currentValue) },
+        onClick = { control.setValue(!control.value) },
         modifier = modifier,
         text = text,
         textStyle = textStyle,
@@ -110,13 +110,13 @@ fun Switch(
     descriptionStyle: TextStyle = TextStyle.S14,
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
-    val isSelected = control.valueState.collectAsState().value
-    val isEnabled = control.enabledState.collectAsState().value
+    val isSelected = control.valueFlow.collectAsState().value
+    val isEnabled = control.isEnabledFlow.collectAsState().value
 
     Switch(
         isSelected = isSelected,
         isEnabled = isEnabled,
-        onClick = { control.setValue(!control.currentValue) },
+        onClick = { control.setValue(!control.value) },
         modifier = modifier,
         label = label,
         labelStyle = labelStyle,

@@ -196,7 +196,7 @@ fun <T> DropDownTextField(
     val isLoading = remember { mutableStateOf(false) }
 
     val searchQueryFlow = remember { snapshotFlow { searchQuery.value } }
-    val controlSnapshot = control.snapshotState.collectAsState().value
+    val controlSnapshot = control.snapshotFlow.collectAsState().value
     val errorMessage = remember(controlSnapshot) { controlSnapshot.errorMessage ?: "" }
     val isReadonly = initializedState.readonlyState.valueChanges.collectAsState().value
     val isExpanded = initializedState.expandedState.valueChanges.collectAsState().value
@@ -313,7 +313,7 @@ fun <T> DropDownTextField(
         sourceItemToString = sourceItemToString,
         label = { Text(label) },
         dropDownIcon = {
-            val isInvalid = control.isInvalidState.collectAsState().value
+            val isInvalid = control.isInvalidFlow.collectAsState().value
             val isExpanded = initializedState.expandedState.valueChanges.collectAsState().value
             val isFocused = initializedState.focusedState.valueChanges.collectAsState().value
 

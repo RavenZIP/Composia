@@ -109,7 +109,7 @@ fun RichButton(
     contentPadding: PaddingValues = PaddingValues(18.dp),
     onClick: () -> Unit = {},
 ) {
-    val isEnabled = control.enabledState.collectAsState().value
+    val isEnabled = control.isEnabledFlow.collectAsState().value
 
     RichButton(
         onClick = onClick,
@@ -140,7 +140,7 @@ fun RichButton(
     contentPadding: PaddingValues = PaddingValues(18.dp),
     onClick: () -> Unit = {},
 ) {
-    val isEnabled = control.enabledState.collectAsState().value
+    val isEnabled = control.isEnabledFlow.collectAsState().value
 
     val labelColor =
         if (labelStyle.color != Color.Unspecified) labelStyle.color else colors.contentColor

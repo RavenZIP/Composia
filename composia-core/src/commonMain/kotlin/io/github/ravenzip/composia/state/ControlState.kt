@@ -8,16 +8,16 @@ sealed class ControlState {
     object Valid : ControlState()
 }
 
-fun ControlState.toActivationState() =
+fun ControlState.toActivationState(): ActivationState =
     when (this) {
         is ControlState.Disabled -> ActivationState.Disabled
         else -> ActivationState.Enabled
     }
 
-fun ControlState.isEnabled() = this !is ControlState.Disabled
+fun ControlState.isEnabled(): Boolean = this !is ControlState.Disabled
 
-fun ControlState.isDisabled() = this is ControlState.Disabled
+fun ControlState.isDisabled(): Boolean = this is ControlState.Disabled
 
-fun ControlState.isInvalid() = this is ControlState.Invalid
+fun ControlState.isInvalid(): Boolean = this is ControlState.Invalid
 
-fun ControlState.isValid() = this is ControlState.Valid
+fun ControlState.isValid(): Boolean = this is ControlState.Valid

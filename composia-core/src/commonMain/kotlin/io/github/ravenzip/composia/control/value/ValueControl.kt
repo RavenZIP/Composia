@@ -11,14 +11,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
 interface ValueControl<T> : ActivationControl {
-    val valueChangeState: StateFlow<ValueChange<T>>
-    val valueState: StateFlow<T>
-    val typeChangeState: StateFlow<ValueChangeType>
-    val currentValueChange: ValueChange<T>
-    val currentValue: T
-    val currentTypeChange: ValueChangeType
+    val valueChangeFlow: StateFlow<ValueChange<T>>
+    val valueFlow: StateFlow<T>
+    val typeChangeFlow: StateFlow<ValueChangeType>
+    val valueChange: ValueChange<T>
+    val value: T
+    val typeChange: ValueChangeType
     val defaultResetValue: T
-    val snapshotState: StateFlow<ValueControlSnapshot<T>>
+    val snapshotFlow: StateFlow<ValueControlSnapshot<T>>
 }
 
 interface MutableValueControl<T> : ValueControl<T>, MutableActivationControl {
@@ -33,37 +33,37 @@ internal open class MutableValueControlImpl<T>(
     enabled: Boolean = true,
     coroutineScope: CoroutineScope,
 ) : MutableActivationControlImpl(enabled, coroutineScope), MutableValueControl<T> {
-    private val _valueChangeState: MutableStateFlow<ValueChange<T>> =
+    private val _valueChangeFlow: MutableStateFlow<ValueChange<T>> =
         MutableStateFlow(ValueChange.createInitializeChange(initialValue))
 
-    override val valueChangeState: StateFlow<ValueChange<T>> = _valueChangeState.asStateFlow()
+    override val valueChangeFlow: StateFlow<ValueChange<T>> = _valueChangeFlow.asStateFlow()
 
-    override val valueState: StateFlow<T> =
-        _valueChangeState
+    override val valueFlow: StateFlow<T> =
+        _valueChangeFlow
             .map { event -> event.value }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = initialValue)
 
-    override val typeChangeState: StateFlow<ValueChangeType> =
-        valueChangeState
+    override val typeChangeFlow: StateFlow<ValueChangeType> =
+        valueChangeFlow
             .map { x -> x.typeChange }
             .stateInWhileSubscribed(
                 scope = coroutineScope,
                 initialValue = ValueChangeType.Initialize,
             )
 
-    override val currentValueChange: ValueChange<T>
-        get() = _valueChangeState.value
+    override val valueChange: ValueChange<T>
+        get() = _valueChangeFlow.value
 
-    override val currentValue: T
-        get() = _valueChangeState.value.value
+    override val value: T
+        get() = _valueChangeFlow.value.value
 
-    override val currentTypeChange: ValueChangeType
-        get() = _valueChangeState.value.typeChange
+    override val typeChange: ValueChangeType
+        get() = _valueChangeFlow.value.typeChange
 
     override val defaultResetValue: T = resetValue
 
-    override val snapshotState: StateFlow<ValueControlSnapshot<T>> =
-        combine(valueChangeState, activationState) { valueWithTypeChanges, enablementState ->
+    override val snapshotFlow: StateFlow<ValueControlSnapshot<T>> =
+        combine(valueChangeFlow, activationStateFlow) { valueWithTypeChanges, enablementState ->
                 ValueControlSnapshotImpl.create(
                     valueChange = valueWithTypeChanges,
                     state = enablementState,
@@ -75,7 +75,7 @@ internal open class MutableValueControlImpl<T>(
             )
 
     override fun setValue(value: T) {
-        _valueChangeState.update { ValueChange.createSetChange(value) }
+        _valueChangeFlow.update { ValueChange.createSetChange(value) }
     }
 
     override fun reset() {
@@ -84,7 +84,7 @@ internal open class MutableValueControlImpl<T>(
 
     override fun reset(value: T) {
         super.reset()
-        _valueChangeState.update { ValueChange.createResetChange(value) }
+        _valueChangeFlow.update { ValueChange.createResetChange(value) }
     }
 }
 
@@ -99,7 +99,7 @@ fun <T> mutableValueControlOf(
 fun <T> MutableValueControl<T>.asReadonly(): ValueControl<T> = this
 
 fun <T, K> MutableValueControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
-    val currentValues = currentValue.addOrRemove(value, keySelector)
+    val currentValues = this.value.addOrRemove(value, keySelector)
 
     setValue(currentValues)
 }

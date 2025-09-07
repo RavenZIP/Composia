@@ -77,7 +77,7 @@ internal fun <T> updateSearchQueryOnControlOrExpandChange(
 ) {
     LaunchedEffect(control, state) {
         merge(
-                control.valueState
+                control.valueFlow
                     .map { value -> sourceItemToString(value) }
                     .filter { value -> value.isNotEmpty() },
                 state.expandedState.valueChanges

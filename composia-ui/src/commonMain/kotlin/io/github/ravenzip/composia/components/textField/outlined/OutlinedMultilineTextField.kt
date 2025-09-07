@@ -76,7 +76,7 @@ fun OutlinedMultiLineTextField(
 
     resetReadonlyStateOnResetValue(control = control, state = initializedState)
 
-    val controlSnapshot = control.snapshotState.collectAsState().value
+    val controlSnapshot = control.snapshotFlow.collectAsState().value
     val errorMessage = remember(controlSnapshot) { controlSnapshot.errorMessage ?: "" }
     val isReadonly = initializedState.readonlyState.valueChanges.collectAsState().value
     val isFocused = initializedState.focusedState.valueChanges.collectAsState().value

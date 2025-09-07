@@ -55,8 +55,8 @@ fun <T, K> SwitchGroup(
     contentPadding: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(10.dp),
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
-    val value = control.valueState.collectAsSnapshotStateList()
-    val isEnabled = control.enabledState.collectAsState().value
+    val value = control.valueFlow.collectAsSnapshotStateList()
+    val isEnabled = control.isEnabledFlow.collectAsState().value
 
     SwitchGroup(
         selectedItems = value,
