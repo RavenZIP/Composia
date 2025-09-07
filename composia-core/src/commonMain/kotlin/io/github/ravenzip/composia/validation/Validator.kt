@@ -1,47 +1,36 @@
 package io.github.ravenzip.composia.validation
 
-private val emailRegex =
-    Regex(
-        "[a-zA-Z0-9+._%\\-]{1,256}" +
-            "@" +
-            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-            "(" +
-            "\\." +
-            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-            ")+"
-    )
-
-private val phoneRegex =
-    Regex("(\\+[0-9]+[\\- .]*)?" + "(\\([0-9]+\\)[\\- .]*)?" + "([0-9][0-9\\- .]+[0-9])")
+typealias ValidatorFn<T> = (T) -> String?
 
 /** Возможные валидаторы для компонентов */
+// TODO надо ли разделить на разные классы согласно типу T?
 class Validator {
     companion object {
-        val required = { value: String ->
+        val required: ValidatorFn<String> = { value: String ->
             if (value.isEmpty()) "Поле обязательно для заполнения" else null
         }
 
-        val minLength = { value: String, min: Int ->
+        fun minLength(min: Int): ValidatorFn<String> = { value: String ->
             if (value.length < min) "Минимальная длина $min символа" else null
         }
 
-        val maxLength = { value: String, max: Int ->
+        fun maxLength(max: Int): ValidatorFn<String> = { value: String ->
             if (value.length > max) "Максимальная длина $max символа" else null
         }
 
-        val min = { value: Int, min: Int ->
+        fun min(min: Double): ValidatorFn<Double> = { value: Double ->
             if (value < min) "Минимальное допустимое значение $min" else null
         }
 
-        val max = { value: Int, max: Int ->
+        fun max(max: Double): ValidatorFn<Double> = { value: Double ->
             if (value > max) "Максимальное допустимое значение $max" else null
         }
 
-        val email = { value: String ->
+        val email: ValidatorFn<String> = { value: String ->
             if (!emailRegex.matches(value)) "Введен некорректный email" else null
         }
 
-        val phone = { value: String ->
+        val phone: ValidatorFn<String> = { value: String ->
             if (!phoneRegex.matches(value)) "Введен некорректный номер телефона" else null
         }
     }

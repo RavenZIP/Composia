@@ -24,14 +24,14 @@ class TextFieldScreenViewModel : ViewModel() {
     val singlenessTextFieldControl =
         mutableValidatableControlOf(
             initialValue = "",
-            validators = listOf { x -> Validator.required(x) },
+            validators = listOf(Validator.maxLength(3)),
             coroutineScope = viewModelScope,
         )
 
     val outlinedSinglenessTextFieldControl =
         mutableValidatableControlOf(
             initialValue = "",
-            validators = listOf { x -> Validator.required(x) },
+            validators = listOf(Validator.required),
             coroutineScope = viewModelScope,
         )
 

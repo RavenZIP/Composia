@@ -20,7 +20,7 @@ interface MutableValidatableControl<T> : ValidatableControl<T>, MutableValueCont
 internal class MutableValidatableValueControlImpl<T>(
     initialValue: T,
     resetValue: T = initialValue,
-    private val validators: List<(T) -> String?> = emptyList(),
+    private val validators: List<ValidatorFn<T>> = emptyList(),
     enabled: Boolean = true,
     coroutineScope: CoroutineScope,
 ) :
@@ -89,7 +89,7 @@ internal class MutableValidatableValueControlImpl<T>(
 fun <T> mutableValidatableControlOf(
     initialValue: T,
     resetValue: T = initialValue,
-    validators: List<(T) -> String?> = emptyList(),
+    validators: List<ValidatorFn<T>> = emptyList(),
     enabled: Boolean = true,
     coroutineScope: CoroutineScope,
 ): MutableValidatableControl<T> =
