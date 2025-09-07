@@ -3,13 +3,13 @@ package io.github.ravenzip.composia.control.validatableControl
 import io.github.ravenzip.composia.control.shared.ValueChangeEvent
 import io.github.ravenzip.composia.control.shared.ValueChangeType
 import io.github.ravenzip.composia.control.shared.isInitialize
-import io.github.ravenzip.composia.control.shared.status.EnablementState
+import io.github.ravenzip.composia.control.shared.status.ActivationState
 import io.github.ravenzip.composia.control.shared.status.isDisabled
 import io.github.ravenzip.composia.control.shared.status.isEnabled
-import io.github.ravenzip.composia.control.validation.ValidationResult
-import io.github.ravenzip.composia.control.validation.getErrorMessage
-import io.github.ravenzip.composia.control.validation.isInvalid
-import io.github.ravenzip.composia.control.validation.isValid
+import io.github.ravenzip.composia.control.shared.validation.ValidationResult
+import io.github.ravenzip.composia.control.shared.validation.getErrorMessage
+import io.github.ravenzip.composia.control.shared.validation.isInvalid
+import io.github.ravenzip.composia.control.shared.validation.isValid
 import io.github.ravenzip.composia.control.valueControl.ValueControlSnapshot
 
 interface ValidatableControlSnapshot<T> : ValueControlSnapshot<T> {
@@ -36,7 +36,7 @@ internal open class ValidatableControlSnapshotImpl<T>(
     companion object {
         fun <T> create(
             valueChangeEvent: ValueChangeEvent<T>,
-            state: EnablementState,
+            state: ActivationState,
             validationResult: ValidationResult,
         ): ValidatableControlSnapshot<T> =
             ValidatableControlSnapshotImpl(
@@ -52,7 +52,7 @@ internal open class ValidatableControlSnapshotImpl<T>(
 
         fun <T> create(
             value: T,
-            state: EnablementState,
+            state: ActivationState,
             validationResult: ValidationResult,
         ): ValidatableControlSnapshot<T> =
             create(
@@ -66,7 +66,7 @@ internal open class ValidatableControlSnapshotImpl<T>(
             create(
                 valueChangeEvent =
                     ValueChangeEvent(value = value, typeChange = ValueChangeType.Initialize),
-                state = EnablementState.Enabled,
+                state = ActivationState.Enabled,
                 validationResult = ValidationResult.Valid,
             )
     }

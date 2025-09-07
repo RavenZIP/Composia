@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.control.validation
+package io.github.ravenzip.composia.control.shared.validation
 
 import kotlinx.coroutines.flow.StateFlow
 

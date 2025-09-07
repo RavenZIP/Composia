@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import io.github.ravenzip.composia.components.model.DataSource
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
+import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
 import io.github.ravenzip.composia.extension.update
 import io.github.ravenzip.composia.function.searchElementsByQuery
 import io.github.ravenzip.composia.state.DropDownTextFieldState
@@ -70,19 +70,19 @@ internal fun <T> loadSearchResult(
 
 @Composable
 internal fun <T> updateSearchQueryOnControlOrExpandChange(
-    control: ValidatableSingleControl<T>,
+    control: ValidatableControl<T>,
     state: DropDownTextFieldState,
     sourceItemToString: (T) -> String,
     onSearchQueryChange: (String) -> Unit,
 ) {
     LaunchedEffect(control, state) {
         merge(
-                control.valueFlow
+                control.valueEvents
                     .map { value -> sourceItemToString(value) }
                     .filter { value -> value.isNotEmpty() },
                 state.expandedState.valueFlow
                     .filter { expanded -> !expanded && control.isInvalid }
-                    .map { sourceItemToString(control.resetValue) },
+                    .map { sourceItemToString(control.defaultResetValue) },
             )
             .onEach { value -> onSearchQueryChange(value) }
             .launchIn(this)

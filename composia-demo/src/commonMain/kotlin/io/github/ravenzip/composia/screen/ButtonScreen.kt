@@ -10,17 +10,17 @@ import androidx.lifecycle.viewModelScope
 import io.github.ravenzip.composia.components.button.IconButton
 import io.github.ravenzip.composia.components.button.RichButton
 import io.github.ravenzip.composia.components.button.SimpleButton
-import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.control.activationControl.mutableActivationControlOf
 import io.github.ravenzip.composia_demo.composia_demo.generated.resources.Res
 import io.github.ravenzip.composia_demo.composia_demo.generated.resources.outline_settings_24
 import org.jetbrains.compose.resources.painterResource
 
 class ButtonScreenViewModel : ViewModel() {
-    val simpleButtonControl = StatusControl(coroutineScope = viewModelScope)
+    val simpleButtonControl = mutableActivationControlOf(coroutineScope = viewModelScope)
 
-    val richButtonControl = StatusControl(coroutineScope = viewModelScope)
+    val richButtonControl = mutableActivationControlOf(coroutineScope = viewModelScope)
 
-    val iconButtonControl = StatusControl(coroutineScope = viewModelScope)
+    val iconButtonControl = mutableActivationControlOf(coroutineScope = viewModelScope)
 }
 
 @Composable

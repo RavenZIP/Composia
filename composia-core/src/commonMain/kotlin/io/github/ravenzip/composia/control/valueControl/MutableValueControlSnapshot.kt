@@ -1,19 +1,18 @@
 package io.github.ravenzip.composia.control.valueControl
 
-import io.github.ravenzip.composia.control.enabledControl.EnablementControlSnapshot
 import io.github.ravenzip.composia.control.shared.ValueChangeEvent
 import io.github.ravenzip.composia.control.shared.ValueChangeType
 import io.github.ravenzip.composia.control.shared.isInitialize
-import io.github.ravenzip.composia.control.shared.status.EnablementState
+import io.github.ravenzip.composia.control.shared.status.ActivationState
 import io.github.ravenzip.composia.control.shared.status.isDisabled
 import io.github.ravenzip.composia.control.shared.status.isEnabled
 
-interface ValueControlSnapshot<T> : EnablementControlSnapshot {
+interface ValueControlSnapshot<T> {
     val value: T
     val typeChange: ValueChangeType
     val hasChanges: Boolean
-    override val isEnabled: Boolean
-    override val isDisabled: Boolean
+    val isEnabled: Boolean
+    val isDisabled: Boolean
 }
 
 internal open class ValueControlSnapshotImpl<T>(
@@ -26,7 +25,7 @@ internal open class ValueControlSnapshotImpl<T>(
     companion object {
         fun <T> create(
             valueChangeEvent: ValueChangeEvent<T>,
-            state: EnablementState,
+            state: ActivationState,
         ): ValueControlSnapshot<T> =
             ValueControlSnapshotImpl(
                 value = valueChangeEvent.value,
@@ -36,7 +35,7 @@ internal open class ValueControlSnapshotImpl<T>(
                 isDisabled = state.isDisabled(),
             )
 
-        fun <T> create(value: T, state: EnablementState): ValueControlSnapshot<T> =
+        fun <T> create(value: T, state: ActivationState): ValueControlSnapshot<T> =
             create(
                 valueChangeEvent =
                     ValueChangeEvent(value = value, typeChange = ValueChangeType.Initialize),
@@ -44,6 +43,6 @@ internal open class ValueControlSnapshotImpl<T>(
             )
 
         fun <T> createDefault(value: T): ValueControlSnapshot<T> =
-            create(value = value, state = EnablementState.Enabled)
+            create(value = value, state = ActivationState.Enabled)
     }
 }

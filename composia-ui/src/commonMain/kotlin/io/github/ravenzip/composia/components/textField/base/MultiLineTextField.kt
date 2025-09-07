@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import io.github.ravenzip.composia.components.textField.shared.resetReadonlyStateOnResetValue
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
+import io.github.ravenzip.composia.control.validatableControl.MutableValidatableControl
 import io.github.ravenzip.composia.state.TextFieldState
 import io.github.ravenzip.composia.style.DefaultComponentShape
 
@@ -59,7 +59,7 @@ fun MultiLineTextField(
 
 @Composable
 fun MultiLineTextField(
-    control: ValidatableSingleControl<String>,
+    control: MutableValidatableControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier,
     maxLength: Int? = null,
@@ -76,7 +76,8 @@ fun MultiLineTextField(
 
     resetReadonlyStateOnResetValue(control = control, state = initializedState)
 
-    val controlSnapshot = control.snapshotFlow.collectAsState().value
+    val controlSnapshot = control.snapshotEvents.collectAsState().value
+    val errorMessage = remember(controlSnapshot) { controlSnapshot.errorMessage ?: "" }
     val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
     val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
 
@@ -88,7 +89,7 @@ fun MultiLineTextField(
         isReadonly = isReadonly,
         isFocused = isFocused,
         onFocusChange = { x -> initializedState.focusedState.setValue(x.isFocused) },
-        errorMessage = controlSnapshot.errorMessage,
+        errorMessage = errorMessage,
         maxLength = maxLength,
         maxLines = maxLines,
         minLines = minLines,

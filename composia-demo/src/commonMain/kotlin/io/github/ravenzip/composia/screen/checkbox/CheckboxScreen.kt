@@ -9,14 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.components.checkbox.CheckboxGroup
-import io.github.ravenzip.composia.control.multiValueControl.MultiValueControl
+import io.github.ravenzip.composia.control.validatableControl.mutableValidatableControlOf
 
 @Composable
 fun CheckboxScreen(padding: PaddingValues, backToMenu: () -> Unit) {
     val source = remember { listOf("Рыба", "Рак", "Щука") }
     val scope = rememberCoroutineScope()
     val control = remember {
-        MultiValueControl(emptyList<String>(), keySelector = { it }, coroutineScope = scope)
+        mutableValidatableControlOf(emptyList<String>(), coroutineScope = scope)
     }
 
     Box(modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
@@ -24,7 +24,12 @@ fun CheckboxScreen(padding: PaddingValues, backToMenu: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            CheckboxGroup(control = control, source = source, sourceItemToString = { it })
+            CheckboxGroup(
+                control = control,
+                source = source,
+                sourceItemToString = { it },
+                keySelector = { it },
+            )
 
             SimpleButton(onClick = { backToMenu() }, text = "Back to menu")
         }

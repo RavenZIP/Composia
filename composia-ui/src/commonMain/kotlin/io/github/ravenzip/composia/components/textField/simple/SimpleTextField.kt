@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.ravenzip.composia.components.textField.shared.resetReadonlyStateOnResetValue
-import io.github.ravenzip.composia.control.singleValueControl.SingleValueControl
+import io.github.ravenzip.composia.control.valueControl.MutableValueControl
 import io.github.ravenzip.composia.state.TextFieldState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,11 +30,13 @@ fun SimpleTextField(
     isReadonly: Boolean = false,
     modifier: Modifier = Modifier,
     placeholder: @Composable (() -> Unit)? = null,
-    interactionSource: InteractionSource = MutableInteractionSource(),
+    interactionSource: InteractionSource? = null,
     colors: TextFieldColors = TextFieldDefaults.colors(),
     textStyle: TextStyle = TextStyle(color = colors.unfocusedTextColor, fontSize = 16.sp),
     showLine: Boolean = false,
 ) {
+    val interactionSource = remember { interactionSource ?: MutableInteractionSource() }
+
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
@@ -68,11 +70,11 @@ fun SimpleTextField(
 
 @Composable
 fun SimpleTextField(
-    control: SingleValueControl<String>,
+    control: MutableValueControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier,
     placeholder: @Composable (() -> Unit)? = null,
-    interactionSource: InteractionSource = MutableInteractionSource(),
+    interactionSource: InteractionSource? = null,
     colors: TextFieldColors = TextFieldDefaults.colors(),
     textStyle: TextStyle = TextStyle(color = colors.unfocusedTextColor, fontSize = 16.sp),
     showLine: Boolean = false,
@@ -81,7 +83,7 @@ fun SimpleTextField(
 
     resetReadonlyStateOnResetValue(control = control, state = initializedState)
 
-    val controlSnapshot = control.snapshotFlow.collectAsState().value
+    val controlSnapshot = control.snapshotEvents.collectAsState().value
     val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
 
     SimpleTextField(

@@ -10,7 +10,8 @@ import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.components.model.DataSource
 import io.github.ravenzip.composia.components.textField.dropdown.DropDownTextField
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
+import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
+import io.github.ravenzip.composia.control.validatableControl.mutableValidatableControlOf
 import io.github.ravenzip.composia.sample.Item
 import io.github.ravenzip.composia.state.DropDownTextFieldState
 import kotlinx.coroutines.delay
@@ -20,7 +21,7 @@ import kotlinx.coroutines.flow.flow
 fun DropDownTextFieldScreen(padding: PaddingValues, backToMenu: () -> Unit) {
     val scope = rememberCoroutineScope()
     val control = remember {
-        ValidatableSingleControl(initialValue = Item.createEmptyModel(), coroutineScope = scope)
+        mutableValidatableControlOf(initialValue = Item.createEmptyModel(), coroutineScope = scope)
     }
     val state = remember { DropDownTextFieldState() }
     val source = remember {
@@ -75,8 +76,8 @@ fun DropDownTextFieldScreen(padding: PaddingValues, backToMenu: () -> Unit) {
 }
 
 @Composable
-fun DropDownTextFieldInfo(control: ValidatableSingleControl<Item>, state: DropDownTextFieldState) {
-    val controlSnapshot = control.snapshotFlow.collectAsState().value
+fun DropDownTextFieldInfo(control: ValidatableControl<Item>, state: DropDownTextFieldState) {
+    val controlSnapshot = control.snapshotEvents.collectAsState().value
     val isReadonly = state.readonlyState.valueFlow.collectAsState().value
     val isFucused = state.focusedState.valueFlow.collectAsState().value
     val isExpanded = state.expandedState.valueFlow.collectAsState().value

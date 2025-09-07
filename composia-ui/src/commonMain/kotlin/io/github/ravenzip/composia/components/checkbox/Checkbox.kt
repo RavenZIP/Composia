@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
+import io.github.ravenzip.composia.control.validatableControl.MutableValidatableControl
 import io.github.ravenzip.composia.extension.S18
 import io.github.ravenzip.composia.style.DefaultComponentShape
 
@@ -48,18 +48,18 @@ fun Checkbox(
 
 @Composable
 fun Checkbox(
-    control: ValidatableSingleControl<Boolean>,
+    control: MutableValidatableControl<Boolean>,
     modifier: Modifier = Modifier,
     text: String,
     textStyle: TextStyle = TextStyle.S18,
     colors: CheckboxColors = CheckboxDefaults.colors(),
 ) {
-    val isSelected = control.valueFlow.collectAsState().value
-    val isEnabled = control.isEnabledFlow.collectAsState().value
+    val isSelected = control.valueEvents.collectAsState().value
+    val isEnabled = control.isEnabledEvents.collectAsState().value
 
     Checkbox(
         isSelected = isSelected,
-        onClick = { control.setValue(!control.value) },
+        onClick = { control.setValue(!control.currentValue) },
         modifier = modifier,
         text = text,
         textStyle = textStyle,

@@ -2,14 +2,14 @@ package io.github.ravenzip.composia.statusControl
 
 import app.cash.turbine.test
 import app.cash.turbine.turbineScope
-import io.github.ravenzip.composia.control.shared.status.ControlStatus
+import io.github.ravenzip.composia.control.shared.status.ControlState
 import io.github.ravenzip.composia.control.statusControl.AbstractStatusControl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.test.runTest
 
 class AbstractStatusControlTest {
     private class BaseStatusControl(disabled: Boolean = false, scope: CoroutineScope) :
@@ -19,7 +19,7 @@ class AbstractStatusControlTest {
     fun `initial state is Valid when not disabled`() = runTest {
         val control = BaseStatusControl(scope = backgroundScope)
 
-        assertEquals(ControlStatus.Valid, control.status)
+        assertEquals(ControlState.Valid, control.status)
         assertTrue(control.isEnabled)
         assertFalse(control.isDisabled)
     }
@@ -28,7 +28,7 @@ class AbstractStatusControlTest {
     fun `initial state is Disabled when disabled`() = runTest {
         val control = BaseStatusControl(disabled = true, scope = backgroundScope)
 
-        assertEquals(ControlStatus.Disabled, control.status)
+        assertEquals(ControlState.Disabled, control.status)
         assertTrue(control.isDisabled)
         assertFalse(control.isEnabled)
     }
@@ -38,7 +38,7 @@ class AbstractStatusControlTest {
         val control = BaseStatusControl(scope = backgroundScope)
         control.disable()
 
-        assertEquals(ControlStatus.Disabled, control.status)
+        assertEquals(ControlState.Disabled, control.status)
         assertTrue(control.isDisabled)
         assertFalse(control.isEnabled)
     }
@@ -48,7 +48,7 @@ class AbstractStatusControlTest {
         val control = BaseStatusControl(disabled = true, scope = backgroundScope)
         control.enable()
 
-        assertEquals(ControlStatus.Valid, control.status)
+        assertEquals(ControlState.Valid, control.status)
         assertTrue(control.isEnabled)
         assertFalse(control.isDisabled)
     }
@@ -58,24 +58,24 @@ class AbstractStatusControlTest {
         val enabledControl = BaseStatusControl(scope = backgroundScope)
 
         enabledControl.disable()
-        assertEquals(ControlStatus.Disabled, enabledControl.status)
+        assertEquals(ControlState.Disabled, enabledControl.status)
         assertTrue(enabledControl.isDisabled)
         assertFalse(enabledControl.isEnabled)
 
         enabledControl.reset()
-        assertEquals(ControlStatus.Valid, enabledControl.status)
+        assertEquals(ControlState.Valid, enabledControl.status)
         assertTrue(enabledControl.isEnabled)
         assertFalse(enabledControl.isDisabled)
 
         val disabledControl = BaseStatusControl(disabled = true, scope = backgroundScope)
 
         disabledControl.enable()
-        assertEquals(ControlStatus.Valid, disabledControl.status)
+        assertEquals(ControlState.Valid, disabledControl.status)
         assertTrue(disabledControl.isEnabled)
         assertFalse(disabledControl.isDisabled)
 
         disabledControl.reset()
-        assertEquals(ControlStatus.Disabled, disabledControl.status)
+        assertEquals(ControlState.Disabled, disabledControl.status)
         assertTrue(disabledControl.isDisabled)
         assertFalse(disabledControl.isEnabled)
     }
@@ -86,13 +86,13 @@ class AbstractStatusControlTest {
             val control = BaseStatusControl(scope = backgroundScope)
 
             control.statusFlow.test {
-                assertEquals(ControlStatus.Valid, awaitItem())
+                assertEquals(ControlState.Valid, awaitItem())
 
                 control.disable()
-                assertEquals(ControlStatus.Disabled, awaitItem())
+                assertEquals(ControlState.Disabled, awaitItem())
 
                 control.enable()
-                assertEquals(ControlStatus.Valid, awaitItem())
+                assertEquals(ControlState.Valid, awaitItem())
             }
         }
     }

@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.layout.RoundedBox
-import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.control.activationControl.ActivationControl
 import io.github.ravenzip.composia.style.DefaultComponentShape
 import io.github.ravenzip.composia.style.IconStyle
 
@@ -61,7 +61,7 @@ fun IconButton(
 
 @Composable
 fun IconButton(
-    control: StatusControl,
+    control: ActivationControl,
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     icon: Painter,
@@ -72,7 +72,7 @@ fun IconButton(
     interactionSource: MutableInteractionSource? = null,
 ) {
     val modifiedColors = colors.copy(contentColor = iconStyle.color ?: colors.contentColor)
-    val isEnabled = control.isEnabledFlow.collectAsState().value
+    val isEnabled = control.isEnabledEvents.collectAsState().value
 
     IconButton(
         icon = icon,

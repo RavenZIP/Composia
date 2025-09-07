@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
+import io.github.ravenzip.composia.control.validatableControl.MutableValidatableControl
 import io.github.ravenzip.composia.extension.S14
 import io.github.ravenzip.composia.extension.S16Medium
 import io.github.ravenzip.composia.style.DefaultComponentShape
@@ -47,19 +47,19 @@ fun Switch(
 
 @Composable
 fun Switch(
-    control: ValidatableSingleControl<Boolean>,
+    control: MutableValidatableControl<Boolean>,
     modifier: Modifier = Modifier,
     text: String,
     textStyle: TextStyle = LocalTextStyle.current,
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
-    val isSelected = control.valueFlow.collectAsState().value
-    val isEnabled = control.isEnabledFlow.collectAsState().value
+    val isSelected = control.valueEvents.collectAsState().value
+    val isEnabled = control.isEnabledEvents.collectAsState().value
 
     Switch(
         isSelected = isSelected,
         isEnabled = isEnabled,
-        onClick = { control.setValue(!control.value) },
+        onClick = { control.setValue(!control.currentValue) },
         modifier = modifier,
         text = text,
         textStyle = textStyle,
@@ -102,7 +102,7 @@ fun Switch(
 
 @Composable
 fun Switch(
-    control: ValidatableSingleControl<Boolean>,
+    control: MutableValidatableControl<Boolean>,
     modifier: Modifier = Modifier,
     label: String,
     labelStyle: TextStyle = TextStyle.S16Medium,
@@ -110,13 +110,13 @@ fun Switch(
     descriptionStyle: TextStyle = TextStyle.S14,
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
-    val isSelected = control.valueFlow.collectAsState().value
-    val isEnabled = control.isEnabledFlow.collectAsState().value
+    val isSelected = control.valueEvents.collectAsState().value
+    val isEnabled = control.isEnabledEvents.collectAsState().value
 
     Switch(
         isSelected = isSelected,
         isEnabled = isEnabled,
-        onClick = { control.setValue(!control.value) },
+        onClick = { control.setValue(!control.currentValue) },
         modifier = modifier,
         label = label,
         labelStyle = labelStyle,

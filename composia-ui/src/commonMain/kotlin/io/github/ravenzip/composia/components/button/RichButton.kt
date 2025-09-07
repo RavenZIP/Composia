@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.control.activationControl.ActivationControl
 import io.github.ravenzip.composia.extension.S14
 import io.github.ravenzip.composia.extension.S18Medium
 import io.github.ravenzip.composia.style.DefaultComponentShape
@@ -99,7 +99,7 @@ fun RichButton(
 
 @Composable
 fun RichButton(
-    control: StatusControl,
+    control: ActivationControl,
     modifier: Modifier = Modifier,
     label: @Composable () -> Unit,
     description: @Composable () -> Unit,
@@ -109,7 +109,7 @@ fun RichButton(
     contentPadding: PaddingValues = PaddingValues(18.dp),
     onClick: () -> Unit = {},
 ) {
-    val isEnabled = control.isEnabledFlow.collectAsState().value
+    val isEnabled = control.isEnabledEvents.collectAsState().value
 
     RichButton(
         onClick = onClick,
@@ -126,7 +126,7 @@ fun RichButton(
 
 @Composable
 fun RichButton(
-    control: StatusControl,
+    control: ActivationControl,
     modifier: Modifier = Modifier,
     label: String,
     labelStyle: TextStyle = TextStyle.S18Medium,
@@ -140,7 +140,7 @@ fun RichButton(
     contentPadding: PaddingValues = PaddingValues(18.dp),
     onClick: () -> Unit = {},
 ) {
-    val isEnabled = control.isEnabledFlow.collectAsState().value
+    val isEnabled = control.isEnabledEvents.collectAsState().value
 
     val labelColor =
         if (labelStyle.color != Color.Unspecified) labelStyle.color else colors.contentColor
