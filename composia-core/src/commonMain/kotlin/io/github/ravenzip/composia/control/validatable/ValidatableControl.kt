@@ -33,6 +33,11 @@ internal class MutableValidatableValueControlImpl<T>(
     override val validationResult: ValidationResult
         get() = _validationResult.value
 
+    override val errorMessageFlow: StateFlow<String?> =
+        _validationResult
+            .map { value -> value.getErrorMessage() }
+            .stateInWhileSubscribed(scope = coroutineScope, initialValue = null)
+
     override val errorMessage: String?
         get() = _validationResult.value.getErrorMessage()
 
