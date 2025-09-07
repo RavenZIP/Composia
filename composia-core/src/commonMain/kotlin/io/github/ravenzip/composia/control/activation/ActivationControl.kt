@@ -1,5 +1,6 @@
 package io.github.ravenzip.composia.control.activation
 
+import androidx.compose.runtime.Stable
 import io.github.ravenzip.composia.extension.stateInWhileSubscribed
 import io.github.ravenzip.composia.state.ActivationState
 import io.github.ravenzip.composia.state.activationStatusOf
@@ -8,6 +9,7 @@ import io.github.ravenzip.composia.state.isEnabled
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
+@Stable
 interface ActivationControl {
     val activationStateFlow: StateFlow<ActivationState>
     val isEnabledFlow: StateFlow<Boolean>
@@ -16,6 +18,7 @@ interface ActivationControl {
     val isDisabled: Boolean
 }
 
+@Stable
 interface MutableActivationControl : ActivationControl {
     fun enable()
 

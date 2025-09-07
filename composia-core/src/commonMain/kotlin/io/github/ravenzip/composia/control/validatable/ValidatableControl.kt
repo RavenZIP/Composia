@@ -1,5 +1,6 @@
 package io.github.ravenzip.composia.control.validatable
 
+import androidx.compose.runtime.Stable
 import io.github.ravenzip.composia.control.value.MutableValueControl
 import io.github.ravenzip.composia.control.value.MutableValueControlImpl
 import io.github.ravenzip.composia.control.value.ValueControl
@@ -9,13 +10,14 @@ import io.github.ravenzip.composia.validation.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
+@Stable
 interface ValidatableControl<T> : ValueControl<T>, Validatable<T> {
     val isValidFlow: StateFlow<Boolean>
     val isInvalidFlow: StateFlow<Boolean>
     override val snapshotFlow: StateFlow<ValidatableControlSnapshot<T>>
 }
 
-interface MutableValidatableControl<T> : ValidatableControl<T>, MutableValueControl<T>
+@Stable interface MutableValidatableControl<T> : ValidatableControl<T>, MutableValueControl<T>
 
 internal class MutableValidatableValueControlImpl<T>(
     initialValue: T,

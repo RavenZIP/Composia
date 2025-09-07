@@ -1,5 +1,6 @@
 package io.github.ravenzip.composia.control.value
 
+import androidx.compose.runtime.Stable
 import io.github.ravenzip.composia.control.activation.ActivationControl
 import io.github.ravenzip.composia.control.activation.MutableActivationControl
 import io.github.ravenzip.composia.control.activation.MutableActivationControlImpl
@@ -10,6 +11,7 @@ import io.github.ravenzip.composia.valueChange.ValueChangeType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
+@Stable
 interface ValueControl<T> : ActivationControl {
     val valueChangeFlow: StateFlow<ValueChange<T>>
     val valueFlow: StateFlow<T>
@@ -21,6 +23,7 @@ interface ValueControl<T> : ActivationControl {
     val snapshotFlow: StateFlow<ValueControlSnapshot<T>>
 }
 
+@Stable
 interface MutableValueControl<T> : ValueControl<T>, MutableActivationControl {
     fun setValue(value: T)
 
