@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.layout.RoundedBox
-import io.github.ravenzip.composia.control.activationControl.ActivationControl
+import io.github.ravenzip.composia.control.activation.ActivationControl
 import io.github.ravenzip.composia.style.DefaultComponentShape
 import io.github.ravenzip.composia.style.IconStyle
 

@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.control.shared
+package io.github.ravenzip.composia.valueChange
 
 data class ValueChangeEvent<T>(val value: T, val typeChange: ValueChangeType) {
     companion object {

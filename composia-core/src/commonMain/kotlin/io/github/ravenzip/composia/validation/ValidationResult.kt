@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.control.shared.validation
+package io.github.ravenzip.composia.validation
 
 sealed class ValidationResult {
     object Valid : ValidationResult()

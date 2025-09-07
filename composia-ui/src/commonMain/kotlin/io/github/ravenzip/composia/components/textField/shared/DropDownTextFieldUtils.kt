@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import io.github.ravenzip.composia.components.model.DataSource
-import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
+import io.github.ravenzip.composia.control.validatable.ValidatableControl
 import io.github.ravenzip.composia.extension.update
 import io.github.ravenzip.composia.function.searchElementsByQuery
 import io.github.ravenzip.composia.state.DropDownTextFieldState

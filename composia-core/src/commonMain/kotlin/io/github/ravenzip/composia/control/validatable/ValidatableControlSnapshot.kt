@@ -1,16 +1,16 @@
-package io.github.ravenzip.composia.control.validatableControl
+package io.github.ravenzip.composia.control.validatable
 
-import io.github.ravenzip.composia.control.shared.ValueChangeEvent
-import io.github.ravenzip.composia.control.shared.ValueChangeType
-import io.github.ravenzip.composia.control.shared.isInitialize
-import io.github.ravenzip.composia.control.shared.status.ActivationState
-import io.github.ravenzip.composia.control.shared.status.isDisabled
-import io.github.ravenzip.composia.control.shared.status.isEnabled
-import io.github.ravenzip.composia.control.shared.validation.ValidationResult
-import io.github.ravenzip.composia.control.shared.validation.getErrorMessage
-import io.github.ravenzip.composia.control.shared.validation.isInvalid
-import io.github.ravenzip.composia.control.shared.validation.isValid
-import io.github.ravenzip.composia.control.valueControl.ValueControlSnapshot
+import io.github.ravenzip.composia.control.value.ValueControlSnapshot
+import io.github.ravenzip.composia.state.ActivationState
+import io.github.ravenzip.composia.state.isDisabled
+import io.github.ravenzip.composia.state.isEnabled
+import io.github.ravenzip.composia.validation.ValidationResult
+import io.github.ravenzip.composia.validation.getErrorMessage
+import io.github.ravenzip.composia.validation.isInvalid
+import io.github.ravenzip.composia.validation.isValid
+import io.github.ravenzip.composia.valueChange.ValueChangeEvent
+import io.github.ravenzip.composia.valueChange.ValueChangeType
+import io.github.ravenzip.composia.valueChange.isInitialize
 
 interface ValidatableControlSnapshot<T> : ValueControlSnapshot<T> {
     override val value: T

@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import io.github.ravenzip.composia.components.button.IconButton
 import io.github.ravenzip.composia.components.button.RichButton
 import io.github.ravenzip.composia.components.button.SimpleButton
-import io.github.ravenzip.composia.control.activationControl.mutableActivationControlOf
+import io.github.ravenzip.composia.control.activation.mutableActivationControlOf
 import io.github.ravenzip.composia_demo.composia_demo.generated.resources.Res
 import io.github.ravenzip.composia_demo.composia_demo.generated.resources.outline_settings_24
 import org.jetbrains.compose.resources.painterResource

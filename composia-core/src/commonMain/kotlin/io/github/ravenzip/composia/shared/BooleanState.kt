@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.state
+package io.github.ravenzip.composia.shared
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

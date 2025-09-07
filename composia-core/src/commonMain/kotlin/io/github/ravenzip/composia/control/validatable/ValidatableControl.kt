@@ -1,11 +1,11 @@
-package io.github.ravenzip.composia.control.validatableControl
+package io.github.ravenzip.composia.control.validatable
 
-import io.github.ravenzip.composia.control.shared.validation.*
-import io.github.ravenzip.composia.control.valueControl.MutableValueControl
-import io.github.ravenzip.composia.control.valueControl.MutableValueControlImpl
-import io.github.ravenzip.composia.control.valueControl.ValueControl
+import io.github.ravenzip.composia.control.value.MutableValueControl
+import io.github.ravenzip.composia.control.value.MutableValueControlImpl
+import io.github.ravenzip.composia.control.value.ValueControl
 import io.github.ravenzip.composia.extension.addOrRemove
 import io.github.ravenzip.composia.extension.stateInWhileSubscribed
+import io.github.ravenzip.composia.validation.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 

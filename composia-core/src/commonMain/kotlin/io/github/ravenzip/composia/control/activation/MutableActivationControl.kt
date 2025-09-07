@@ -1,10 +1,10 @@
-package io.github.ravenzip.composia.control.activationControl
+package io.github.ravenzip.composia.control.activation
 
-import io.github.ravenzip.composia.control.shared.status.ActivationState
-import io.github.ravenzip.composia.control.shared.status.activationStatusOf
-import io.github.ravenzip.composia.control.shared.status.isDisabled
-import io.github.ravenzip.composia.control.shared.status.isEnabled
 import io.github.ravenzip.composia.extension.stateInWhileSubscribed
+import io.github.ravenzip.composia.state.ActivationState
+import io.github.ravenzip.composia.state.activationStatusOf
+import io.github.ravenzip.composia.state.isDisabled
+import io.github.ravenzip.composia.state.isEnabled
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 

@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.activationControl.ActivationControl
+import io.github.ravenzip.composia.control.activation.ActivationControl
 import io.github.ravenzip.composia.extension.S14
 import io.github.ravenzip.composia.extension.S18Medium
 import io.github.ravenzip.composia.style.DefaultComponentShape

@@ -11,7 +11,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import io.github.ravenzip.composia.components.textField.shared.acceptInput
 import io.github.ravenzip.composia.components.textField.shared.resetReadonlyStateOnResetValue
-import io.github.ravenzip.composia.control.validatableControl.MutableValidatableControl
+import io.github.ravenzip.composia.control.validatable.MutableValidatableControl
 import io.github.ravenzip.composia.state.TextFieldState
 import io.github.ravenzip.composia.style.DefaultComponentShape
 

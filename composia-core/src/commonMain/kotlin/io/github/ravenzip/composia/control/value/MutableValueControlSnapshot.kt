@@ -1,11 +1,11 @@
-package io.github.ravenzip.composia.control.valueControl
+package io.github.ravenzip.composia.control.value
 
-import io.github.ravenzip.composia.control.shared.ValueChangeEvent
-import io.github.ravenzip.composia.control.shared.ValueChangeType
-import io.github.ravenzip.composia.control.shared.isInitialize
-import io.github.ravenzip.composia.control.shared.status.ActivationState
-import io.github.ravenzip.composia.control.shared.status.isDisabled
-import io.github.ravenzip.composia.control.shared.status.isEnabled
+import io.github.ravenzip.composia.state.ActivationState
+import io.github.ravenzip.composia.state.isDisabled
+import io.github.ravenzip.composia.state.isEnabled
+import io.github.ravenzip.composia.valueChange.ValueChangeEvent
+import io.github.ravenzip.composia.valueChange.ValueChangeType
+import io.github.ravenzip.composia.valueChange.isInitialize
 
 interface ValueControlSnapshot<T> {
     val value: T

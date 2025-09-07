@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.components.checkbox.CheckboxGroup
-import io.github.ravenzip.composia.control.validatableControl.mutableValidatableControlOf
+import io.github.ravenzip.composia.control.validatable.mutableValidatableControlOf
 
 @Composable
 fun CheckboxScreen(padding: PaddingValues, backToMenu: () -> Unit) {

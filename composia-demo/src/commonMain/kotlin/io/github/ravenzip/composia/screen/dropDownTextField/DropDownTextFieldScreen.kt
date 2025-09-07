@@ -10,8 +10,8 @@ import androidx.compose.ui.unit.dp
 import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.components.model.DataSource
 import io.github.ravenzip.composia.components.textField.dropdown.DropDownTextField
-import io.github.ravenzip.composia.control.validatableControl.ValidatableControl
-import io.github.ravenzip.composia.control.validatableControl.mutableValidatableControlOf
+import io.github.ravenzip.composia.control.validatable.ValidatableControl
+import io.github.ravenzip.composia.control.validatable.mutableValidatableControlOf
 import io.github.ravenzip.composia.sample.Item
 import io.github.ravenzip.composia.state.DropDownTextFieldState
 import kotlinx.coroutines.delay

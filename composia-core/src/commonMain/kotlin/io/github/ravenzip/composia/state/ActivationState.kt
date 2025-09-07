@@ -1,4 +1,4 @@
-package io.github.ravenzip.composia.control.shared.status
+package io.github.ravenzip.composia.state
 
 sealed interface ActivationState {
     object Enabled : ActivationState

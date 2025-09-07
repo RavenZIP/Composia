@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.validatableControl.MutableValidatableControl
+import io.github.ravenzip.composia.control.validatable.MutableValidatableControl
 import io.github.ravenzip.composia.extension.S18
 import io.github.ravenzip.composia.style.DefaultComponentShape
 

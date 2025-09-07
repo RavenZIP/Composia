@@ -1,12 +1,12 @@
-package io.github.ravenzip.composia.control.valueControl
+package io.github.ravenzip.composia.control.value
 
-import io.github.ravenzip.composia.control.activationControl.ActivationControl
-import io.github.ravenzip.composia.control.activationControl.MutableActivationControl
-import io.github.ravenzip.composia.control.activationControl.MutableActivationControlImpl
-import io.github.ravenzip.composia.control.shared.ValueChangeEvent
-import io.github.ravenzip.composia.control.shared.ValueChangeType
+import io.github.ravenzip.composia.control.activation.ActivationControl
+import io.github.ravenzip.composia.control.activation.MutableActivationControl
+import io.github.ravenzip.composia.control.activation.MutableActivationControlImpl
 import io.github.ravenzip.composia.extension.addOrRemove
 import io.github.ravenzip.composia.extension.stateInWhileSubscribed
+import io.github.ravenzip.composia.valueChange.ValueChangeEvent
+import io.github.ravenzip.composia.valueChange.ValueChangeType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
