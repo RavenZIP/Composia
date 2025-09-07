@@ -64,5 +64,4 @@ fun mutableActivationControlOf(
     coroutineScope: CoroutineScope,
 ): MutableActivationControl = MutableActivationControlImpl(enabled, coroutineScope)
 
-// TODO
-// fun MutableEnablementControl.asReadonly(): EnablementControl
+fun MutableActivationControl.asReadonly(): ActivationControl = this

@@ -98,6 +98,8 @@ fun <T> mutableValueControlOf(
 ): MutableValueControl<T> =
     MutableValueControlImpl(initialValue, resetValue, enabled, coroutineScope)
 
+fun <T> MutableValueControl<T>.asReadonly(): ValueControl<T> = this
+
 fun <T, K> MutableValueControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
     val currentValues = currentValue.addOrRemove(value, keySelector)
 

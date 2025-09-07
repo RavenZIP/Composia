@@ -101,6 +101,8 @@ fun <T> mutableValidatableControlOf(
         coroutineScope,
     )
 
+fun <T> MutableValidatableControl<T>.asReadonly(): ValidatableControl<T> = this
+
 fun <T, K> MutableValidatableControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
     val currentValues = currentValue.addOrRemove(value, keySelector)
 
