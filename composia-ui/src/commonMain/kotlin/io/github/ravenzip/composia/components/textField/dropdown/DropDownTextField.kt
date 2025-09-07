@@ -198,9 +198,9 @@ fun <T> DropDownTextField(
     val searchQueryFlow = remember { snapshotFlow { searchQuery.value } }
     val controlSnapshot = control.snapshotEvents.collectAsState().value
     val errorMessage = remember(controlSnapshot) { controlSnapshot.errorMessage ?: "" }
-    val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
-    val isExpanded = initializedState.expandedState.valueFlow.collectAsState().value
-    val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+    val isReadonly = initializedState.readonlyState.valueChanges.collectAsState().value
+    val isExpanded = initializedState.expandedState.valueChanges.collectAsState().value
+    val isFocused = initializedState.focusedState.valueChanges.collectAsState().value
 
     resetReadonlyStateOnResetValue(control = control, state = initializedState)
 
@@ -314,8 +314,8 @@ fun <T> DropDownTextField(
         label = { Text(label) },
         dropDownIcon = {
             val isInvalid = control.isInvalidEvents.collectAsState().value
-            val isExpanded = initializedState.expandedState.valueFlow.collectAsState().value
-            val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+            val isExpanded = initializedState.expandedState.valueChanges.collectAsState().value
+            val isFocused = initializedState.focusedState.valueChanges.collectAsState().value
 
             val color =
                 colors.calculateLabelColor(

@@ -78,8 +78,8 @@ fun MultiLineTextField(
 
     val controlSnapshot = control.snapshotEvents.collectAsState().value
     val errorMessage = remember(controlSnapshot) { controlSnapshot.errorMessage ?: "" }
-    val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
-    val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+    val isReadonly = initializedState.readonlyState.valueChanges.collectAsState().value
+    val isFocused = initializedState.focusedState.valueChanges.collectAsState().value
 
     MultiLineTextField(
         value = controlSnapshot.value,

@@ -34,7 +34,7 @@ internal fun <T> loadSearchResult(
     results: SnapshotStateList<T>,
 ) {
     LaunchedEffect(state) {
-        combineExpandedStateWithSearchQuery(state.expandedState.valueFlow, searchQueryFlow)
+        combineExpandedStateWithSearchQuery(state.expandedState.valueChanges, searchQueryFlow)
             .map { x ->
                 if (x.second.isEmpty()) source.items
                 else searchElementsByQuery(source.items, sourceItemToString, x.second)
@@ -54,7 +54,7 @@ internal fun <T> loadSearchResult(
     results: SnapshotStateList<T>,
 ) {
     LaunchedEffect(state) {
-        combineExpandedStateWithSearchQuery(state.expandedState.valueFlow, searchQueryFlow)
+        combineExpandedStateWithSearchQuery(state.expandedState.valueChanges, searchQueryFlow)
             .onEach {
                 changeIsLoadingTo(true)
                 results.clear()
@@ -80,7 +80,7 @@ internal fun <T> updateSearchQueryOnControlOrExpandChange(
                 control.valueEvents
                     .map { value -> sourceItemToString(value) }
                     .filter { value -> value.isNotEmpty() },
-                state.expandedState.valueFlow
+                state.expandedState.valueChanges
                     .filter { expanded -> !expanded && control.isInvalid }
                     .map { sourceItemToString(control.defaultResetValue) },
             )

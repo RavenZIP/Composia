@@ -84,7 +84,7 @@ fun SimpleTextField(
     resetReadonlyStateOnResetValue(control = control, state = initializedState)
 
     val controlSnapshot = control.snapshotEvents.collectAsState().value
-    val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
+    val isReadonly = initializedState.readonlyState.valueChanges.collectAsState().value
 
     SimpleTextField(
         value = controlSnapshot.value,

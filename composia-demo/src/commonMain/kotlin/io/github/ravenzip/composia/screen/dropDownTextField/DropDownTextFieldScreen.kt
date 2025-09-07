@@ -78,9 +78,9 @@ fun DropDownTextFieldScreen(padding: PaddingValues, backToMenu: () -> Unit) {
 @Composable
 fun DropDownTextFieldInfo(control: ValidatableControl<Item>, state: DropDownTextFieldState) {
     val controlSnapshot = control.snapshotEvents.collectAsState().value
-    val isReadonly = state.readonlyState.valueFlow.collectAsState().value
-    val isFucused = state.focusedState.valueFlow.collectAsState().value
-    val isExpanded = state.expandedState.valueFlow.collectAsState().value
+    val isReadonly = state.readonlyState.valueChanges.collectAsState().value
+    val isFucused = state.focusedState.valueChanges.collectAsState().value
+    val isExpanded = state.expandedState.valueChanges.collectAsState().value
 
     Card(modifier = Modifier.fillMaxWidth(0.9f)) {
         Column(modifier = Modifier.padding(10.dp)) {

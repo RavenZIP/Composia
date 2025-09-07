@@ -1,13 +1,14 @@
 package io.github.ravenzip.composia.shared
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 abstract class BooleanState(val initialValue: Boolean = false) {
-    private val _value = MutableStateFlow(initialValue)
+    private val _value: MutableStateFlow<Boolean> = MutableStateFlow(initialValue)
 
-    val valueFlow = _value.asStateFlow()
-    val value
+    val valueChanges: StateFlow<Boolean> = _value.asStateFlow()
+    val currentValue: Boolean
         get() = _value.value
 
     fun setValue(newValue: Boolean) {
