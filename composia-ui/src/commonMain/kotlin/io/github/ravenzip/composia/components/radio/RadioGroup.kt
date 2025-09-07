@@ -25,7 +25,7 @@ fun <T, K> RadioGroup(
     contentPadding: Arrangement.Vertical = Arrangement.spacedBy(10.dp),
     colors: RadioButtonColors = RadioButtonDefaults.colors(),
 ) {
-    val value = control.valueEvents.collectAsState().value
+    val value = control.valueState.collectAsState().value
     val selectedKey = remember(value) { keySelector(value) }
 
     Column(modifier = modifier, verticalArrangement = contentPadding) {

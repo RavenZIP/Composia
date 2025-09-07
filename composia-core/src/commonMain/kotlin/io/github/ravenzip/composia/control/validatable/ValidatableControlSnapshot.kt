@@ -8,7 +8,7 @@ import io.github.ravenzip.composia.validation.ValidationResult
 import io.github.ravenzip.composia.validation.getErrorMessage
 import io.github.ravenzip.composia.validation.isInvalid
 import io.github.ravenzip.composia.validation.isValid
-import io.github.ravenzip.composia.valueChange.ValueChangeEvent
+import io.github.ravenzip.composia.valueChange.ValueChange
 import io.github.ravenzip.composia.valueChange.ValueChangeType
 import io.github.ravenzip.composia.valueChange.isInitialize
 
@@ -35,14 +35,14 @@ internal open class ValidatableControlSnapshotImpl<T>(
 ) : ValidatableControlSnapshot<T> {
     companion object {
         fun <T> create(
-            valueChangeEvent: ValueChangeEvent<T>,
+            valueChange: ValueChange<T>,
             state: ActivationState,
             validationResult: ValidationResult,
         ): ValidatableControlSnapshot<T> =
             ValidatableControlSnapshotImpl(
-                value = valueChangeEvent.value,
-                typeChange = valueChangeEvent.typeChange,
-                hasChanges = !valueChangeEvent.typeChange.isInitialize(),
+                value = valueChange.value,
+                typeChange = valueChange.typeChange,
+                hasChanges = !valueChange.typeChange.isInitialize(),
                 isEnabled = state.isEnabled(),
                 isDisabled = state.isDisabled(),
                 isValid = validationResult.isValid(),
@@ -56,16 +56,14 @@ internal open class ValidatableControlSnapshotImpl<T>(
             validationResult: ValidationResult,
         ): ValidatableControlSnapshot<T> =
             create(
-                valueChangeEvent =
-                    ValueChangeEvent(value = value, typeChange = ValueChangeType.Initialize),
+                valueChange = ValueChange(value = value, typeChange = ValueChangeType.Initialize),
                 state = state,
                 validationResult = validationResult,
             )
 
         fun <T> createDefault(value: T): ValidatableControlSnapshot<T> =
             create(
-                valueChangeEvent =
-                    ValueChangeEvent(value = value, typeChange = ValueChangeType.Initialize),
+                valueChange = ValueChange(value = value, typeChange = ValueChangeType.Initialize),
                 state = ActivationState.Enabled,
                 validationResult = ValidationResult.Valid,
             )

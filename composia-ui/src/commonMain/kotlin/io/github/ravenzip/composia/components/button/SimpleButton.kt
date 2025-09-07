@@ -51,7 +51,7 @@ fun SimpleButton(
     shape: Shape = DefaultComponentShape,
     contentPadding: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
 ) {
-    val isEnabled = control.isEnabledEvents.collectAsState().value
+    val isEnabled = control.enabledState.collectAsState().value
 
     SimpleButton(
         onClick = onClick,

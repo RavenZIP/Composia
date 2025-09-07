@@ -54,8 +54,8 @@ fun Checkbox(
     textStyle: TextStyle = TextStyle.S18,
     colors: CheckboxColors = CheckboxDefaults.colors(),
 ) {
-    val isSelected = control.valueEvents.collectAsState().value
-    val isEnabled = control.isEnabledEvents.collectAsState().value
+    val isSelected = control.valueState.collectAsState().value
+    val isEnabled = control.enabledState.collectAsState().value
 
     Checkbox(
         isSelected = isSelected,

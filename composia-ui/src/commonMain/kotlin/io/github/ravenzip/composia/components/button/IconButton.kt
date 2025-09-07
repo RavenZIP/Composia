@@ -72,7 +72,7 @@ fun IconButton(
     interactionSource: MutableInteractionSource? = null,
 ) {
     val modifiedColors = colors.copy(contentColor = iconStyle.color ?: colors.contentColor)
-    val isEnabled = control.isEnabledEvents.collectAsState().value
+    val isEnabled = control.enabledState.collectAsState().value
 
     IconButton(
         icon = icon,

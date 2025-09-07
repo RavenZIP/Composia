@@ -3,7 +3,7 @@ package io.github.ravenzip.composia.control.value
 import io.github.ravenzip.composia.state.ActivationState
 import io.github.ravenzip.composia.state.isDisabled
 import io.github.ravenzip.composia.state.isEnabled
-import io.github.ravenzip.composia.valueChange.ValueChangeEvent
+import io.github.ravenzip.composia.valueChange.ValueChange
 import io.github.ravenzip.composia.valueChange.ValueChangeType
 import io.github.ravenzip.composia.valueChange.isInitialize
 
@@ -24,21 +24,20 @@ internal open class ValueControlSnapshotImpl<T>(
 ) : ValueControlSnapshot<T> {
     companion object {
         fun <T> create(
-            valueChangeEvent: ValueChangeEvent<T>,
+            valueChange: ValueChange<T>,
             state: ActivationState,
         ): ValueControlSnapshot<T> =
             ValueControlSnapshotImpl(
-                value = valueChangeEvent.value,
-                typeChange = valueChangeEvent.typeChange,
-                hasChanges = !valueChangeEvent.typeChange.isInitialize(),
+                value = valueChange.value,
+                typeChange = valueChange.typeChange,
+                hasChanges = !valueChange.typeChange.isInitialize(),
                 isEnabled = state.isEnabled(),
                 isDisabled = state.isDisabled(),
             )
 
         fun <T> create(value: T, state: ActivationState): ValueControlSnapshot<T> =
             create(
-                valueChangeEvent =
-                    ValueChangeEvent(value = value, typeChange = ValueChangeType.Initialize),
+                valueChange = ValueChange(value = value, typeChange = ValueChangeType.Initialize),
                 state = state,
             )
 

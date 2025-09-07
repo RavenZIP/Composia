@@ -23,7 +23,7 @@ internal fun <T> resetReadonlyStateOnResetValue(
     state: TextFieldState,
 ) {
     LaunchedEffect(control, state) {
-        control.typeChangesEvents
+        control.typeChangeState
             .filter { type -> type is ValueChangeType.Reset }
             .collect { state.readonlyState.setValue(state.readonlyState.initialValue) }
     }
@@ -32,7 +32,7 @@ internal fun <T> resetReadonlyStateOnResetValue(
 @Composable
 internal fun <T> resetReadonlyStateOnResetValue(control: ValueControl<T>, state: TextFieldState) {
     LaunchedEffect(control, state) {
-        control.typeChangesEvents
+        control.typeChangeState
             .filter { type -> type is ValueChangeType.Reset }
             .collect { state.readonlyState.setValue(state.readonlyState.initialValue) }
     }

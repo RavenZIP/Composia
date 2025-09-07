@@ -9,10 +9,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
 interface ActivationControl {
-    val activationStateEvents: StateFlow<ActivationState>
-    val isEnabledEvents: StateFlow<Boolean>
+    val activationState: StateFlow<ActivationState>
+    val enabledState: StateFlow<Boolean>
     val isEnabled: Boolean
-    val isDisabledEvents: StateFlow<Boolean>
+    val isDisabledState: StateFlow<Boolean>
     val isDisabled: Boolean
 }
 
@@ -30,33 +30,31 @@ internal open class MutableActivationControlImpl(
 ) : MutableActivationControl {
     internal val initialState: ActivationState = activationStatusOf(enabled)
 
-    private val _activationStateEvents: MutableStateFlow<ActivationState> =
-        MutableStateFlow(initialState)
+    private val _activationState: MutableStateFlow<ActivationState> = MutableStateFlow(initialState)
 
-    override val activationStateEvents: StateFlow<ActivationState> =
-        _activationStateEvents.asStateFlow()
+    override val activationState: StateFlow<ActivationState> = _activationState.asStateFlow()
 
-    override val isEnabledEvents: StateFlow<Boolean> =
-        activationStateEvents
+    override val enabledState: StateFlow<Boolean> =
+        activationState
             .map { x -> x is ActivationState.Enabled }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = enabled)
 
     override val isEnabled: Boolean
-        get() = _activationStateEvents.value.isEnabled()
+        get() = _activationState.value.isEnabled()
 
-    override val isDisabledEvents: StateFlow<Boolean> =
-        activationStateEvents
+    override val isDisabledState: StateFlow<Boolean> =
+        activationState
             .map { x -> x is ActivationState.Disabled }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = !enabled)
 
     override val isDisabled: Boolean
-        get() = _activationStateEvents.value.isDisabled()
+        get() = _activationState.value.isDisabled()
 
-    override fun enable() = _activationStateEvents.update { ActivationState.Enabled }
+    override fun enable() = _activationState.update { ActivationState.Enabled }
 
-    override fun disable() = _activationStateEvents.update { ActivationState.Disabled }
+    override fun disable() = _activationState.update { ActivationState.Disabled }
 
-    override fun reset() = _activationStateEvents.update { initialState }
+    override fun reset() = _activationState.update { initialState }
 }
 
 fun mutableActivationControlOf(

@@ -84,7 +84,7 @@ fun ColIconButton(
     contentPadding: PaddingValues = PaddingValues(10.dp),
     onClick: () -> Unit = {},
 ) {
-    val isEnabled = control.isEnabledEvents.collectAsState().value
+    val isEnabled = control.enabledState.collectAsState().value
 
     ColIconButton(
         text = text,

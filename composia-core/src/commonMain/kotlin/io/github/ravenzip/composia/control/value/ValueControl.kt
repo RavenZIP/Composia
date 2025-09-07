@@ -5,20 +5,20 @@ import io.github.ravenzip.composia.control.activation.MutableActivationControl
 import io.github.ravenzip.composia.control.activation.MutableActivationControlImpl
 import io.github.ravenzip.composia.extension.addOrRemove
 import io.github.ravenzip.composia.extension.stateInWhileSubscribed
-import io.github.ravenzip.composia.valueChange.ValueChangeEvent
+import io.github.ravenzip.composia.valueChange.ValueChange
 import io.github.ravenzip.composia.valueChange.ValueChangeType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
 interface ValueControl<T> : ActivationControl {
-    val valueChangeEvents: StateFlow<ValueChangeEvent<T>>
-    val valueEvents: StateFlow<T>
-    val typeChangesEvents: StateFlow<ValueChangeType>
-    val currentValueChangeEvent: ValueChangeEvent<T>
+    val valueChangeState: StateFlow<ValueChange<T>>
+    val valueState: StateFlow<T>
+    val typeChangeState: StateFlow<ValueChangeType>
+    val currentValueChange: ValueChange<T>
     val currentValue: T
     val currentTypeChange: ValueChangeType
     val defaultResetValue: T
-    val snapshotEvents: StateFlow<ValueControlSnapshot<T>>
+    val snapshotState: StateFlow<ValueControlSnapshot<T>>
 }
 
 interface MutableValueControl<T> : ValueControl<T>, MutableActivationControl {
@@ -29,45 +29,43 @@ interface MutableValueControl<T> : ValueControl<T>, MutableActivationControl {
 
 internal open class MutableValueControlImpl<T>(
     initialValue: T,
-    val resetValue: T = initialValue,
+    private val resetValue: T = initialValue,
     enabled: Boolean = true,
     coroutineScope: CoroutineScope,
 ) : MutableActivationControlImpl(enabled, coroutineScope), MutableValueControl<T> {
-    private val _valueChangeEvents: MutableStateFlow<ValueChangeEvent<T>> =
-        MutableStateFlow(ValueChangeEvent.createInitializeChange(initialValue))
+    private val _valueChangeState: MutableStateFlow<ValueChange<T>> =
+        MutableStateFlow(ValueChange.createInitializeChange(initialValue))
 
-    override val valueChangeEvents: StateFlow<ValueChangeEvent<T>> =
-        _valueChangeEvents.asStateFlow()
+    override val valueChangeState: StateFlow<ValueChange<T>> = _valueChangeState.asStateFlow()
 
-    override val valueEvents: StateFlow<T> =
-        _valueChangeEvents
+    override val valueState: StateFlow<T> =
+        _valueChangeState
             .map { event -> event.value }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = initialValue)
 
-    override val typeChangesEvents: StateFlow<ValueChangeType> =
-        valueChangeEvents
+    override val typeChangeState: StateFlow<ValueChangeType> =
+        valueChangeState
             .map { x -> x.typeChange }
             .stateInWhileSubscribed(
                 scope = coroutineScope,
                 initialValue = ValueChangeType.Initialize,
             )
 
-    override val currentValueChangeEvent: ValueChangeEvent<T>
-        get() = _valueChangeEvents.value
+    override val currentValueChange: ValueChange<T>
+        get() = _valueChangeState.value
 
     override val currentValue: T
-        get() = _valueChangeEvents.value.value
+        get() = _valueChangeState.value.value
 
     override val currentTypeChange: ValueChangeType
-        get() = _valueChangeEvents.value.typeChange
+        get() = _valueChangeState.value.typeChange
 
-    override val defaultResetValue: T
-        get() = resetValue
+    override val defaultResetValue: T = resetValue
 
-    override val snapshotEvents: StateFlow<ValueControlSnapshot<T>> =
-        combine(valueChangeEvents, activationStateEvents) { valueWithTypeChanges, enablementState ->
+    override val snapshotState: StateFlow<ValueControlSnapshot<T>> =
+        combine(valueChangeState, activationState) { valueWithTypeChanges, enablementState ->
                 ValueControlSnapshotImpl.create(
-                    valueChangeEvent = valueWithTypeChanges,
+                    valueChange = valueWithTypeChanges,
                     state = enablementState,
                 )
             }
@@ -77,7 +75,7 @@ internal open class MutableValueControlImpl<T>(
             )
 
     override fun setValue(value: T) {
-        _valueChangeEvents.update { ValueChangeEvent.createSetChange(value) }
+        _valueChangeState.update { ValueChange.createSetChange(value) }
     }
 
     override fun reset() {
@@ -86,7 +84,7 @@ internal open class MutableValueControlImpl<T>(
 
     override fun reset(value: T) {
         super.reset()
-        _valueChangeEvents.update { ValueChangeEvent.createResetChange(value) }
+        _valueChangeState.update { ValueChange.createResetChange(value) }
     }
 }
 

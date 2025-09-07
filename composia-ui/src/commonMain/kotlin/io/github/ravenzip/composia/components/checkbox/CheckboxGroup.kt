@@ -55,8 +55,8 @@ fun <T, K> CheckboxGroup(
     contentPadding: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(10.dp),
     colors: CheckboxColors = CheckboxDefaults.colors(),
 ) {
-    val value = control.valueEvents.collectAsSnapshotStateList()
-    val isEnabled = control.isEnabledEvents.collectAsState().value
+    val value = control.valueState.collectAsSnapshotStateList()
+    val isEnabled = control.enabledState.collectAsState().value
 
     CheckboxGroup(
         selectedItems = value,
