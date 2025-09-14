@@ -2,19 +2,17 @@ package io.github.ravenzip.composia.control.activation
 
 import androidx.compose.runtime.Stable
 import io.github.ravenzip.composia.extension.stateInWhileSubscribed
-import io.github.ravenzip.composia.state.ActivationState
-import io.github.ravenzip.composia.state.activationStatusOf
-import io.github.ravenzip.composia.state.isDisabled
-import io.github.ravenzip.composia.state.isEnabled
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 
 @Stable
 interface ActivationControl {
-    val activationStateFlow: StateFlow<ActivationState>
     val isEnabledFlow: StateFlow<Boolean>
-    val isEnabled: Boolean
     val isDisabledFlow: StateFlow<Boolean>
+    val isEnabled: Boolean
     val isDisabled: Boolean
 }
 
@@ -28,38 +26,30 @@ interface MutableActivationControl : ActivationControl {
 }
 
 internal open class MutableActivationControlImpl(
-    enabled: Boolean = true,
+    private val enabled: Boolean = true,
     coroutineScope: CoroutineScope,
 ) : MutableActivationControl {
-    internal val initialState: ActivationState = activationStatusOf(enabled)
-
-    private val _activationStateFlow: MutableStateFlow<ActivationState> =
-        MutableStateFlow(initialState)
-
-    override val activationStateFlow: StateFlow<ActivationState> =
-        _activationStateFlow.asStateFlow()
+    private val _isEnabled: MutableStateFlow<Boolean> = MutableStateFlow(enabled)
 
     override val isEnabledFlow: StateFlow<Boolean> =
-        activationStateFlow
-            .map { x -> x is ActivationState.Enabled }
-            .stateInWhileSubscribed(scope = coroutineScope, initialValue = enabled)
+        _isEnabled.stateInWhileSubscribed(scope = coroutineScope, initialValue = enabled)
 
     override val isEnabled: Boolean
-        get() = _activationStateFlow.value.isEnabled()
+        get() = _isEnabled.value
 
     override val isDisabledFlow: StateFlow<Boolean> =
-        activationStateFlow
-            .map { x -> x is ActivationState.Disabled }
+        _isEnabled
+            .map { isEnabled -> !isEnabled }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = !enabled)
 
     override val isDisabled: Boolean
-        get() = _activationStateFlow.value.isDisabled()
+        get() = !_isEnabled.value
 
-    override fun enable() = _activationStateFlow.update { ActivationState.Enabled }
+    override fun enable() = _isEnabled.update { true }
 
-    override fun disable() = _activationStateFlow.update { ActivationState.Disabled }
+    override fun disable() = _isEnabled.update { false }
 
-    override fun reset() = _activationStateFlow.update { initialState }
+    override fun reset() = _isEnabled.update { enabled }
 }
 
 fun mutableActivationControlOf(

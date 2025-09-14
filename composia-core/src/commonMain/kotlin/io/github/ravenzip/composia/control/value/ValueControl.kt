@@ -3,7 +3,7 @@ package io.github.ravenzip.composia.control.value
 import androidx.compose.runtime.Stable
 import io.github.ravenzip.composia.control.activation.ActivationControl
 import io.github.ravenzip.composia.control.activation.MutableActivationControl
-import io.github.ravenzip.composia.control.activation.MutableActivationControlImpl
+import io.github.ravenzip.composia.control.activation.mutableActivationControlOf
 import io.github.ravenzip.composia.extension.addOrRemove
 import io.github.ravenzip.composia.extension.stateInWhileSubscribed
 import io.github.ravenzip.composia.valueChange.ValueChange
@@ -16,11 +16,12 @@ interface ValueControl<T> : ActivationControl {
     val valueChangeFlow: StateFlow<ValueChange<T>>
     val valueFlow: StateFlow<T>
     val typeChangeFlow: StateFlow<ValueChangeType>
-    val valueChange: ValueChange<T>
+    val snapshotFlow: StateFlow<ValueControlSnapshot<T>>
+    val valueWithTypeChange: ValueChange<T>
     val value: T
     val typeChange: ValueChangeType
+    val snapshot: ValueControlSnapshot<T>
     val defaultResetValue: T
-    val snapshotFlow: StateFlow<ValueControlSnapshot<T>>
 }
 
 @Stable
@@ -30,12 +31,12 @@ interface MutableValueControl<T> : ValueControl<T>, MutableActivationControl {
     fun reset(value: T)
 }
 
-internal open class MutableValueControlImpl<T>(
-    initialValue: T,
-    private val resetValue: T = initialValue,
-    enabled: Boolean = true,
+internal class MutableValueControlImpl<T>(
+    private val initialValue: T,
+    resetValue: T = initialValue,
+    private val activationControl: MutableActivationControl,
     coroutineScope: CoroutineScope,
-) : MutableActivationControlImpl(enabled, coroutineScope), MutableValueControl<T> {
+) : MutableValueControl<T>, MutableActivationControl by activationControl {
     private val _valueChangeFlow: MutableStateFlow<ValueChange<T>> =
         MutableStateFlow(ValueChange.createInitializeChange(initialValue))
 
@@ -54,7 +55,30 @@ internal open class MutableValueControlImpl<T>(
                 initialValue = ValueChangeType.Initialize,
             )
 
-    override val valueChange: ValueChange<T>
+    override val snapshotFlow: StateFlow<ValueControlSnapshot<T>> =
+        combine(valueChangeFlow, activationControl.isEnabledFlow) { valueWithTypeChanges, enabled ->
+                ValueControlSnapshotImpl.create(
+                    valueChange = valueWithTypeChanges,
+                    enabled = enabled,
+                )
+            }
+            .stateIn(
+                scope = coroutineScope,
+                started = SharingStarted.Eagerly,
+                initialValue =
+                    ValueControlSnapshotImpl.create(initialValue, activationControl.isEnabled),
+            )
+
+    override val snapshot: ValueControlSnapshot<T>
+        get() = snapshotFlow.value
+
+    override val isEnabled: Boolean
+        get() = activationControl.isEnabled
+
+    override val isDisabled: Boolean
+        get() = activationControl.isDisabled
+
+    override val valueWithTypeChange: ValueChange<T>
         get() = _valueChangeFlow.value
 
     override val value: T
@@ -65,28 +89,12 @@ internal open class MutableValueControlImpl<T>(
 
     override val defaultResetValue: T = resetValue
 
-    override val snapshotFlow: StateFlow<ValueControlSnapshot<T>> =
-        combine(valueChangeFlow, activationStateFlow) { valueWithTypeChanges, enablementState ->
-                ValueControlSnapshotImpl.create(
-                    valueChange = valueWithTypeChanges,
-                    state = enablementState,
-                )
-            }
-            .stateInWhileSubscribed(
-                scope = coroutineScope,
-                initialValue = ValueControlSnapshotImpl.create(initialValue, initialState),
-            )
+    override fun setValue(value: T) = _valueChangeFlow.update { ValueChange.createSetChange(value) }
 
-    override fun setValue(value: T) {
-        _valueChangeFlow.update { ValueChange.createSetChange(value) }
-    }
-
-    override fun reset() {
-        reset(resetValue)
-    }
+    override fun reset() = reset(defaultResetValue)
 
     override fun reset(value: T) {
-        super.reset()
+        activationControl.reset()
         _valueChangeFlow.update { ValueChange.createResetChange(value) }
     }
 }
@@ -96,14 +104,15 @@ fun <T> mutableValueControlOf(
     resetValue: T = initialValue,
     enabled: Boolean = true,
     coroutineScope: CoroutineScope,
-): MutableValueControl<T> =
-    MutableValueControlImpl(initialValue, resetValue, enabled, coroutineScope)
+): MutableValueControl<T> {
+    val activationControl = mutableActivationControlOf(enabled, coroutineScope)
+    return MutableValueControlImpl(initialValue, resetValue, activationControl, coroutineScope)
+}
 
 fun <T> MutableValueControl<T>.asReadonly(): ValueControl<T> = this
 
 fun <T, K> MutableValueControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
     val currentValues = this.value.addOrRemove(value, keySelector)
-
     setValue(currentValues)
 }
 
@@ -113,4 +122,8 @@ fun <T> MutableValueControl<List<T>>.setValue(vararg values: T) {
 
 fun <T> MutableValueControl<List<T>>.reset(vararg values: T) {
     reset(values.toList())
+}
+
+fun <T> MutableValueControl<List<T>>.reset(values: List<T>) {
+    reset(values)
 }

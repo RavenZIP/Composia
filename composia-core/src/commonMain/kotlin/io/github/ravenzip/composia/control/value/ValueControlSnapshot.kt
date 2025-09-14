@@ -1,8 +1,5 @@
 package io.github.ravenzip.composia.control.value
 
-import io.github.ravenzip.composia.state.ActivationState
-import io.github.ravenzip.composia.state.isDisabled
-import io.github.ravenzip.composia.state.isEnabled
 import io.github.ravenzip.composia.valueChange.ValueChange
 import io.github.ravenzip.composia.valueChange.ValueChangeType
 import io.github.ravenzip.composia.valueChange.isInitialize
@@ -23,25 +20,19 @@ internal open class ValueControlSnapshotImpl<T>(
     override val isDisabled: Boolean,
 ) : ValueControlSnapshot<T> {
     companion object {
-        fun <T> create(
-            valueChange: ValueChange<T>,
-            state: ActivationState,
-        ): ValueControlSnapshot<T> =
+        fun <T> create(valueChange: ValueChange<T>, enabled: Boolean): ValueControlSnapshot<T> =
             ValueControlSnapshotImpl(
                 value = valueChange.value,
                 typeChange = valueChange.typeChange,
                 hasChanges = !valueChange.typeChange.isInitialize(),
-                isEnabled = state.isEnabled(),
-                isDisabled = state.isDisabled(),
+                isEnabled = enabled,
+                isDisabled = !enabled,
             )
 
-        fun <T> create(value: T, state: ActivationState): ValueControlSnapshot<T> =
+        fun <T> create(value: T, enabled: Boolean): ValueControlSnapshot<T> =
             create(
                 valueChange = ValueChange(value = value, typeChange = ValueChangeType.Initialize),
-                state = state,
+                enabled = enabled,
             )
-
-        fun <T> createDefault(value: T): ValueControlSnapshot<T> =
-            create(value = value, state = ActivationState.Enabled)
     }
 }

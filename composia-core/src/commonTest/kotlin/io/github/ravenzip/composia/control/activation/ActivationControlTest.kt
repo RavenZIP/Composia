@@ -2,12 +2,10 @@ package io.github.ravenzip.composia.control.activation
 
 import app.cash.turbine.test
 import app.cash.turbine.turbineScope
-import io.github.ravenzip.composia.state.ActivationState
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import kotlinx.coroutines.test.runTest
 
 class ActivationControlTest {
     @Test
@@ -66,23 +64,6 @@ class ActivationControlTest {
         disabledControl.reset()
         assertTrue(disabledControl.isDisabled)
         assertFalse(disabledControl.isEnabled)
-    }
-
-    @Test
-    fun `statusFlow emits changes`() = runTest {
-        turbineScope {
-            val control = mutableActivationControlOf(coroutineScope = backgroundScope)
-
-            control.activationStateFlow.test {
-                assertEquals(ActivationState.Enabled, awaitItem())
-
-                control.disable()
-                assertEquals(ActivationState.Disabled, awaitItem())
-
-                control.enable()
-                assertEquals(ActivationState.Enabled, awaitItem())
-            }
-        }
     }
 
     @Test

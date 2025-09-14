@@ -1,16 +1,12 @@
 package io.github.ravenzip.composia.control.validatable
 
 import io.github.ravenzip.composia.control.value.ValueControlSnapshot
-import io.github.ravenzip.composia.state.ActivationState
-import io.github.ravenzip.composia.state.isDisabled
-import io.github.ravenzip.composia.state.isEnabled
-import io.github.ravenzip.composia.validation.ValidationResult
+import io.github.ravenzip.composia.validation.ValidationState
 import io.github.ravenzip.composia.validation.getErrorMessage
 import io.github.ravenzip.composia.validation.isInvalid
 import io.github.ravenzip.composia.validation.isValid
 import io.github.ravenzip.composia.valueChange.ValueChange
 import io.github.ravenzip.composia.valueChange.ValueChangeType
-import io.github.ravenzip.composia.valueChange.isInitialize
 
 interface ValidatableControlSnapshot<T> : ValueControlSnapshot<T> {
     override val value: T
@@ -35,37 +31,34 @@ internal open class ValidatableControlSnapshotImpl<T>(
 ) : ValidatableControlSnapshot<T> {
     companion object {
         fun <T> create(
-            valueChange: ValueChange<T>,
-            state: ActivationState,
-            validationResult: ValidationResult,
+            value: T,
+            typeChange: ValueChangeType,
+            hasChanges: Boolean,
+            isEnabled: Boolean,
+            validationState: ValidationState,
         ): ValidatableControlSnapshot<T> =
             ValidatableControlSnapshotImpl(
-                value = valueChange.value,
-                typeChange = valueChange.typeChange,
-                hasChanges = !valueChange.typeChange.isInitialize(),
-                isEnabled = state.isEnabled(),
-                isDisabled = state.isDisabled(),
-                isValid = validationResult.isValid(),
-                isInvalid = validationResult.isInvalid(),
-                errorMessage = validationResult.getErrorMessage(),
+                value = value,
+                typeChange = typeChange,
+                hasChanges = hasChanges,
+                isEnabled = isEnabled,
+                isDisabled = !isEnabled,
+                isValid = validationState.isValid(),
+                isInvalid = validationState.isInvalid(),
+                errorMessage = validationState.getErrorMessage(),
             )
 
         fun <T> create(
-            value: T,
-            state: ActivationState,
-            validationResult: ValidationResult,
+            valueWithTypeChange: ValueChange<T>,
+            isEnabled: Boolean,
+            validationState: ValidationState,
         ): ValidatableControlSnapshot<T> =
             create(
-                valueChange = ValueChange(value = value, typeChange = ValueChangeType.Initialize),
-                state = state,
-                validationResult = validationResult,
-            )
-
-        fun <T> createDefault(value: T): ValidatableControlSnapshot<T> =
-            create(
-                valueChange = ValueChange(value = value, typeChange = ValueChangeType.Initialize),
-                state = ActivationState.Enabled,
-                validationResult = ValidationResult.Valid,
+                value = valueWithTypeChange.value,
+                typeChange = valueWithTypeChange.typeChange,
+                hasChanges = valueWithTypeChange.typeChange !is ValueChangeType.Initialize,
+                isEnabled = isEnabled,
+                validationState = validationState,
             )
     }
 }

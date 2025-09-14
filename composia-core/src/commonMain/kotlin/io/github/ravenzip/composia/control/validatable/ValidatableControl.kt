@@ -2,97 +2,108 @@ package io.github.ravenzip.composia.control.validatable
 
 import androidx.compose.runtime.Stable
 import io.github.ravenzip.composia.control.value.MutableValueControl
-import io.github.ravenzip.composia.control.value.MutableValueControlImpl
 import io.github.ravenzip.composia.control.value.ValueControl
-import io.github.ravenzip.composia.extension.addOrRemove
+import io.github.ravenzip.composia.control.value.mutableValueControlOf
 import io.github.ravenzip.composia.extension.stateInWhileSubscribed
+import io.github.ravenzip.composia.status.ControlStatus
 import io.github.ravenzip.composia.validation.*
+import io.github.ravenzip.composia.valueChange.ValueChangeType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
 @Stable
 interface ValidatableControl<T> : ValueControl<T>, Validatable<T> {
-    val isValidFlow: StateFlow<Boolean>
-    val isInvalidFlow: StateFlow<Boolean>
+    val statusFlow: StateFlow<ControlStatus>
     override val snapshotFlow: StateFlow<ValidatableControlSnapshot<T>>
+    val status: ControlStatus
+    override val snapshot: ValidatableControlSnapshot<T>
 }
 
 @Stable interface MutableValidatableControl<T> : ValidatableControl<T>, MutableValueControl<T>
 
 internal class MutableValidatableValueControlImpl<T>(
-    initialValue: T,
-    resetValue: T = initialValue,
     private val validators: List<ValidatorFn<T>> = emptyList(),
-    enabled: Boolean = true,
+    valueControl: MutableValueControl<T>,
     coroutineScope: CoroutineScope,
-) :
-    MutableValueControlImpl<T>(initialValue, resetValue, enabled, coroutineScope),
-    MutableValidatableControl<T> {
-    private val _validationResult: MutableStateFlow<ValidationResult> =
-        MutableStateFlow(ValidationResult.Valid)
-    override val validationResultFlow: StateFlow<ValidationResult> = _validationResult.asStateFlow()
+) : MutableValidatableControl<T>, MutableValueControl<T> by valueControl {
+    private val validationStateFlow: StateFlow<ValidationState> =
+        valueChangeFlow
+            .filter { valueChange -> valueChange.typeChange is ValueChangeType.Set }
+            .map { valueChange ->
+                val errorMessage =
+                    validators.firstNotNullOfOrNull { validator -> validator(valueChange.value) }
 
-    override val validationResult: ValidationResult
-        get() = _validationResult.value
+                if (errorMessage == null) ValidationState.Valid
+                else ValidationState.Invalid(errorMessage)
+            }
+            .stateIn(
+                scope = coroutineScope,
+                started = SharingStarted.Eagerly,
+                initialValue = ValidationState.Valid,
+            )
+
+    override val statusFlow: StateFlow<ControlStatus> =
+        combine(valueControl.isEnabledFlow, validationStateFlow) { isEnabled, validationResult ->
+                if (isEnabled) validationResult.toControlStatus() else ControlStatus.Disabled
+            }
+            .stateIn(
+                scope = coroutineScope,
+                started = SharingStarted.Eagerly,
+                initialValue = ControlStatus.Valid,
+            )
 
     override val errorMessageFlow: StateFlow<String?> =
-        _validationResult
+        validationStateFlow
             .map { value -> value.getErrorMessage() }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = null)
 
-    override val errorMessage: String?
-        get() = _validationResult.value.getErrorMessage()
-
-    override val isValid: Boolean
-        get() = _validationResult.value.isValid()
-
-    override val isInvalid: Boolean
-        get() = _validationResult.value.isInvalid()
-
     override val snapshotFlow: StateFlow<ValidatableControlSnapshot<T>> =
-        combine(valueChangeFlow, activationStateFlow, validationResultFlow) {
-                valueWithTypeChanges,
-                enablementState,
+        combine(valueControl.snapshotFlow, validationStateFlow) {
+                valueControlSnapshot,
                 validationResult ->
                 ValidatableControlSnapshotImpl.create(
-                    valueChange = valueWithTypeChanges,
-                    state = enablementState,
-                    validationResult = validationResult,
+                    value = valueControlSnapshot.value,
+                    typeChange = valueControlSnapshot.typeChange,
+                    hasChanges = valueControlSnapshot.hasChanges,
+                    isEnabled = valueControlSnapshot.isEnabled,
+                    validationState = validationResult,
                 )
             }
-            .stateInWhileSubscribed(
+            .stateIn(
                 scope = coroutineScope,
+                started = SharingStarted.Eagerly,
                 initialValue =
                     ValidatableControlSnapshotImpl.create(
-                        initialValue,
-                        initialState,
-                        _validationResult.value,
+                        valueControl.valueWithTypeChange,
+                        valueControl.isEnabled,
+                        validationStateFlow.value,
                     ),
             )
 
     override val isValidFlow: StateFlow<Boolean> =
-        validationResultFlow
-            .map { x -> x is ValidationResult.Valid }
-            .stateInWhileSubscribed(scope = coroutineScope, initialValue = enabled)
+        validationStateFlow
+            .map { x -> x is ValidationState.Valid }
+            .stateInWhileSubscribed(scope = coroutineScope, initialValue = isValid)
 
     override val isInvalidFlow: StateFlow<Boolean> =
-        validationResultFlow
-            .map { x -> x is ValidationResult.Invalid }
-            .stateInWhileSubscribed(scope = coroutineScope, initialValue = !enabled)
+        validationStateFlow
+            .map { x -> x is ValidationState.Invalid }
+            .stateInWhileSubscribed(scope = coroutineScope, initialValue = isInvalid)
 
-    override fun setValue(value: T) {
-        super.setValue(value)
-        validate(value)
-    }
+    override val errorMessage: String?
+        get() = validationStateFlow.value.getErrorMessage()
 
-    override fun validate(value: T) {
-        val errorMessage = validators.firstNotNullOfOrNull { validator -> validator(value) }
+    override val isValid: Boolean
+        get() = validationStateFlow.value.isValid()
 
-        _validationResult.update {
-            if (errorMessage == null) ValidationResult.Valid
-            else ValidationResult.Invalid(errorMessage)
-        }
-    }
+    override val isInvalid: Boolean
+        get() = validationStateFlow.value.isInvalid()
+
+    override val status: ControlStatus
+        get() = statusFlow.value
+
+    override val snapshot: ValidatableControlSnapshot<T>
+        get() = snapshotFlow.value
 }
 
 fun <T> mutableValidatableControlOf(
@@ -101,31 +112,16 @@ fun <T> mutableValidatableControlOf(
     validators: List<ValidatorFn<T>> = emptyList(),
     enabled: Boolean = true,
     coroutineScope: CoroutineScope,
-): MutableValidatableControl<T> =
-    MutableValidatableValueControlImpl(
-        initialValue,
-        resetValue,
-        validators,
-        enabled,
-        coroutineScope,
-    )
+): MutableValidatableControl<T> {
+    val valueControl =
+        mutableValueControlOf(
+            initialValue = initialValue,
+            resetValue = resetValue,
+            enabled = enabled,
+            coroutineScope = coroutineScope,
+        )
+
+    return MutableValidatableValueControlImpl(validators, valueControl, coroutineScope)
+}
 
 fun <T> MutableValidatableControl<T>.asReadonly(): ValidatableControl<T> = this
-
-fun <T, K> MutableValidatableControl<List<T>>.toggle(value: T, keySelector: (T) -> K) {
-    val currentValues = this.value.addOrRemove(value, keySelector)
-
-    setValue(currentValues)
-    validate(currentValues)
-}
-
-fun <T> MutableValidatableControl<List<T>>.setValue(vararg values: T) {
-    val newValues = values.toList()
-
-    setValue(newValues)
-    validate(newValues)
-}
-
-fun <T> MutableValidatableControl<List<T>>.reset(vararg values: T) {
-    reset(values.toList())
-}
