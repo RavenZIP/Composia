@@ -1,6 +1,7 @@
 package io.github.ravenzip.composia.control.validatable
 
 import io.github.ravenzip.composia.control.value.ValueControlSnapshot
+import io.github.ravenzip.composia.control.value.ValueControlSnapshotImpl
 import io.github.ravenzip.composia.validation.ValidationState
 import io.github.ravenzip.composia.validation.getErrorMessage
 import io.github.ravenzip.composia.validation.isInvalid
@@ -19,7 +20,8 @@ interface ValidatableControlSnapshot<T> : ValueControlSnapshot<T> {
     val errorMessage: String?
 }
 
-internal open class ValidatableControlSnapshotImpl<T>(
+internal open class ValidatableControlSnapshotImpl<T>
+private constructor(
     override val value: T,
     override val typeChange: ValueChangeType,
     override val hasChanges: Boolean,
@@ -62,3 +64,9 @@ internal open class ValidatableControlSnapshotImpl<T>(
             )
     }
 }
+
+fun <T> ValidatableControlSnapshot<T>.toValidatableControlSnapshot(): ValueControlSnapshot<T> =
+    ValueControlSnapshotImpl.create(
+        valueChange = ValueChange(value = value, typeChange = typeChange),
+        isEnabled = isEnabled,
+    )

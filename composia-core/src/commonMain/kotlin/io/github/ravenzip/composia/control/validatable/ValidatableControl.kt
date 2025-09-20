@@ -4,6 +4,7 @@ import androidx.compose.runtime.Stable
 import io.github.ravenzip.composia.control.value.MutableValueControl
 import io.github.ravenzip.composia.control.value.ValueControl
 import io.github.ravenzip.composia.control.value.mutableValueControlOf
+import io.github.ravenzip.composia.control.value.toValidatableControlSnapshot
 import io.github.ravenzip.composia.extension.stateInWhileSubscribed
 import io.github.ravenzip.composia.status.ControlStatus
 import io.github.ravenzip.composia.validation.*
@@ -36,11 +37,7 @@ internal class MutableValidatableValueControlImpl<T>(
                 if (errorMessage == null) ValidationState.Valid
                 else ValidationState.Invalid(errorMessage)
             }
-            .stateIn(
-                scope = coroutineScope,
-                started = SharingStarted.Eagerly,
-                initialValue = ValidationState.Valid,
-            )
+            .stateInWhileSubscribed(scope = coroutineScope, initialValue = ValidationState.Valid)
 
     override val statusFlow: StateFlow<ControlStatus> =
         combine(valueControl.isEnabledFlow, validationStateFlow) { isEnabled, validationResult ->
@@ -60,14 +57,8 @@ internal class MutableValidatableValueControlImpl<T>(
     override val snapshotFlow: StateFlow<ValidatableControlSnapshot<T>> =
         combine(valueControl.snapshotFlow, validationStateFlow) {
                 valueControlSnapshot,
-                validationResult ->
-                ValidatableControlSnapshotImpl.create(
-                    value = valueControlSnapshot.value,
-                    typeChange = valueControlSnapshot.typeChange,
-                    hasChanges = valueControlSnapshot.hasChanges,
-                    isEnabled = valueControlSnapshot.isEnabled,
-                    validationState = validationResult,
-                )
+                validationState ->
+                valueControlSnapshot.toValidatableControlSnapshot(validationState)
             }
             .stateIn(
                 scope = coroutineScope,

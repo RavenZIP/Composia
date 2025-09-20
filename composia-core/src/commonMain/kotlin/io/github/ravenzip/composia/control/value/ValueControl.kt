@@ -59,7 +59,7 @@ internal class MutableValueControlImpl<T>(
         combine(valueChangeFlow, activationControl.isEnabledFlow) { valueWithTypeChanges, enabled ->
                 ValueControlSnapshotImpl.create(
                     valueChange = valueWithTypeChanges,
-                    enabled = enabled,
+                    isEnabled = enabled,
                 )
             }
             .stateIn(
