@@ -27,7 +27,7 @@ internal class MutableValidatableValueControlImpl<T>(
     valueControl: MutableValueControl<T>,
     coroutineScope: CoroutineScope,
 ) : MutableValidatableControl<T>, MutableValueControl<T> by valueControl {
-    private val validationStateFlow: StateFlow<ValidationState> =
+    private val _validationStateFlow: StateFlow<ValidationState> =
         valueChangeFlow
             .filter { valueChange -> valueChange.typeChange is ValueChangeType.Set }
             .map { valueChange ->
@@ -40,7 +40,7 @@ internal class MutableValidatableValueControlImpl<T>(
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = ValidationState.Valid)
 
     override val statusFlow: StateFlow<ControlStatus> =
-        combine(valueControl.isEnabledFlow, validationStateFlow) { isEnabled, validationResult ->
+        combine(valueControl.isEnabledFlow, _validationStateFlow) { isEnabled, validationResult ->
                 if (isEnabled) validationResult.toControlStatus() else ControlStatus.Disabled
             }
             .stateIn(
@@ -50,12 +50,12 @@ internal class MutableValidatableValueControlImpl<T>(
             )
 
     override val errorMessageFlow: StateFlow<String?> =
-        validationStateFlow
+        _validationStateFlow
             .map { value -> value.getErrorMessage() }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = null)
 
     override val snapshotFlow: StateFlow<ValidatableControlSnapshot<T>> =
-        combine(valueControl.snapshotFlow, validationStateFlow) {
+        combine(valueControl.snapshotFlow, _validationStateFlow) {
                 valueControlSnapshot,
                 validationState ->
                 valueControlSnapshot.toValidatableControlSnapshot(validationState)
@@ -67,28 +67,28 @@ internal class MutableValidatableValueControlImpl<T>(
                     ValidatableControlSnapshotImpl.create(
                         valueControl.valueWithTypeChange,
                         valueControl.isEnabled,
-                        validationStateFlow.value,
+                        _validationStateFlow.value,
                     ),
             )
 
     override val isValidFlow: StateFlow<Boolean> =
-        validationStateFlow
+        _validationStateFlow
             .map { x -> x is ValidationState.Valid }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = isValid)
 
     override val isInvalidFlow: StateFlow<Boolean> =
-        validationStateFlow
+        _validationStateFlow
             .map { x -> x is ValidationState.Invalid }
             .stateInWhileSubscribed(scope = coroutineScope, initialValue = isInvalid)
 
     override val errorMessage: String?
-        get() = validationStateFlow.value.getErrorMessage()
+        get() = _validationStateFlow.value.getErrorMessage()
 
     override val isValid: Boolean
-        get() = validationStateFlow.value.isValid()
+        get() = _validationStateFlow.value.isValid()
 
     override val isInvalid: Boolean
-        get() = validationStateFlow.value.isInvalid()
+        get() = _validationStateFlow.value.isInvalid()
 
     override val status: ControlStatus
         get() = statusFlow.value
