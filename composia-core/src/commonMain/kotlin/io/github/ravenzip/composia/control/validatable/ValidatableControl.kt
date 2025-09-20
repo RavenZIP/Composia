@@ -8,7 +8,6 @@ import io.github.ravenzip.composia.control.value.toValidatableControlSnapshot
 import io.github.ravenzip.composia.extension.stateInWhileSubscribed
 import io.github.ravenzip.composia.status.ControlStatus
 import io.github.ravenzip.composia.validation.*
-import io.github.ravenzip.composia.valueChange.ValueChangeType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
@@ -29,7 +28,6 @@ internal class MutableValidatableValueControlImpl<T>(
 ) : MutableValidatableControl<T>, MutableValueControl<T> by valueControl {
     private val _validationStateFlow: StateFlow<ValidationState> =
         valueChangeFlow
-            .filter { valueChange -> valueChange.typeChange is ValueChangeType.Set }
             .map { valueChange ->
                 val errorMessage =
                     validators.firstNotNullOfOrNull { validator -> validator(valueChange.value) }
