@@ -21,7 +21,6 @@ interface ValueControl<T> : ActivationControl {
     val value: T
     val typeChange: ValueChangeType
     val snapshot: ValueControlSnapshot<T>
-    val defaultResetValue: T
 }
 
 @Stable
@@ -29,11 +28,15 @@ interface MutableValueControl<T> : ValueControl<T>, MutableActivationControl {
     fun setValue(value: T)
 
     fun reset(value: T)
+
+    fun resetValueOnly()
+
+    fun resetValueOnly(value: T)
 }
 
 internal class MutableValueControlImpl<T>(
     private val initialValue: T,
-    resetValue: T = initialValue,
+    private val resetValue: T = initialValue,
     private val activationControl: MutableActivationControl,
     coroutineScope: CoroutineScope,
 ) : MutableValueControl<T>, MutableActivationControl by activationControl {
@@ -87,14 +90,18 @@ internal class MutableValueControlImpl<T>(
     override val typeChange: ValueChangeType
         get() = _valueChangeFlow.value.typeChange
 
-    override val defaultResetValue: T = resetValue
-
     override fun setValue(value: T) = _valueChangeFlow.update { ValueChange.createSetChange(value) }
 
-    override fun reset() = reset(defaultResetValue)
+    override fun reset() = reset(resetValue)
 
-    override fun reset(value: T) {
-        activationControl.reset()
+    override fun reset(value: T) = reset(value, onlyValue = false)
+
+    override fun resetValueOnly() = resetValueOnly(resetValue)
+
+    override fun resetValueOnly(value: T) = reset(value, onlyValue = true)
+
+    private fun reset(value: T, onlyValue: Boolean) {
+        if (!onlyValue) activationControl.reset()
         _valueChangeFlow.update { ValueChange.createResetChange(value) }
     }
 }

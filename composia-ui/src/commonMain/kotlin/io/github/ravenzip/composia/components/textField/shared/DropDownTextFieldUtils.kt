@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import io.github.ravenzip.composia.components.model.DataSource
+import io.github.ravenzip.composia.control.validatable.MutableValidatableControl
 import io.github.ravenzip.composia.control.validatable.ValidatableControl
 import io.github.ravenzip.composia.extension.update
 import io.github.ravenzip.composia.function.searchElementsByQuery
@@ -69,22 +70,30 @@ internal fun <T> loadSearchResult(
 }
 
 @Composable
-internal fun <T> updateSearchQueryOnControlOrExpandChange(
+internal fun <T> updateSearchQueryOnControlChange(
     control: ValidatableControl<T>,
     state: DropDownTextFieldState,
     sourceItemToString: (T) -> String,
     onSearchQueryChange: (String) -> Unit,
 ) {
     LaunchedEffect(control, state) {
-        merge(
-                control.valueFlow
-                    .map { value -> sourceItemToString(value) }
-                    .filter { value -> value.isNotEmpty() },
-                state.expandedState.valueChanges
-                    .filter { expanded -> !expanded && control.isInvalid }
-                    .map { sourceItemToString(control.defaultResetValue) },
-            )
+        control.valueFlow
+            .map { value -> sourceItemToString(value) }
+            .filter { value -> value.isNotEmpty() }
             .onEach { value -> onSearchQueryChange(value) }
+            .launchIn(this)
+    }
+}
+
+@Composable
+internal fun <T> resetControlValueOnExpandChange(
+    control: MutableValidatableControl<T>,
+    state: DropDownTextFieldState,
+) {
+    LaunchedEffect(control, state) {
+        state.expandedState.valueChanges
+            .filter { expanded -> !expanded && control.isInvalid }
+            .onEach { control.resetValueOnly() }
             .launchIn(this)
     }
 }

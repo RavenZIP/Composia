@@ -226,12 +226,14 @@ fun <T> DropDownTextField(
         }
     }
 
-    updateSearchQueryOnControlOrExpandChange(
+    updateSearchQueryOnControlChange(
         control = control,
         state = initializedState,
         sourceItemToString = sourceItemToString,
         onSearchQueryChange = { x -> searchQuery.value = x },
     )
+
+    resetControlValueOnExpandChange(control = control, state = initializedState)
 
     turnOffProgressIndicatorStateOnSourceChange(
         source = source,
@@ -247,7 +249,7 @@ fun <T> DropDownTextField(
         },
         searchQuery = searchQuery.value,
         onSearchQueryChange = { query ->
-            control.setValue(control.defaultResetValue)
+            control.resetValueOnly()
             searchQuery.value = query
         },
         searchResults = results,
