@@ -134,3 +134,11 @@ fun <T> MutableValueControl<List<T>>.reset(vararg values: T) {
 fun <T> MutableValueControl<List<T>>.reset(values: List<T>) {
     reset(values)
 }
+
+fun <T> MutableValueControl<List<T>>.resetValueOnly(vararg values: T) {
+    resetValueOnly(values.toList())
+}
+
+fun <T> MutableValueControl<List<T>>.resetValueOnly(values: List<T>) {
+    resetValueOnly(values)
+}
