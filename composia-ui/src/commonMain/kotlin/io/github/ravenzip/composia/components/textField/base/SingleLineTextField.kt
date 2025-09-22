@@ -11,7 +11,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Shape
 import io.github.ravenzip.composia.components.textField.shared.acceptInput
 import io.github.ravenzip.composia.components.textField.shared.resetReadonlyStateOnResetValue
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
+import io.github.ravenzip.composia.control.validatable.MutableValidatableControl
 import io.github.ravenzip.composia.state.TextFieldState
 import io.github.ravenzip.composia.style.DefaultComponentShape
 
@@ -63,7 +63,7 @@ fun SingleLineTextField(
 
 @Composable
 fun SingleLineTextField(
-    control: ValidatableSingleControl<String>,
+    control: MutableValidatableControl<String>,
     state: TextFieldState? = null,
     modifier: Modifier = Modifier,
     maxLength: Int? = null,
@@ -82,8 +82,9 @@ fun SingleLineTextField(
     resetReadonlyStateOnResetValue(control = control, state = initializedState)
 
     val controlSnapshot = control.snapshotFlow.collectAsState().value
-    val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
-    val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+    val errorMessage = remember(controlSnapshot) { controlSnapshot.errorMessage ?: "" }
+    val isReadonly = initializedState.readonlyState.valueChanges.collectAsState().value
+    val isFocused = initializedState.focusedState.valueChanges.collectAsState().value
 
     SingleLineTextField(
         value = controlSnapshot.value,
@@ -95,7 +96,7 @@ fun SingleLineTextField(
         isEnabled = controlSnapshot.isEnabled,
         isReadonly = isReadonly,
         isInvalid = controlSnapshot.isInvalid,
-        errorMessage = controlSnapshot.errorMessage,
+        errorMessage = errorMessage,
         isFocused = isFocused,
         onFocusChange = { focusState ->
             initializedState.focusedState.setValue(focusState.isFocused)

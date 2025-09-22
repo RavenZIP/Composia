@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.control.activation.ActivationControl
 import io.github.ravenzip.composia.extension.S18Medium
 import io.github.ravenzip.composia.style.DefaultComponentShape
 import io.github.ravenzip.composia.style.IconStyle
@@ -72,7 +72,7 @@ fun ColIconButton(
 
 @Composable
 fun ColIconButton(
-    control: StatusControl,
+    control: ActivationControl,
     text: String,
     textStyle: TextStyle = TextStyle.S18Medium,
     icon: Painter,

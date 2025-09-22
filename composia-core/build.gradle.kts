@@ -3,6 +3,8 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.vanniktech.mavenPublish)
 }
@@ -20,7 +22,10 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies { implementation(libs.kotlin.coroutines) }
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(libs.kotlin.coroutines)
+        }
 
         commonTest.dependencies {
             implementation(libs.kotlin.test)

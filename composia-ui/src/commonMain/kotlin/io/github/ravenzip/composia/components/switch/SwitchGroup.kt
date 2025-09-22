@@ -10,9 +10,10 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.multiValueControl.MultiValueControl
+import io.github.ravenzip.composia.control.validatable.MutableValidatableControl
+import io.github.ravenzip.composia.control.value.toggle
 import io.github.ravenzip.composia.extension.S18
-import io.github.ravenzip.composia.function.collectAsSnapshotListState
+import io.github.ravenzip.composia.extension.collectAsSnapshotStateList
 
 @Composable
 fun <T, K> SwitchGroup(
@@ -45,23 +46,24 @@ fun <T, K> SwitchGroup(
 
 @Composable
 fun <T, K> SwitchGroup(
-    control: MultiValueControl<T, K>,
+    control: MutableValidatableControl<List<T>>,
     source: List<T>,
     sourceItemToString: (T) -> String,
+    keySelector: (T) -> K,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle.S18,
     contentPadding: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(10.dp),
     colors: SwitchColors = SwitchDefaults.colors(),
 ) {
-    val value = control.valueFlow.collectAsSnapshotListState()
+    val value = control.valueFlow.collectAsSnapshotStateList()
     val isEnabled = control.isEnabledFlow.collectAsState().value
 
     SwitchGroup(
         selectedItems = value,
         source = source,
         sourceItemToString = sourceItemToString,
-        onClick = { x -> control.toggle(x) },
-        keySelector = { x -> control.keySelector(x) },
+        onClick = { x -> control.toggle(x, keySelector) },
+        keySelector = keySelector,
         modifier = modifier,
         isEnabled = isEnabled,
         textStyle = textStyle,

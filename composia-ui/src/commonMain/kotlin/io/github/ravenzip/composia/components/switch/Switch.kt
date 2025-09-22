@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
+import io.github.ravenzip.composia.control.validatable.MutableValidatableControl
 import io.github.ravenzip.composia.extension.S14
 import io.github.ravenzip.composia.extension.S16Medium
 import io.github.ravenzip.composia.style.DefaultComponentShape
@@ -47,7 +47,7 @@ fun Switch(
 
 @Composable
 fun Switch(
-    control: ValidatableSingleControl<Boolean>,
+    control: MutableValidatableControl<Boolean>,
     modifier: Modifier = Modifier,
     text: String,
     textStyle: TextStyle = LocalTextStyle.current,
@@ -102,7 +102,7 @@ fun Switch(
 
 @Composable
 fun Switch(
-    control: ValidatableSingleControl<Boolean>,
+    control: MutableValidatableControl<Boolean>,
     modifier: Modifier = Modifier,
     label: String,
     labelStyle: TextStyle = TextStyle.S16Medium,

@@ -16,7 +16,7 @@ import io.github.ravenzip.composia.components.icon.ConditionalIcon
 import io.github.ravenzip.composia.components.model.DataSource
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.shared.*
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
+import io.github.ravenzip.composia.control.validatable.MutableValidatableControl
 import io.github.ravenzip.composia.state.DropDownTextFieldState
 import io.github.ravenzip.composia.style.DefaultComponentShape
 import io.github.ravenzip.composia.style.IconStyle
@@ -175,7 +175,7 @@ fun <T> DropDownTextField(
 @Composable
 fun <T> DropDownTextField(
     modifier: Modifier = Modifier,
-    control: ValidatableSingleControl<T>,
+    control: MutableValidatableControl<T>,
     state: DropDownTextFieldState? = null,
     source: DataSource<T>,
     sourceItemToString: (T) -> String,
@@ -197,9 +197,10 @@ fun <T> DropDownTextField(
 
     val searchQueryFlow = remember { snapshotFlow { searchQuery.value } }
     val controlSnapshot = control.snapshotFlow.collectAsState().value
-    val isReadonly = initializedState.readonlyState.valueFlow.collectAsState().value
-    val isExpanded = initializedState.expandedState.valueFlow.collectAsState().value
-    val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+    val errorMessage = remember(controlSnapshot) { controlSnapshot.errorMessage ?: "" }
+    val isReadonly = initializedState.readonlyState.valueChanges.collectAsState().value
+    val isExpanded = initializedState.expandedState.valueChanges.collectAsState().value
+    val isFocused = initializedState.focusedState.valueChanges.collectAsState().value
 
     resetReadonlyStateOnResetValue(control = control, state = initializedState)
 
@@ -225,12 +226,14 @@ fun <T> DropDownTextField(
         }
     }
 
-    updateSearchQueryOnControlOrExpandChange(
+    updateSearchQueryOnControlChange(
         control = control,
         state = initializedState,
         sourceItemToString = sourceItemToString,
         onSearchQueryChange = { x -> searchQuery.value = x },
     )
+
+    resetControlValueOnExpandChange(control = control, state = initializedState)
 
     turnOffProgressIndicatorStateOnSourceChange(
         source = source,
@@ -246,7 +249,7 @@ fun <T> DropDownTextField(
         },
         searchQuery = searchQuery.value,
         onSearchQueryChange = { query ->
-            control.setValue(control.resetValue)
+            control.resetValueOnly()
             searchQuery.value = query
         },
         searchResults = results,
@@ -254,7 +257,7 @@ fun <T> DropDownTextField(
         isEnabled = controlSnapshot.isEnabled,
         isReadonly = isReadonly,
         isInvalid = controlSnapshot.isInvalid,
-        errorMessage = controlSnapshot.errorMessage,
+        errorMessage = errorMessage,
         isFocused = isFocused,
         onFocusChange = { x -> initializedState.focusedState.setValue(x.isFocused) },
         isExpanded = isExpanded,
@@ -285,7 +288,7 @@ fun <T> DropDownTextField(
 @Composable
 fun <T> DropDownTextField(
     modifier: Modifier = Modifier,
-    control: ValidatableSingleControl<T>,
+    control: MutableValidatableControl<T>,
     state: DropDownTextFieldState? = null,
     source: DataSource<T>,
     sourceItemToString: (T) -> String,
@@ -313,8 +316,8 @@ fun <T> DropDownTextField(
         label = { Text(label) },
         dropDownIcon = {
             val isInvalid = control.isInvalidFlow.collectAsState().value
-            val isExpanded = initializedState.expandedState.valueFlow.collectAsState().value
-            val isFocused = initializedState.focusedState.valueFlow.collectAsState().value
+            val isExpanded = initializedState.expandedState.valueChanges.collectAsState().value
+            val isFocused = initializedState.focusedState.valueChanges.collectAsState().value
 
             val color =
                 colors.calculateLabelColor(

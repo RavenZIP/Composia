@@ -10,9 +10,10 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.multiValueControl.MultiValueControl
+import io.github.ravenzip.composia.control.validatable.MutableValidatableControl
+import io.github.ravenzip.composia.control.value.toggle
 import io.github.ravenzip.composia.extension.S18
-import io.github.ravenzip.composia.function.collectAsSnapshotListState
+import io.github.ravenzip.composia.extension.collectAsSnapshotStateList
 
 @Composable
 fun <T, K> CheckboxGroup(
@@ -45,22 +46,23 @@ fun <T, K> CheckboxGroup(
 
 @Composable
 fun <T, K> CheckboxGroup(
-    control: MultiValueControl<T, K>,
+    control: MutableValidatableControl<List<T>>,
     source: List<T>,
     sourceItemToString: (T) -> String,
+    keySelector: (T) -> K,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle.S18,
     contentPadding: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(10.dp),
     colors: CheckboxColors = CheckboxDefaults.colors(),
 ) {
-    val value = control.valueFlow.collectAsSnapshotListState()
+    val value = control.valueFlow.collectAsSnapshotStateList()
     val isEnabled = control.isEnabledFlow.collectAsState().value
 
     CheckboxGroup(
         selectedItems = value,
         source = source,
-        onClick = { x -> control.toggle(x) },
-        keySelector = { x -> control.keySelector(x) },
+        onClick = { x -> control.toggle(x, keySelector) },
+        keySelector = keySelector,
         sourceItemToString = sourceItemToString,
         modifier = modifier,
         isEnabled = isEnabled,

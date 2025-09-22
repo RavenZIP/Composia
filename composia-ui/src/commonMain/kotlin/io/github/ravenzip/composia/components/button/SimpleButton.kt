@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.statusControl.StatusControl
+import io.github.ravenzip.composia.control.activation.ActivationControl
 import io.github.ravenzip.composia.extension.S16Medium
 import io.github.ravenzip.composia.style.DefaultComponentShape
 
@@ -42,7 +42,7 @@ fun SimpleButton(
 
 @Composable
 fun SimpleButton(
-    control: StatusControl,
+    control: ActivationControl,
     onClick: () -> Unit = {},
     text: String,
     modifier: Modifier = Modifier,

@@ -10,33 +10,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import io.github.ravenzip.composia.components.text.CounterLabel
 import io.github.ravenzip.composia.components.text.HintText
-import io.github.ravenzip.composia.control.shared.ValueChangeType
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
-import io.github.ravenzip.composia.control.valueControl.SingleValueControl
+import io.github.ravenzip.composia.control.validatable.ValidatableControl
+import io.github.ravenzip.composia.control.value.ValueControl
 import io.github.ravenzip.composia.state.TextFieldState
+import io.github.ravenzip.composia.valueChange.ValueChangeType
 import kotlinx.coroutines.flow.filter
 
 /** Обертка над текстовыми полями, которые используют контролы напрямую */
 @Composable
 internal fun <T> resetReadonlyStateOnResetValue(
-    control: ValidatableSingleControl<T>,
+    control: ValidatableControl<T>,
     state: TextFieldState,
 ) {
     LaunchedEffect(control, state) {
-        control.valueWithTypeChangesFlow
-            .filter { x -> x.typeChange is ValueChangeType.Reset }
+        control.typeChangeFlow
+            .filter { type -> type is ValueChangeType.Reset }
             .collect { state.readonlyState.setValue(state.readonlyState.initialValue) }
     }
 }
 
 @Composable
-internal fun <T> resetReadonlyStateOnResetValue(
-    control: SingleValueControl<T>,
-    state: TextFieldState,
-) {
+internal fun <T> resetReadonlyStateOnResetValue(control: ValueControl<T>, state: TextFieldState) {
     LaunchedEffect(control, state) {
-        control.valueWithTypeChangesFlow
-            .filter { x -> x.typeChange is ValueChangeType.Reset }
+        control.typeChangeFlow
+            .filter { type -> type is ValueChangeType.Reset }
             .collect { state.readonlyState.setValue(state.readonlyState.initialValue) }
     }
 }

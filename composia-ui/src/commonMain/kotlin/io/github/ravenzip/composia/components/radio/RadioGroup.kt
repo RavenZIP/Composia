@@ -11,12 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
+import io.github.ravenzip.composia.control.validatable.MutableValidatableControl
 import io.github.ravenzip.composia.style.DefaultComponentShape
 
 @Composable
 fun <T, K> RadioGroup(
-    control: ValidatableSingleControl<T>,
+    control: MutableValidatableControl<T>,
     source: List<T>,
     view: (T) -> String,
     keySelector: (T) -> K,
@@ -26,7 +26,7 @@ fun <T, K> RadioGroup(
     colors: RadioButtonColors = RadioButtonDefaults.colors(),
 ) {
     val value = control.valueFlow.collectAsState().value
-    val selectedKey = remember(value) { keySelector(control.value) }
+    val selectedKey = remember(value) { keySelector(value) }
 
     Column(modifier = modifier, verticalArrangement = contentPadding) {
         source.forEach { item ->

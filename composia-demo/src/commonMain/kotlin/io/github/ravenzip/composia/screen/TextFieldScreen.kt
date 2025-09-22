@@ -13,31 +13,31 @@ import io.github.ravenzip.composia.components.button.SimpleButton
 import io.github.ravenzip.composia.components.textField.base.SingleLineTextField
 import io.github.ravenzip.composia.components.textField.outlined.OutlinedSingleLineTextField
 import io.github.ravenzip.composia.components.textField.simple.SimpleTextField
-import io.github.ravenzip.composia.control.shared.Validator
-import io.github.ravenzip.composia.control.statusControl.StatusControl
-import io.github.ravenzip.composia.control.validatableControl.ValidatableSingleControl
-import io.github.ravenzip.composia.control.valueControl.SingleValueControl
+import io.github.ravenzip.composia.control.activation.mutableActivationControlOf
+import io.github.ravenzip.composia.control.validatable.mutableValidatableControlOf
+import io.github.ravenzip.composia.control.value.mutableValueControlOf
+import io.github.ravenzip.composia.validation.Validator
 
 class TextFieldScreenViewModel : ViewModel() {
-    val simpleTextFieldControl = SingleValueControl("", coroutineScope = viewModelScope)
+    val simpleTextFieldControl = mutableValueControlOf("", coroutineScope = viewModelScope)
 
     val singlenessTextFieldControl =
-        ValidatableSingleControl(
+        mutableValidatableControlOf(
             initialValue = "",
-            validators = listOf { x -> Validator.required(x) },
+            validators = listOf(Validator.maxLength(3)),
             coroutineScope = viewModelScope,
         )
 
     val outlinedSinglenessTextFieldControl =
-        ValidatableSingleControl(
+        mutableValidatableControlOf(
             initialValue = "",
-            validators = listOf { x -> Validator.required(x) },
+            validators = listOf(Validator.required),
             coroutineScope = viewModelScope,
         )
 
-    val simpleButtonControl = StatusControl(coroutineScope = viewModelScope)
+    val simpleButtonControl = mutableActivationControlOf(coroutineScope = viewModelScope)
 
-    val simpleButtonControl2 = StatusControl(coroutineScope = viewModelScope)
+    val simpleButtonControl2 = mutableActivationControlOf(coroutineScope = viewModelScope)
 }
 
 @Composable
