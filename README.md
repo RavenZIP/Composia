@@ -46,7 +46,7 @@ iOS is temporarily not supported due to the impossibility of checking the functi
 
 The library consists of 3 parts:
 
-- `composia-core` — controls (`ValidatableControl`, `ValueControl`, `StatusControl`) and validators.
+- `composia-core` — controls (`ValidatableControl`, `ValueControl`, `ActivationControl`) and validators.
 - `composia-ui` — ready-made UI components based on Jetpack Compose. Contains custom Compose components both with and
   without controls
 - `composia-demo` — demo part of the library. Not available for connection to your project
@@ -65,7 +65,7 @@ dependencyResolutionManagement {
 }
 ```
 
-**build.gradle.kts (composia-ui)**
+**build.gradle.kts**
 
 ```
 dependencies {
@@ -75,6 +75,32 @@ dependencies {
       implementation("com.github.RavenZIP.Composia:composia-ui:$version")
 }
 ```
+
+Если вы используете libs.versions.toml / If you use libs.versions.toml
+
+**libs.versions.toml**
+
+```
+[versions]
+ravenzip-composia = "$version"
+
+[libraries]
+ravenzip-composia-core = { module = "com.github.RavenZIP.Composia:composia-core", version.ref = "ravenzip-composia" }
+// И (ИЛИ) / AND (OR)
+ravenzip-composia-ui = { module = "com.github.RavenZIP.Composia:composia-ui", version.ref = "ravenzip-composia" }
+```
+
+
+**build.gradle.kts**
+
+```
+dependencies {
+      implementation(libs.ravenzip.composia.core)
+      // И (ИЛИ) / AND (OR)
+      implementation(libs.ravenzip.composia.ui)
+}
+```
+
 
 ## 🚬 Использование / Usage
 
