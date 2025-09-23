@@ -19,4 +19,6 @@ include("composia-ui")
 
 include("composia-core")
 
-include("composia-demo")
+if (System.getenv("JITPACK") == null) {
+    include("composia-demo")
+}
