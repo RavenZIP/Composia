@@ -44,18 +44,6 @@ kotlin {
     }
 }
 
-publishing {
-    publications {
-        register<MavenPublication>("release") {
-            groupId = "io.github.ravenzip.composia-ui"
-            artifactId = "composia-ui"
-            version = "0.0.1"
-
-            afterEvaluate { from(components["kotlin"]) }
-        }
-    }
-}
-
 android {
     namespace = "io.github.ravenzip.composia"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -68,4 +56,16 @@ android {
     }
 
     kotlin { jvmToolchain(17) }
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "io.github.ravenzip.composia-ui"
+            artifactId = "composia-ui"
+            version = "0.0.1"
+
+            afterEvaluate { from(components["kotlin"]) }
+        }
+    }
 }
