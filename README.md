@@ -69,10 +69,10 @@ dependencyResolutionManagement {
 
 ```
 dependencies {
-      implementation("com.github.RavenZIP:composia-ui:$version")
-      
-      // Если вам не нужен UI / if you don't need a UI
-      implementation("com.github.RavenZIP:composia-core:$version") 
+      implementation("com.github.RavenZIP.Composia:composia-core:$version") 
+
+      // И (ИЛИ) / AND (OR)
+      implementation("com.github.RavenZIP.Composia:composia-ui:$version")
 }
 ```
 
