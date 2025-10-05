@@ -6,7 +6,7 @@
 <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-2.2.10-A831F5">
 <img alt="Compose Multiplatform" src="https://img.shields.io/badge/Compose Multiplatform-1.9.0 beta03-3b83f8">
 <img alt="Static Badge" src="https://img.shields.io/badge/API-24+-39ad31">
-<img alt="Static Badge" src="https://img.shields.io/badge/v0.0.1-red">
+<img alt="Static Badge" src="https://img.shields.io/badge/v0.1.0-red">
 </p>
 
 ## 🌍 Поддерживаемые платформы / Supported platforms
@@ -90,7 +90,6 @@ ravenzip-composia-core = { module = "com.github.RavenZIP.Composia:composia-core"
 ravenzip-composia-ui = { module = "com.github.RavenZIP.Composia:composia-ui", version.ref = "ravenzip-composia" }
 ```
 
-
 **build.gradle.kts**
 
 ```
@@ -100,7 +99,6 @@ dependencies {
       implementation(libs.ravenzip.composia.ui)
 }
 ```
-
 
 ## 🚬 Использование / Usage
 

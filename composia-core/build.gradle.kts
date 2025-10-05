@@ -11,7 +11,7 @@ plugins {
 
 group = "io.github.ravenzip.composia-core"
 
-version = "0.0.1"
+version = "0.1.0"
 
 kotlin {
     jvm()
@@ -40,7 +40,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "io.github.ravenzip.composia-core"
             artifactId = "composia-core"
-            version = "0.0.1"
+            version = "0.1.0"
 
             afterEvaluate { from(components["kotlin"]) }
         }

@@ -14,7 +14,7 @@ plugins {
 
 group = "io.github.ravenzip.composia-ui"
 
-version = "0.0.1"
+version = "0.1.0"
 
 kotlin {
     androidTarget {
@@ -63,7 +63,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "io.github.ravenzip.composia-ui"
             artifactId = "composia-ui"
-            version = "0.0.1"
+            version = "0.1.0"
 
             afterEvaluate { from(components["kotlin"]) }
         }
