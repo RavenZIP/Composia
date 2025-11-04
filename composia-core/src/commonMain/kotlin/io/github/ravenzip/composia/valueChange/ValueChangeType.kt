@@ -12,8 +12,8 @@ sealed class ValueChangeType {
     data object Reset : ValueChangeType()
 }
 
-fun ValueChangeType.isInitialize() = this is ValueChangeType.Initialize
+fun ValueChangeType.isInitialize(): Boolean = this is ValueChangeType.Initialize
 
-fun ValueChangeType.isSet() = this is ValueChangeType.Set
+fun ValueChangeType.isSet(): Boolean = this is ValueChangeType.Set
 
-fun ValueChangeType.isReset() = this is ValueChangeType.Reset
+fun ValueChangeType.isReset(): Boolean = this is ValueChangeType.Reset
