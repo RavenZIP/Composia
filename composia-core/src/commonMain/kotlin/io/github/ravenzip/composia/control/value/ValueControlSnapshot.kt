@@ -7,6 +7,11 @@ import io.github.ravenzip.composia.valueChange.ValueChange
 import io.github.ravenzip.composia.valueChange.ValueChangeType
 import io.github.ravenzip.composia.valueChange.isInitialize
 
+/**
+ * Снимок состояния [ValueControl] в определённый момент времени.
+ *
+ * Объединяет в себе текущее значение, тип последнего изменения, а также состояние активации
+ */
 interface ValueControlSnapshot<T> {
     val value: T
     val typeChange: ValueChangeType
@@ -15,6 +20,7 @@ interface ValueControlSnapshot<T> {
     val isDisabled: Boolean
 }
 
+/** Внутренняя реализация [ValueControlSnapshot] */
 internal open class ValueControlSnapshotImpl<T>
 private constructor(
     override val value: T,
@@ -41,6 +47,7 @@ private constructor(
     }
 }
 
+/** Мапинг [ValueControlSnapshot] в [ValidatableControlSnapshot] */
 fun <T> ValueControlSnapshot<T>.toValidatableControlSnapshot(
     validationState: ValidationState
 ): ValidatableControlSnapshot<T> =

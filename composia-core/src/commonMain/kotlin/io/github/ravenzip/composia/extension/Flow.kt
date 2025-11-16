@@ -23,6 +23,12 @@ internal fun <T> Flow<T>.stateInWhileSubscribed(
     )
 }
 
+/**
+ * Собирает значения из потока типа List<T> и представляет его последнее значение через
+ * [SnapshotStateList]
+ *
+ * @param initialValue начальное состояние
+ */
 @Composable
 fun <T> Flow<List<T>>.collectAsSnapshotStateList(
     initialValue: List<T> = emptyList()
@@ -39,6 +45,12 @@ fun <T> Flow<List<T>>.collectAsSnapshotStateList(
     return result
 }
 
+/**
+ * Собирает значения из потока типа List<T> и представляет его последнее значение через
+ * [SnapshotStateList]
+ *
+ * Отличается от [collectAsSnapshotStateList] тем, что берет начальное значение из потока
+ */
 @Composable
 fun <T> StateFlow<List<T>>.collectAsSnapshotStateList(): SnapshotStateList<T> {
     return collectAsSnapshotStateList(this.value)

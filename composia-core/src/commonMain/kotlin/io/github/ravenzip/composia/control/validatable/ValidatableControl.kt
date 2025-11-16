@@ -11,16 +11,33 @@ import io.github.ravenzip.composia.validation.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
+/**
+ * Контрол, поддерживающий валидацию значения.
+ *
+ * Расширяет [ValueControl], добавляя информацию о валидности контрола
+ */
 @Stable
 interface ValidatableControl<T> : ValueControl<T>, Validatable<T> {
+    /** Поток, эмитирующий текущий статус контрола (валиден, невалиден, выключен) */
     val statusFlow: StateFlow<ControlStatus>
+
+    /** Поток, эмитирующий полный снимок состояния контрола */
     override val snapshotFlow: StateFlow<ValidatableControlSnapshot<T>>
+
+    /** Текущий статус контрола из [statusFlow] */
     val status: ControlStatus
+
+    /** Текущий снимок состояния из [snapshotFlow] */
     override val snapshot: ValidatableControlSnapshot<T>
 }
 
+/**
+ * Изменяемая версия [ValidatableControl], позволяющая устанавливать значения и менять состояние
+ * активации
+ */
 @Stable interface MutableValidatableControl<T> : ValidatableControl<T>, MutableValueControl<T>
 
+/** Внутренняя реализация [MutableValidatableControl] */
 internal class MutableValidatableValueControlImpl<T>(
     private val validators: List<ValidatorFn<T>> = emptyList(),
     valueControl: MutableValueControl<T>,
@@ -95,6 +112,16 @@ internal class MutableValidatableValueControlImpl<T>(
         get() = snapshotFlow.value
 }
 
+/**
+ * Создаёт [MutableValidatableControl] с заданным начальным значением, валидаторами и состоянием
+ * активации.
+ *
+ * @param initialValue начальное значение
+ * @param resetValue значение для сброса (по умолчанию [initialValue])
+ * @param validators список валидаторов, возвращающих сообщение об ошибке или `null`
+ * @param enabled начальное состояние активации (по умолчанию true)
+ * @param coroutineScope scope для управления потоками
+ */
 fun <T> mutableValidatableControlOf(
     initialValue: T,
     resetValue: T = initialValue,
@@ -113,4 +140,5 @@ fun <T> mutableValidatableControlOf(
     return MutableValidatableValueControlImpl(validators, valueControl, coroutineScope)
 }
 
+/** Преобразует [MutableValidatableControl] в [ValidatableControl] */
 fun <T> MutableValidatableControl<T>.asReadonly(): ValidatableControl<T> = this
